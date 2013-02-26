@@ -11,16 +11,16 @@ Cada tipo de usuario tiene un rol diferente y tendra opciones o acceso a paginas
 * Encargado de inventario
 * Visitante
 
-###Encargado del inventario
-* Puede consultar cantidad de producto consultar estado de producto(espera, disponible, agotado, descontinuado)  
-pero no puede hacer ningun otro manejo sobre la base de datos como modificar campos etc.
-
 ###Cliente
 * Consulta de productos
 * Consulta de facturas
 * Ver el estatus de su compra
 * Que compras ha realizado
 * Ver las facturas en historial
+* 
+###Encargado del inventario
+* Puede consultar cantidad de producto consultar estado de producto(espera, disponible, agotado, descontinuado)  
+pero no puede hacer ningun otro manejo sobre la base de datos como modificar campos etc.
 
 ###Encargado de ventas
 * Es el encargado de monitorear las compras que realiza el cliente y asegurarse de que hayan hecho correctamente,  
