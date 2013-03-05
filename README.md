@@ -14,11 +14,15 @@ Cada tipo de usuario tiene un rol diferente y tendra opciones o acceso a paginas
 * Visitante
 
 ###Cliente
+* Realizar compra: Con el catalogo de productos el cliente podra seleccionar el  o los productos que desee agregar 
+  al carro de compras, una ves terminado tendra que confirmar el pedido llenando los datos necesarios (direccion, telefono 
+  metodo de pago, y paqueteria para el envio). Una vez confirmado no se podra cancelar el pedido.
 * Consulta de productos
 * Consulta de facturas
 * Ver el estatus de su compra
 * Que compras ha realizado
 * Ver las facturas en historial
+
 
 ###Encargado del inventario
 * Puede consultar cantidad de producto consultar estado de producto(espera, disponible, agotado, descontinuado),
