@@ -45,7 +45,7 @@ Cada tipo de usuario tiene un rol diferente y tendra opciones o acceso a paginas
 
 ##Desarrolladores
 * Duarte Sanchez Alejandro
-   * Codigo: 
+   * Codigo: 206587844
    * Email: lexds_1591@hotmail.com  
 * Ortiz Valdovinos Gabriel
    * Codigo: 210224446
