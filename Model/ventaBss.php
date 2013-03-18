@@ -60,21 +60,21 @@ class ventaBss {
 	 * @param int $id de la venta que se desea cancelar
 	 * @return bool TRUE si se pudo generar la venta, FALSE en caso contrario
 	 */
-	function cancelarVenta($id) {
+	function cancelarVenta($tipo,$dato) {
 
 		require ('dbdata.inc');
 		require ('dbClass.php');
 		$conexion = new DB($hostdb, $userdb, $passdb, $db);
+		$conexion->conecta();
 
 		if (!$conexion)
 			die('LIST. No se ha podido realizar la conexion a la bd');
 
-		$id = $conexion -> limpiarVariable($id);
-
+		$tipo = $conexion -> limpiarVariable($tipo);
+		$dato = $conexion -> limpiarVariable($dato);
 		//Crear el query
-		$query = 'SELECT *
-					FROM  
-						venta';
+		$query = "DELETE FROM venta
+					WHERE $tipo=$dato";
 
 		//Ejecutar el query
 		$resultado = $conexion -> ejecutarConsulta($query);
@@ -99,8 +99,9 @@ class ventaBss {
 	 */
 	function listar() {
 		require ('dbdata.inc');
-		require ('dbClass.php');
+		require_once ('dbClass.php');
 		$conexion = new DB($hostdb, $userdb, $passdb, $db);
+		$conexion->conecta();
 
 		if (!$conexion)
 			die('LIST. No se ha podido realizar la conexion a la bd');
@@ -135,38 +136,36 @@ class ventaBss {
 
 	function consultar($tipo, $dato) {
 		require ('dbdata.inc');
-		require ('dbClass.php');
+		require_once ('dbClass.php');
 		$conexion = new DB($hostdb, $userdb, $passdb, $db);
-		//$conexion->conecta();
+		$conexion->conecta();
 
 		if (!$conexion)
 			die('No se ha podido realizar la conexion a la bd');
 
-		$id = $conexion -> limpiarVariable($id);
-
 		//Crear el query
 		$query = "SELECT *
 					FROM  
-						venta
-					WHERE $tipo =  $dato";
+					venta
+					WHERE $tipo = $dato";
 
 		//Ejecutar el query
 		$resultado = $conexion -> ejecutarConsulta($query);
-		
 
 		if (!$resultado) {
 			echo 'FALLO la consulta';
 
 			//Cerrar la conexion
 			$conexion -> cerrar();
-			echo 'asd';
 			return FALSE;
 		} else {
 			//Cerrar la conexion
 			$conexion -> cerrar();
-			var_dump($resultado);
+
 			return $resultado;
 		}
+		
+		
 
 	}//Fin de consultar()
 

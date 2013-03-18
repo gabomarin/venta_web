@@ -1,7 +1,6 @@
 <?php
 
-class usuarioClass{
-
+class facturaClass{
 	public $folio, $fecha, $cantidad, $precio, $estatus;
 	
 

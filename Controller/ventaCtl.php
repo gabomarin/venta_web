@@ -39,12 +39,13 @@ class ventaCtl {
 					break;
 
 				case  'cancelar' :
-					$venta = $this -> modelo -> cancelarVenta($_REQUEST['id']);
+					$venta = $this -> modelo -> cancelarVenta($_REQUEST['tipo'],$_REQUEST['dato']);
 					if ($venta == true)
-						include ('View/ventaInsertada.php');
+						include ('View/listaVenta.php');
 					else {
 						include ('View/ventaError.php');
 					}
+				break;
 
 				case  'consulta' :
 					$venta = $this -> modelo -> consultar($_REQUEST['tipo'], $_REQUEST['dato']);
@@ -53,6 +54,7 @@ class ventaCtl {
 					else {
 						include ('View/ventaError.php');
 					}
+					break;
 					
 				case 'listar':
 					$venta = $this -> modelo -> listar();
@@ -61,6 +63,7 @@ class ventaCtl {
 					else {
 						include ('View/ventaError.php');
 					}
+					break;
 					
 			}
 

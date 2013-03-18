@@ -19,6 +19,15 @@ switch($_REQUEST['modulo'])
 		include('Controller/inventarioCtl.php');
 		$controlador = new inventarioCtl();
 		break;
+		
+	case 'venta':
+		include('Controller/ventaCtl.php');
+		$controlador = new ventaCtl();
+		break;
+	case 'factura':
+		include('Controller/facturaCtl.php');
+		$controlador = new facturaCtl();
+		break;
 }
 
 //Ejecutamos el controlador
