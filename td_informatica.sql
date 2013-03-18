@@ -14,6 +14,7 @@ CREATE  TABLE IF NOT EXISTS `td_informatica`.`Producto` (
   `nombre` VARCHAR(45) NOT NULL ,
   `estatus` INT NOT NULL ,
   `Precio` DOUBLE NOT NULL ,
+  `existencia` INT NOT NULL ,
   PRIMARY KEY (`idProducto`) )
 ENGINE = InnoDB;
 
@@ -24,58 +25,9 @@ ENGINE = InnoDB;
 CREATE  TABLE IF NOT EXISTS `td_informatica`.`Venta` (
   `idVenta` INT NOT NULL AUTO_INCREMENT ,
   `fecha` DATE NOT NULL ,
+  `total` DOUBLE NOT NULL ,
   PRIMARY KEY (`idVenta`) )
 ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `td_informatica`.`Detalle_venta`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `td_informatica`.`Detalle_venta` (
-  `Producto_idProducto` INT NOT NULL ,
-  `Venta_idVenta` INT NOT NULL ,
-  `total` DOUBLE NOT NULL ,
-  `cantidad` INT NOT NULL ,
-  PRIMARY KEY (`Producto_idProducto`, `Venta_idVenta`) ,
-  CONSTRAINT `fk_Producto_has_Venta_Producto1`
-    FOREIGN KEY (`Producto_idProducto` )
-    REFERENCES `td_informatica`.`Producto` (`idProducto` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Producto_has_Venta_Venta1`
-    FOREIGN KEY (`Venta_idVenta` )
-    REFERENCES `td_informatica`.`Venta` (`idVenta` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-CREATE INDEX `fk_Producto_has_Venta_Venta1_idx` ON `td_informatica`.`Detalle_venta` (`Venta_idVenta` ASC) ;
-
-CREATE INDEX `fk_Producto_has_Venta_Producto1_idx` ON `td_informatica`.`Detalle_venta` (`Producto_idProducto` ASC) ;
-
-
--- -----------------------------------------------------
--- Table `td_informatica`.`Usuario`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `td_informatica`.`Usuario` (
-  `idUsuario` INT NOT NULL AUTO_INCREMENT ,
-  `nombre` VARCHAR(45) NOT NULL ,
-  `direccion` VARCHAR(45) NOT NULL ,
-  `RFC` VARCHAR(45) NULL ,
-  `telefono` VARCHAR(45) NOT NULL ,
-  `estatus` VARCHAR(45) NOT NULL ,
-  `tipo` VARCHAR(45) NOT NULL ,
-  `Detalle_venta_Producto_idProducto` INT NOT NULL ,
-  `Detalle_venta_Venta_idVenta` INT NOT NULL ,
-  PRIMARY KEY (`idUsuario`, `Detalle_venta_Producto_idProducto`, `Detalle_venta_Venta_idVenta`) ,
-  CONSTRAINT `fk_Usuario_Detalle_venta1`
-    FOREIGN KEY (`Detalle_venta_Producto_idProducto` , `Detalle_venta_Venta_idVenta` )
-    REFERENCES `td_informatica`.`Detalle_venta` (`Producto_idProducto` , `Venta_idVenta` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-CREATE INDEX `fk_Usuario_Detalle_venta1_idx` ON `td_informatica`.`Usuario` (`Detalle_venta_Producto_idProducto` ASC, `Detalle_venta_Venta_idVenta` ASC) ;
 
 
 -- -----------------------------------------------------
@@ -87,6 +39,39 @@ CREATE  TABLE IF NOT EXISTS `td_informatica`.`Inventario` (
   `fecha` DATE NOT NULL ,
   PRIMARY KEY (`idInventario`) )
 ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `td_informatica`.`Usuario`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `td_informatica`.`Usuario` (
+  `idUsuario` INT NOT NULL AUTO_INCREMENT ,
+  `nombre` VARCHAR(45) NOT NULL ,
+  `email` VARCHAR(40) NOT NULL ,
+  `pass` VARCHAR(45) NOT NULL ,
+  `RFC` VARCHAR(45) NULL ,
+  `direccion` VARCHAR(45) NOT NULL ,
+  `telefono` VARCHAR(45) NOT NULL ,
+  `estatus` VARCHAR(45) NOT NULL ,
+  `tipo` VARCHAR(45) NOT NULL ,
+  `Venta_idVenta` INT NOT NULL ,
+  `Inventario_idInventario` INT NOT NULL ,
+  PRIMARY KEY (`idUsuario`, `Venta_idVenta`, `Inventario_idInventario`) ,
+  CONSTRAINT `fk_Usuario_Venta1`
+    FOREIGN KEY (`Venta_idVenta` )
+    REFERENCES `td_informatica`.`Venta` (`idVenta` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Usuario_Inventario1`
+    FOREIGN KEY (`Inventario_idInventario` )
+    REFERENCES `td_informatica`.`Inventario` (`idInventario` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE INDEX `fk_Usuario_Venta1_idx` ON `td_informatica`.`Usuario` (`Venta_idVenta` ASC) ;
+
+CREATE INDEX `fk_Usuario_Inventario1_idx` ON `td_informatica`.`Usuario` (`Inventario_idInventario` ASC) ;
 
 
 -- -----------------------------------------------------
@@ -115,6 +100,10 @@ CREATE INDEX `fk_factura-venta_Venta1_idx` ON `td_informatica`.`factura-venta` (
 CREATE  TABLE IF NOT EXISTS `td_informatica`.`Detalle_inventario` (
   `Producto_idProducto` INT NOT NULL ,
   `Inventario_idInventario` INT NOT NULL ,
+  `fecha` DATE NOT NULL ,
+  `cantidad_real` INT NOT NULL ,
+  `cantidad_esperada` INT NOT NULL ,
+  `descripcion` VARCHAR(300) NOT NULL ,
   PRIMARY KEY (`Producto_idProducto`, `Inventario_idInventario`) ,
   CONSTRAINT `fk_Producto_has_Inventario_Producto1`
     FOREIGN KEY (`Producto_idProducto` )
@@ -131,6 +120,32 @@ ENGINE = InnoDB;
 CREATE INDEX `fk_Producto_has_Inventario_Inventario1_idx` ON `td_informatica`.`Detalle_inventario` (`Inventario_idInventario` ASC) ;
 
 CREATE INDEX `fk_Producto_has_Inventario_Producto1_idx` ON `td_informatica`.`Detalle_inventario` (`Producto_idProducto` ASC) ;
+
+
+-- -----------------------------------------------------
+-- Table `td_informatica`.`Detalle_venta`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `td_informatica`.`Detalle_venta` (
+  `Producto_idProducto` INT NOT NULL ,
+  `Venta_idVenta` INT NOT NULL ,
+  `total` DOUBLE NOT NULL ,
+  `cantidad` INT NOT NULL ,
+  PRIMARY KEY (`Producto_idProducto`, `Venta_idVenta`) ,
+  CONSTRAINT `fk_Producto_has_Venta_Producto1`
+    FOREIGN KEY (`Producto_idProducto` )
+    REFERENCES `td_informatica`.`Producto` (`idProducto` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Producto_has_Venta_Venta1`
+    FOREIGN KEY (`Venta_idVenta` )
+    REFERENCES `td_informatica`.`Venta` (`idVenta` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE INDEX `fk_Producto_has_Venta_Venta1_idx` ON `td_informatica`.`Detalle_venta` (`Venta_idVenta` ASC) ;
+
+CREATE INDEX `fk_Producto_has_Venta_Producto1_idx` ON `td_informatica`.`Detalle_venta` (`Producto_idProducto` ASC) ;
 
 USE `td_informatica` ;
 

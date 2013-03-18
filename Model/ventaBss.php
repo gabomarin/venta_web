@@ -137,6 +137,7 @@ class ventaBss {
 		require ('dbdata.inc');
 		require ('dbClass.php');
 		$conexion = new DB($hostdb, $userdb, $passdb, $db);
+		//$conexion->conecta();
 
 		if (!$conexion)
 			die('No se ha podido realizar la conexion a la bd');
@@ -144,24 +145,26 @@ class ventaBss {
 		$id = $conexion -> limpiarVariable($id);
 
 		//Crear el query
-		$query = 'SELECT *
+		$query = "SELECT *
 					FROM  
 						venta
-					WHERE' . $tipo . '=' . $dato;
+					WHERE $tipo =  $dato";
 
 		//Ejecutar el query
 		$resultado = $conexion -> ejecutarConsulta($query);
+		
 
 		if (!$resultado) {
 			echo 'FALLO la consulta';
 
 			//Cerrar la conexion
 			$conexion -> cerrar();
+			echo 'asd';
 			return FALSE;
 		} else {
 			//Cerrar la conexion
 			$conexion -> cerrar();
-
+			var_dump($resultado);
 			return $resultado;
 		}
 
