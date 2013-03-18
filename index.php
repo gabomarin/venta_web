@@ -15,6 +15,10 @@ switch($_REQUEST['modulo'])
 		include('Controller/productoCtl.php');
 		$controlador = new productoCtl(); 
 		break;
+	case 'inventario':
+		include('Controller/inventarioCtl.php');
+		$controlador = new inventarioCtl();
+		break;
 }
 
 //Ejecutamos el controlador
