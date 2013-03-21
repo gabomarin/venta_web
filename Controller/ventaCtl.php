@@ -31,7 +31,7 @@ class ventaCtl {
 		} else
 			switch($_REQUEST['action']) {
 				case 'generar' :
-					$venta = $this -> modelo -> generarVenta($_REQUEST['fecha'], $_REQUEST['total']);
+					$venta = $this -> modelo -> generarVenta($_REQUEST['fecha'], $_REQUEST['total'], $_REQUEST['facturaId'], $_REQUEST['usuarioId']);
 					if (is_array($venta))
 						include ('View/listaVenta.php');
 					else
