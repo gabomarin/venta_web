@@ -34,7 +34,7 @@ class loginBss{
 			
 
 		//Crear el query
-		$query = "SELECT mail, pass  FROM usuario 
+		$query = "SELECT * FROM usuario 
 				  WHERE
 				  	mail= '$mail'
 				  	AND
@@ -51,8 +51,10 @@ class loginBss{
 			return FALSE;
 		}
 		
+		//var_dump($resultado);
+		return $resultado;
 		
-		return TRUE;
+		
 
 		
 	}
