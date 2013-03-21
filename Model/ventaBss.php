@@ -11,7 +11,7 @@ class ventaBss {
 	 * @param string $fecha de la creacion de la venta, double $total de la venta realizada
 	 * @return bool TRUE si se pudo generar la venta, FALSE en caso contrario
 	 */
-	function generarVenta($fecha, $total) {
+	function generarVenta($fecha, $total,$facturaId, $usuarioId) {
 
 		require ('ventaClass.php');
 
@@ -23,16 +23,20 @@ class ventaBss {
 			die('No se ha podido realizar la conexion a la bd');
 
 		//Limpiar las variables recibidas
-		$fecha = $conexion -> limpiarVariable($fecha);
-		$total = $conexion -> limpiarVariable($total);
+		$fecha = 		$conexion -> limpiarVariable($fecha);
+		$total = 		$conexion -> limpiarVariable($total);
+		$facturaId	= 	$conexion -> limpiarVariable($facturaId);
+		$usuarioId 	=	$conexion -> limpiarVariable($usuarioId);
 
 
 		//Crear el query
 		$query = "INSERT INTO 
-					venta (fecha, total)
+					venta (fecha, total, facturaId, usuarioId)
 				  VALUES 
 					('$fecha',
-					 '$total')";
+					 '$total',
+					 '$facturaId',
+					 '$usuarioId')";
 
 		//Ejecutar el query
 		$resultado = $conexion -> ejecutarConsulta($query);
