@@ -28,6 +28,16 @@ switch($_REQUEST['modulo'])
 		include('Controller/facturaCtl.php');
 		$controlador = new facturaCtl();
 		break;
+	
+	case 'estandar':
+		include('Controller/stdCtl.php');
+		$controlador= new stdCtl();
+		break;
+		
+	default://carga el controlador estandar
+			include("Controller/stdCtl.php");
+			$controlador = new stdCtl();
+			break;
 }
 
 //Ejecutamos el controlador
