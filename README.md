@@ -12,7 +12,7 @@ Cada tipo de usuario tiene un rol diferente y tendra opciones o acceso a paginas
 * Cliente ( tipo = 1 )
 * Encargado de ventas ( tipo = 2 )
 * Encargado de inventario ( tipo = 3 )
-
+* cada uno de ellos tiene un estado: 1 --> activo , 0 --> inactivo ( no puede iniciar sesion )
 ###Cliente
 * Realizar compra: Con el catalogo de productos el cliente podra seleccionar el  o los productos que desee agregar 
   al carro de compras, una ves terminado tendra que confirmar el pedido llenando los datos necesarios (direccion, telefono 
@@ -35,7 +35,6 @@ Cada tipo de usuario tiene un rol diferente y tendra opciones o acceso a paginas
  
 ###Visitante
 * Solo puede navegar por el sitio y ver los productos
-
 
 ##Lenguajes contemplados:
 * HTML5
