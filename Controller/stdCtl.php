@@ -21,41 +21,69 @@ class stdCtl {
 	}
 
 	function ejecutar() {
+		
 		session_start();
-
-		//$this -> modelo = new SesionMdl();
-
-		//Existen los valores?
-
+		//opcion por default
 		if (!isset($_REQUEST['action'])) {
-			$user = $this -> modelo -> login($_GET['mail'], $_GET['pass']);
-			//echo gettype($cadena);
-			if ($user)
-				echo 'Login exitoso';
-			else
-				echo 'Usuario o contraseña invalidos';
-		} else
+			if (!isset($_SESSION['mail'])) {
+				$user = $this -> modelo -> login($_GET['mail'], $_GET['pass']);
+				//var_dump($user);
+				//echo gettype($cadena);
+				if (is_array($user)) {
+					if( $user[0]['estatus'] == 1  ){
+								//Se hace el login
+								$_SESSION['id'] = $user[0]['id'];
+								$_SESSION['nombre'] = $user[0]['nombre'];
+								$_SESSION['mail'] = $user[0]['mail'];
+								$_SESSION['pass'] = $user[0]['pass'];
+								$_SESSION['rfc'] = $user[0]['rfc'];
+								$_SESSION['direccion'] = $user[0]['direccion'];
+								$_SESSION['telefono'] = $user[0]['telefono'];
+								$_SESSION['estatus'] = $user[0]['estatus'];
+								$_SESSION['tipo'] = $user[0]['tipo'];
+								echo 'Has iniciado Correctamente!';
+										
+					} 
+					else 
+						echo 'cuenta inactiva. Porfavor contacte al administrador de cuentas.';
+
+				}
+				else
+					echo 'Usuario o contraseña invalidos';
+				
+			} 
+			else {
+				echo 'Ya iniciaste sesion eres: '.$_SESSION['nombre'];
+			}
+		} 
+		else{
 			switch($_REQUEST['action']) {
 				case 'login' :
 					if (!isset($_SESSION['mail'])) {
-						//$cadena = array("foo", "bar", "hallo", "world");
 						$user = $this -> modelo -> login($_GET['mail'], $_GET['pass']);
 						//var_dump($user);
 						//echo gettype($cadena);
-						if (is_array($user)) {
-							//validar que no este logueado antes
-
-							//Se hace el login
-							$_SESSION['id'] = $user[0]['id'];
-							$_SESSION['nombre'] = $user[0]['nombre'];
-							$_SESSION['mail'] = $user[0]['mail'];
-							$_SESSION['pass'] = $user[0]['pass'];
-							$_SESSION['tipo'] = $user[0]['tipo'];
-							var_dump($_SESSION);
+						if ( is_array( $user ) ) {
+							if( $user[0]['estatus'] == 1  ){
+								//Se hace el login
+								$_SESSION['id'] = $user[0]['id'];
+								$_SESSION['nombre'] = $user[0]['nombre'];
+								$_SESSION['mail'] = $user[0]['mail'];
+								$_SESSION['pass'] = $user[0]['pass'];
+								$_SESSION['rfc'] = $user[0]['rfc'];
+								$_SESSION['direccion'] = $user[0]['direccion'];
+								$_SESSION['telefono'] = $user[0]['telefono'];
+								$_SESSION['estatus'] = $user[0]['estatus'];
+								$_SESSION['tipo'] = $user[0]['tipo'];
+								echo 'Has iniciado Correctamente!';
+										
+							} 
+							else 
+								echo 'cuenta inactiva. Porfavor contacte al administrador de cuentas.';
 							
-
-						}else
-						echo 'Usuario o contraseña invalidos';
+						}
+						else
+							echo 'Usuario o contraseña invalidos';
 						
 					} 
 					else {
@@ -83,9 +111,9 @@ class stdCtl {
 
 					break;
 			}
-
-		//else
 		}
+			
+	}
 
 }
 ?>
