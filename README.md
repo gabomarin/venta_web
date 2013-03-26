@@ -8,10 +8,12 @@ Se lleva un control de usuarios con diferentes permisos entre ello
 Cada tipo de usuario tiene un rol diferente y tendra opciones o acceso a paginas diferentes segun su tipo de usuario.
 
 ##Intervienen diferentes usuario:
-* Cliente
-* Encargado de ventas
-* Encargado de inventario
-* Visitante
+* Visitante ( tipo = 0 )
+* Cliente ( tipo = 1 )
+* Encargado de ventas ( tipo = 2 )
+* Encargado de inventario ( tipo = 3 )
+* cada uno de ellos tiene un estado: 1 --> activo , 0 --> inactivo ( no puede iniciar sesion )
+
 
 ###Cliente
 * Realizar compra: Con el catalogo de productos el cliente podra seleccionar el  o los productos que desee agregar 
@@ -35,7 +37,6 @@ Cada tipo de usuario tiene un rol diferente y tendra opciones o acceso a paginas
  
 ###Visitante
 * Solo puede navegar por el sitio y ver los productos
-
 
 ##Lenguajes contemplados:
 * HTML5
