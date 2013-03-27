@@ -45,10 +45,12 @@ class DB{
 		if($this-> cn ->errno)
 			return FALSE;
 		if(is_object($resultado)){
-			if ($resultado -> num_rows > 0)
+			if ($resultado -> num_rows > 0){
 				while($fila = $resultado->fetch_assoc())
 					$resultado_array[] = $fila;
-			return $resultado_array;
+				return $resultado_array;
+			}
+			else return FALSE;
 		}
 		$pos = strpos($query,'INSERT');
 		if($pos === 0)
