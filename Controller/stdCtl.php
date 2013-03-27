@@ -26,6 +26,7 @@ class stdCtl {
 		//opcion por default
 		if (!isset($_REQUEST['action'])) {
 			if (!isset($_SESSION['mail'])) {
+				
 				$user = $this -> modelo -> login($_GET['mail'], $_GET['pass']);
 				//var_dump($user);
 				//echo gettype($cadena);
@@ -60,6 +61,7 @@ class stdCtl {
 			switch($_REQUEST['action']) {
 				case 'login' :
 					if (!isset($_SESSION['mail'])) {
+						
 						$user = $this -> modelo -> login($_GET['mail'], $_GET['pass']);
 						//var_dump($user);
 						//echo gettype($cadena);
@@ -96,18 +98,20 @@ class stdCtl {
 					
 					if (isset($_SESSION['mail'])) {
 						
-						echo 'Adios '. $_SESSION['nombre'].' vuelve pronto';
+						echo 'Adios'.$_SESSION['nombre'].'vuelve pronto';
 						//Limpiamos la sesion
 						session_unset();
 						//destruyo sesion
 						session_destroy();
 
 						//Destruyo cookie
-						setcookie(session_name(), '', time() - 3600);
+						@setcookie(session_name(), '', time() - 3600);
 
 						//Redireccionar a la pagina anterior o al indice con header()
 						
 					}
+					else
+						echo 'No has iniciado sesion'; 
 
 					break;
 			}
