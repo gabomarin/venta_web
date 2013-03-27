@@ -111,7 +111,7 @@ class usuarioBss{
 	 * @param int $id del usuario
 	 * @return object usuarioClass, FALSE en caso de falla
 	 */
-	function consultarDato($dato,$tipo){
+	function consultarDato($dato,$atributo){
 		//Cargar clase usuario
 		require('usuarioClass.php');
 		
@@ -125,7 +125,7 @@ class usuarioBss{
 
 		//Limpio las variables
 		$dato = $conexion->limpiarVariable($dato);
-		if( $tipo != 'id' && $tipo != 'estatus' && $tipo != 'tipo' )
+		if( $atributo != 'id' && $atributo != 'estatus' && $atributo != '$atributo' )
 			$temp = '"'.$dato.'"' ;
 		else
 			$temp = $dato; 
@@ -137,7 +137,7 @@ class usuarioBss{
 			    FROM
 			    	usuario
 			    WHERE 
-					$tipo = $temp";
+					$atributo = $temp";
 
 		//Ejecutar el query
 		$resultado = $conexion -> ejecutarConsulta($query);
@@ -153,8 +153,10 @@ class usuarioBss{
 			//Cerrar la conexion
 			$conexion -> cerrar();
 
-			if( $resultado[0][$tipo] == $dato ){
-					$user = new usuarioClass($resultado[0]['id'],$resultado[0]['nombre'],$resultado[0]['mail'],$resultado[0]['pass'],$resultado[0]['direccion'],$resultado[0]['rfc'],$resultado[0]['telefono'],$resultado[0]['estatus'],$resultado[0]['tipo']);
+			if( $resultado[0][$atributo] == $dato ){
+					$user = new usuarioClass($resultado[0]['id'],$resultado[0]['nombre'],$resultado[0]['mail'],
+											$resultado[0]['pass'],$resultado[0]['direccion'],$resultado[0]['rfc'],
+											$resultado[0]['telefono'],$resultado[0]['estatus'],$resultado[0]['tipo']);
 					
 					return $user;
 				}

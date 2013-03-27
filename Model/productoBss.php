@@ -78,8 +78,9 @@ class productoBss{
 					producto';
 
 		//Ejecutar el query
+		//echo $query;
 		$resultado = $conexion -> ejecutarConsulta($query);
-
+		
 		if(!$resultado){
 			echo 'FALLO la consulta';
 			
@@ -99,7 +100,7 @@ class productoBss{
 	 * @param int $id del producto
 	 * @return object usuarioClass, FALSE en caso de falla
 	 */
-	function consultarDato($dato,$tipo){
+	function consultarDato($dato,$atributo){
 		//Cargar clase usuario
 		require('productoClass.php');
 		
@@ -113,7 +114,7 @@ class productoBss{
 
 		//Limpio las variables
 		$dato = $conexion->limpiarVariable($dato);
-		if( $tipo == 'nombre' )
+		if( $atributo == 'nombre' )
 			$temp = '"'.$dato.'"' ;
 		else
 			$temp = $dato; 
@@ -125,7 +126,7 @@ class productoBss{
 			    FROM
 			    	producto
 			    WHERE 
-					$tipo = $temp";
+					$atributo = $temp";
 
 		//Ejecutar el query
 		$resultado = $conexion -> ejecutarConsulta($query);
@@ -141,7 +142,7 @@ class productoBss{
 			//Cerrar la conexion
 			$conexion -> cerrar();
 
-			if( $resultado[0][$tipo] == $dato ){
+			if( $resultado[0][$atributo] == $dato ){
 					$product = new productoClass($resultado[0]['id'],$resultado[0]['nombre'],$resultado[0]['estatus'],$resultado[0]['precio'],$resultado[0]['existencia']);
 					
 					return $product;
