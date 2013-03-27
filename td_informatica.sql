@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 3.3.7deb7
+-- version 3.4.5
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 20-03-2013 a las 22:03:24
--- Versión del servidor: 5.1.66
--- Versión de PHP: 5.3.3-7+squeeze15
+-- Tiempo de generación: 27-03-2013 a las 09:01:52
+-- Versión del servidor: 5.5.16
+-- Versión de PHP: 5.3.8
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -16,7 +17,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Base de datos: `cc409_virtualtd`
+-- Base de datos: `td_informatica`
 --
 
 -- --------------------------------------------------------
@@ -35,11 +36,6 @@ CREATE TABLE IF NOT EXISTS `detalle_venta` (
   KEY `fk_producto_has_venta_producto_idx` (`producto_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Volcar la base de datos para la tabla `detalle_venta`
---
-
-
 -- --------------------------------------------------------
 
 --
@@ -56,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `factura` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
--- Volcar la base de datos para la tabla `factura`
+-- Volcado de datos para la tabla `factura`
 --
 
 INSERT INTO `factura` (`id`, `fecha`, `precio`, `estatus`, `cantidad`) VALUES
@@ -80,11 +76,6 @@ CREATE TABLE IF NOT EXISTS `inventario` (
   KEY `fk_inventario_usuario1_idx` (`usuario_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Volcar la base de datos para la tabla `inventario`
---
-
-
 -- --------------------------------------------------------
 
 --
@@ -99,11 +90,6 @@ CREATE TABLE IF NOT EXISTS `inventario_has_producto` (
   KEY `fk_inventario_has_producto_inventario1_idx` (`inventario_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Volcar la base de datos para la tabla `inventario_has_producto`
---
-
-
 -- --------------------------------------------------------
 
 --
@@ -117,12 +103,16 @@ CREATE TABLE IF NOT EXISTS `producto` (
   `precio` double NOT NULL,
   `existencia` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
--- Volcar la base de datos para la tabla `producto`
+-- Volcado de datos para la tabla `producto`
 --
 
+INSERT INTO `producto` (`id`, `nombre`, `estatus`, `precio`, `existencia`) VALUES
+(1, 'laptop', 1, 1500, 500),
+(2, 'mouse', 1, 75, 515),
+(3, 'touchpad', 1, 900, 5);
 
 -- --------------------------------------------------------
 
@@ -139,16 +129,19 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `direccion` varchar(45) NOT NULL,
   `telefono` varchar(45) NOT NULL,
   `estatus` int(11) NOT NULL,
-  `tipo` varchar(45) NOT NULL,
+  `tipo` int(45) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
--- Volcar la base de datos para la tabla `usuario`
+-- Volcado de datos para la tabla `usuario`
 --
 
 INSERT INTO `usuario` (`id`, `nombre`, `mail`, `pass`, `rfc`, `direccion`, `telefono`, `estatus`, `tipo`) VALUES
-(1, 'jesus', 'jesus@gmail.com', '1234', NULL, 'paseos del bosque 1282', '3312509523', 1, 'empleado');
+(1, 'jesus', 'jesus@gmail.com', '1234', NULL, 'lomas de zapopan', '55555', 1, 1),
+(2, 'pedro', 'pedro@gmail.com', '1234', 'sdfddfs', 'sdfssdasda', '55555', 1, 2),
+(4, 'pancho', 'pancho@gmail.com', 'pancho', 'rkjhkdjfhf', 'dslsdfldsajf', '6465465', 1, 3),
+(5, 'hugo', 'hugo@gmail.com', '1234', 'djdsakljds', 'jhdfs', '45454', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -165,17 +158,17 @@ CREATE TABLE IF NOT EXISTS `venta` (
   PRIMARY KEY (`id`),
   KEY `fk_venta_factura1_idx` (`factura_id`),
   KEY `fk_venta_usuario1_idx` (`usuario_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
--- Volcar la base de datos para la tabla `venta`
+-- Volcado de datos para la tabla `venta`
 --
 
 INSERT INTO `venta` (`id`, `fecha`, `total`, `factura_id`, `usuario_id`) VALUES
 (1, '2013-03-13', 300, 1, 1);
 
 --
--- Filtros para las tablas descargadas (dump)
+-- Restricciones para tablas volcadas
 --
 
 --
@@ -202,5 +195,9 @@ ALTER TABLE `inventario_has_producto`
 -- Filtros para la tabla `venta`
 --
 ALTER TABLE `venta`
-  ADD CONSTRAINT `venta_ibfk_3` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `venta_ibfk_2` FOREIGN KEY (`factura_id`) REFERENCES `factura` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `venta_ibfk_2` FOREIGN KEY (`factura_id`) REFERENCES `factura` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `venta_ibfk_3` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
