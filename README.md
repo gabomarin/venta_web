@@ -8,7 +8,7 @@ Se lleva un control de usuarios con diferentes permisos entre ello
 Cada tipo de usuario tiene un rol diferente y tendra opciones o acceso a paginas diferentes segun su tipo de usuario.
 
 ##Intervienen diferentes usuario:
-* Visitante ( tipo = 0 )
+* Visitante (no es asignado el tipo, si no hay sesion se sabe que es un visitante: isset)
 * Cliente ( tipo = 1 )
 * Encargado de ventas ( tipo = 2 )
 * Encargado de inventario ( tipo = 3 )
@@ -45,7 +45,7 @@ Cada tipo de usuario tiene un rol diferente y tendra opciones o acceso a paginas
 
 
 ##Desarrolladores
-* Duarte Sanchez Alejandro
+* Duarte Sánchez Alejandro
    * Codigo: 206587844
    * Email: lexds_1591@hotmail.com  
 * Ortiz Valdovinos Gabriel
