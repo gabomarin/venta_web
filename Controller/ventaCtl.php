@@ -9,6 +9,10 @@
 //Este controlador require tener acceso al modelo
 include_once ('Model/ventaBss.php');
 
+define('VENTAS', 2);
+define('CLIENTE', 1);
+define('VISITANTE', 0);
+
 //La clase controlador
 
 class ventaCtl {
@@ -21,50 +25,83 @@ class ventaCtl {
 	}
 
 	function ejecutar() {
-		//Si no tengo parametros, listo los usuarios
+		session_start();
+		//Si no tengo parametros, listo las ventas
 		if (!isset($_REQUEST['action'])) {
-			//Obtengo los datos que se van a listar
-			$usuarios = $this -> modelo -> listar();
 
-			//Muestro los datos
-			include ('View/listaVenta.php');
+			if (isset($_SESSION['mail']) && $_SESSION['tipo'] == VENTAS) {
+				$venta = $this -> modelo -> listar();
+				if (is_array($venta))
+					include ('View/listaVenta.php');
+				else {
+					include ('View/ventaError.php');
+				}
+			} else
+				echo 'No puedes realizar esta accion';
 		} else
 			switch($_REQUEST['action']) {
 				case 'generar' :
-					$venta = $this -> modelo -> generarVenta($_REQUEST['fecha'], $_REQUEST['total'], $_REQUEST['facturaId'], $_REQUEST['usuarioId']);
-					if (is_array($venta))
-						include ('View/listaVenta.php');
-					else
-						include ('View/ventaError.php');
+					//Cualquiera puede comprar, menos los visitantes
+					if (isset($_SESSION['mail'])) {
+						$venta = $this -> modelo -> generarVenta($_REQUEST['fecha'], $_REQUEST['total'], $_REQUEST['facturaId'], $_REQUEST['usuarioId']);
+						if (is_array($venta))
+							include ('View/listaVenta.php');
+						else
+							include ('View/ventaError.php');
+					} else
+						echo 'logueate para poder realizar la compra';
 					break;
 
 				case  'cancelar' :
-					$venta = $this -> modelo -> cancelarVenta($_REQUEST['tipo'],$_REQUEST['dato']);
-					if ($venta == true)
-						include ('View/listaVenta.php');
-					else {
-						include ('View/ventaError.php');
+					//Solo encargado de ventas cancela compras
+					if (isset($_SESSION['mail']) && $_SESSION['tipo'] == VENTAS) {
+						$venta = $this -> modelo -> cancelarVenta($_REQUEST['tipo'], $_REQUEST['dato']);
+						if ($venta == true)
+							include ('View/listaVenta.php');
+						else {
+							include ('View/ventaError.php');
+						}
+					} else {
+						echo 'No tienes los privilegios para cancelar la compra';
 					}
-				break;
+					break;
 
 				case  'consulta' :
-					$venta = $this -> modelo -> consultar($_REQUEST['tipo'], $_REQUEST['dato']);
-					if (is_array($venta))
-						include ('View/listaVenta.php');
-					else {
-						include ('View/ventaError.php');
-					}
+					if (isset($_SESSION['mail']) && $_SESSION['tipo'] == VENTAS) {
+						$venta = $this -> modelo -> consultar($_REQUEST['tipo'], $_REQUEST['dato']);
+						if (is_array($venta))
+							include ('View/listaVenta.php');
+						else {
+							include ('View/ventaError.php');
+						}
+					} else if (isset($_SESSION['mail']) && $_SESSION['tipo'] == CLIENTE) {
+						$venta = $this -> modelo -> consultar('id', $_SESSION['id']);
+						if (is_array($venta))
+							include ('View/listaVenta.php');
+						else {
+							include ('View/ventaError.php');
+						}
+
+					} else
+						echo 'No tienes permisos para consultar';
+
 					break;
-					
-				case 'listar':
-					$venta = $this -> modelo -> listar();
-					if (is_array($venta))
-						include ('View/listaVenta.php');
-					else {
-						include ('View/ventaError.php');
-					}
+
+				case 'listar' :
+					if (isset($_SESSION['mail']) && $_SESSION['tipo'] == VENTAS) {
+						$venta = $this -> modelo -> listar();
+						if (is_array($venta))
+							include ('View/listaVenta.php');
+						else {
+							include ('View/ventaError.php');
+						}
+
+					} else
+						echo 'No tienes permisos para listar';
 					break;
-					
+
+				default :
+					echo 'Parametro invalido';
 			}
 
 	}
