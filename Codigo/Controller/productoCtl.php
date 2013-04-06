@@ -32,13 +32,20 @@ class productoCtl{
 		}
 		else switch($_REQUEST['action']){
 			case 'insertar'://solo el encargado de inventario puede insertar
+				include('validaciones.php');
 				if( isset($_SESSION['mail']) && $_SESSION['tipo'] == 3 ){
-					$producto = $this->modelo->insertar($_REQUEST['nombre'],$_REQUEST['estatus'],$_REQUEST['precio'],$_REQUEST['existencia']);
-					if ( is_object($producto) )
-						include('View/productoInsertadoView.php');
-					else
-						echo 'Error no se pudo insertar';
-						//include('View/usuarioError.php');
+					if(isNombre($_REQUEST['nombre']) && isEstatus($_REQUEST['estatus']) && isPrecio($_REQUEST['precio']) && isExistencia($_REQUEST['existencia'])){
+						$producto = $this->modelo->insertar($_REQUEST['nombre'],$_REQUEST['estatus'],$_REQUEST['precio'],$_REQUEST['existencia']);
+						if ( is_object($producto) )
+							include('View/productoInsertadoView.php');
+						else
+							echo 'Error no se pudo insertar';
+							//include('View/usuarioError.php');
+					}
+					else {
+						echo 'Datos no validos. Porfavor revise la sintaxis';
+					}
+					
 				}
 				else {
 					echo 'No tienes permisos para realizar esta accion';
@@ -52,19 +59,31 @@ class productoCtl{
 						echo 'Error no se pudo listar';	
 					break;
 			case 'consultarDato'://cualquiera puede consultar un producto
-						$producto = $this->modelo->consultarDato($_REQUEST['dato'],$_REQUEST['atributo']);
-						if(is_object($producto))
-							include('View/productoListaView.php');		
-						else
-							echo 'Error no se pudo listar';	
+						include('validaciones.php');
+						if(isProductoAD($_REQUEST['atributo'],$_REQUEST['dato'])){
+							$producto = $this->modelo->consultarDato($_REQUEST['dato'],$_REQUEST['atributo']);
+							if(is_object($producto))
+								include('View/productoListaView.php');		
+							else
+								echo 'Error no se pudo listar';	
+						}
+						else {
+							echo 'Datos no validos. Porfavor revise la sintaxis';
+						}
 						break;
 			case 'modificarDato'://solo el encargado de ventas e inventario pueden realizar esta accion
 						if( isset($_SESSION['mail']) && $_SESSION['tipo'] != 1  ){
-							$producto = $this->modelo->modificarDato($_REQUEST['id'],$_REQUEST['dato'],$_REQUEST['atributo']);
-							if($producto == TRUE)
-								echo 'El campo fue modificado exitosamente';
+							include('validaciones.php');
+							if(isId($_REQUEST['id']) && isProductoAD($_REQUEST['atributo'],$_REQUEST['dato'])){
+								$producto = $this->modelo->modificarDato($_REQUEST['id'],$_REQUEST['dato'],$_REQUEST['atributo']);
+								if($producto == TRUE)
+									echo 'El campo fue modificado exitosamente';
+								else {
+									echo 'El campo no pudo ser modificado';
+								}
+							}
 							else {
-								echo 'El campo no pudo ser modificado';
+								echo 'Datos no validos. Porfavor revise la sintaxis';
 							}
 						}
 						else {
