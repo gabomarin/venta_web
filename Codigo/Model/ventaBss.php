@@ -31,7 +31,7 @@ class ventaBss {
 
 		//Crear el query
 		$query = "INSERT INTO 
-					venta (fecha, total, facturaId, usuarioId)
+					venta (fecha, total, factura_Id, usuario_Id)
 				  VALUES 
 					('$fecha',
 					 '$total',
