@@ -8,11 +8,6 @@
 
 //Este controlador require tener acceso al modelo
 include_once ('Model/ventaBss.php');
-
-define('VENTAS', 2);
-define('CLIENTE', 1);
-define('VISITANTE', 0);
-
 //La clase controlador
 
 class ventaCtl {

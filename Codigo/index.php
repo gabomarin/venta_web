@@ -4,7 +4,14 @@
  * @package mvc
  */
 
+//Se definen las constantes de usuarios
+define('INVENTARIO',3);
+define('VENTAS', 2);
+define('CLIENTE', 1);
+
+ 
 //Creamos el contralador en base a lo requerido y lo mandamos a ejecutar
+
 if (isset($_GET['modulo'])) {
 
 	switch($_REQUEST['modulo']) {
@@ -39,6 +46,7 @@ if (isset($_GET['modulo'])) {
 			//carga el controlador estandar
 			include ("Controller/stdCtl.php");
 			$controlador = new stdCtl();
+			//header("/index.php");
 			break;
 	}
 
