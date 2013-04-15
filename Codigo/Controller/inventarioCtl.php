@@ -10,6 +10,7 @@
 include_once ('Model/inventarioBss.php');
 define('INVENTARIO', 3);
 
+
 //La clase controlador
 
 class inventarioCtl {
@@ -22,6 +23,8 @@ class inventarioCtl {
 	}
 
 	function ejecutar() {
+		session_start();
+		echo $_SESSION['tipo'];
 		if (!isset($_REQUEST['action'])) {
 			if (isset($_SESSION['mail']) && $_SESSION['tipo'] == INVENTARIO) {
 				//Si no tengo parametros, listo los usuarios
