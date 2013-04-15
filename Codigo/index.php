@@ -9,6 +9,9 @@ define('INVENTARIO',3);
 define('VENTAS', 2);
 define('CLIENTE', 1);
 
+
+
+
  
 //Creamos el contralador en base a lo requerido y lo mandamos a ejecutar
 
