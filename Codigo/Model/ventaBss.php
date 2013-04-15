@@ -64,7 +64,7 @@ class ventaBss {
 	 * @param int $id de la venta que se desea cancelar
 	 * @return bool TRUE si se pudo generar la venta, FALSE en caso contrario
 	 */
-	function cancelarVenta($tipo,$dato) {
+	function cancelarVenta($id) {
 
 		require ('dbdata.inc');
 		require ('dbClass.php');
@@ -74,11 +74,11 @@ class ventaBss {
 		if (!$conexion)
 			die('LIST. No se ha podido realizar la conexion a la bd');
 
-		$tipo = $conexion -> limpiarVariable($tipo);
-		$dato = $conexion -> limpiarVariable($dato);
+
+		$id = $conexion -> limpiarVariable($id);
 		//Crear el query
 		$query = "DELETE FROM venta
-					WHERE $tipo=$dato";
+					WHERE id=$id";
 
 		//Ejecutar el query
 		$resultado = $conexion -> ejecutarConsulta($query);
