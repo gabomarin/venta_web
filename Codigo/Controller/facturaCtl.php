@@ -10,6 +10,7 @@
 include_once ('Model/facturaBss.php');
 define('VENTAS', 2);
 define('CLIENTE', 1);
+define('INVENTARIO',3);
 
 
 //La clase controlador
@@ -41,7 +42,7 @@ class facturaCtl {
 				case 'generar' :
 					//solo encargado de ventas crea factura
 					if (isset($_SESSION['mail']) && $_SESSION['tipo'] == VENTAS) {
-						$factura = $this -> modelo -> crearFactura($_REQUEST['fecha'], $_REQUEST['cantidad'], $_REQUEST['precio'], $_REQUEST['estatus'], $_REQUEST['idVenta']);
+						$factura = $this -> modelo -> crearFactura($_REQUEST['fecha'], $_REQUEST['cantidad'], $_REQUEST['precio'], $_REQUEST['estatus']);
 						if (is_array($factura))
 							include ('View/listaFactura.php');
 						else
@@ -56,7 +57,7 @@ class facturaCtl {
 				case 'modificar' :
 					// solo encargado de ventas modifica facturas
 					if (isset($_SESSION['mail']) && $_SESSION['tipo'] == VENTAS) {
-						$factura = $this -> modelo -> modificarEstatus($_REQUEST['folio'], $_REQUEST['estatus']);
+						$factura = $this -> modelo -> modificarEstatus($_REQUEST['id'], $_REQUEST['estatus']);
 						if (is_array($factura))
 							include ('View/listaFactura.php');
 						else
@@ -83,17 +84,17 @@ class facturaCtl {
 
 					//El encargado de ventas elige que consultar
 					if (isset($_SESSION['mail']) && $_SESSION['tipo'] == VENTAS) {
-						$factura = $this -> modelo -> consultar($_REQUEST['tipo'], $_REQUEST['dato']);
+						$factura = $this -> modelo -> consultar($_REQUEST['tipo'], $_REQUEST['dato'],false );
 						if (is_array($factura))
 							include ('View/listaFactura.php');
 						else
 							include ('View/facturaError.php');
 					} 
 										
-					// si es cliente solo podra listar sus propias facturas
-					 if( isset($_SESSION['mail']) && $_SESSION['tipo'] == CLIENTE ){
+					// si es cliente  o inventario solo podra listar sus propias facturas
+					else if( isset($_SESSION['mail']) && $_SESSION['tipo'] == CLIENTE  || isset($_SESSION['mail']) && $_SESSION['tipo'] == INVENTARIO){
 						unset($_GET); //se limpian las variables get por que no se utilizan
-						$factura = $this -> modelo -> consultar('id', $_SESSION['id']);
+						$factura = $this -> modelo -> consultar('id', $_SESSION['id'],true);
 						if (is_array($factura))
 							include ('View/listaFactura.php');
 						else

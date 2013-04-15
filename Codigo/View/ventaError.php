@@ -1,5 +1,6 @@
 <?php
 
-var_dump($venta);
+if(isset($venta))
+	var_dump($venta);
 
 ?>
