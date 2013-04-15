@@ -11,7 +11,7 @@ class facturaBss {
 	 * @param string $fecha de la creacion de la venta, double $total de la venta realizada
 	 * @return bool TRUE si se pudo generar la venta, FALSE en caso contrario
 	 */
-	function crearFactura( $fecha, $cantidad, $precio, $estatus,$idVenta) {
+	function crearFactura($fecha, $cantidad, $precio, $estatus, $idVenta) {
 
 		require ('facturaClass.php');
 
@@ -28,16 +28,15 @@ class facturaBss {
 		$precio = $conexion -> limpiarVariable($precio);
 		$estatus = $conexion -> limpiarVariable($estatus);
 
-
 		//Crear el query
 		$query = "INSERT INTO 
-					factura (fecha, cantidad, precio, estatus, Venta_idVenta)
+					factura (fecha, cantidad, precio, estatus)
 				  VALUES 
 					('$fecha',
 					 $cantidad,
 					 $precio,
 					 $estatus,
-					 $idVenta)";
+					 )";
 
 		//Ejecutar el query
 		$resultado = $conexion -> ejecutarConsulta($query);
@@ -47,14 +46,12 @@ class facturaBss {
 			//Cerrar la conexion
 			$conexion -> cerrar();
 			return FALSE;
-		} 
-		else {
+		} else {
 			$folio = $resultado;
 			//Cerrar la conexion
 			$conexion -> cerrar();
 
-			
-			$factura= new facturaClass($folio, $fecha, $cantidad, $precio, $estatus);
+			$factura = new facturaClass($folio, $fecha, $cantidad, $precio, $estatus);
 
 			return $factura;
 		}
@@ -65,21 +62,21 @@ class facturaBss {
 	 * @param int $id de la venta que se desea cancelar
 	 * @return bool TRUE si se pudo generar la venta, FALSE en caso contrario
 	 */
-	function modificarEstatus($folio, $estatus) {
+	function modificarEstatus($id, $estatus) {
 
 		require ('dbdata.inc');
 		require ('dbClass.php');
 		$conexion = new DB($hostdb, $userdb, $passdb, $db);
 
-		if (!$conexion->conecta())
+		if (!$conexion -> conecta())
 			die('LIST. No se ha podido realizar la conexion a la bd');
 
-		$folio = $conexion -> limpiarVariable($folio);
+		$id = $conexion -> limpiarVariable($id);
 
 		//Crear el query
 		$query = "UPDATE factura
 					SET estatus=$estatus
-					WHERE folio=$folio";
+					WHERE id=$id";
 
 		//Ejecutar el query
 		$resultado = $conexion -> ejecutarConsulta($query);
@@ -97,7 +94,6 @@ class facturaBss {
 
 	}// fin de cancelarVenta()
 
-	
 	/**
 	 * @return mixed. bool FALSE si no se realizo la consulta, venta $resultado con los datos del objeto encontrado
 	 */
@@ -106,7 +102,7 @@ class facturaBss {
 		require ('dbClass.php');
 		$conexion = new DB($hostdb, $userdb, $passdb, $db);
 
-		if (!$conexion->conecta())
+		if (!$conexion -> conecta())
 			die('LIST. No se ha podido realizar la conexion a la bd');
 
 		//Crear el query
@@ -131,28 +127,36 @@ class facturaBss {
 		}
 
 	}//Fin de listar
-	
+
 	/**
 	 * @param string $tipo atributo de la entidad, string $dato que se desea comparar
 	 * @return mixed. bool FALSE si no se realizo la consulta, venta $resultado con los datos del objeto encontrado
 	 */
 
-	function consultar($tipo, $dato) {
+	function consultar($tipo, $dato, $bandera) {
 		require ('dbdata.inc');
 		require ('dbClass.php');
 		$conexion = new DB($hostdb, $userdb, $passdb, $db);
 
-		if (!$conexion->conecta())
+		if (!$conexion -> conecta())
 			die('No se ha podido realizar la conexion a la bd');
 
 		$tipo = $conexion -> limpiarVariable($tipo);
 		$dato = $conexion -> limpiarVariable($dato);
 		//Crear el query
-		$query = "SELECT *
+		if ($bandera == false) {
+			$query = "SELECT *
 					FROM  
 						factura
 					WHERE $tipo=$dato";
+		} 
+		else {
+			$query = "SELECT * 
+					FROM factura 
+					INNER JOIN venta 
+					WHERE venta.usuario_id=$dato AND factura.id = venta.factura_id";
 
+		}
 		//Ejecutar el query
 		$resultado = $conexion -> ejecutarConsulta($query);
 
