@@ -5,6 +5,9 @@
  * @subpackage controller
  * @author
  */
+define('INVENTARIO', 3);
+define('VENTAS', 2);
+define('CLIENTE', 1);
 
 //Este controlador require tener acceso al modelo
 include_once ('Model/ventaBss.php');
@@ -38,7 +41,7 @@ class ventaCtl {
 				case 'generar' :
 					//Cualquiera puede comprar, menos los visitantes
 					if (isset($_SESSION['mail'])) {
-						$venta = $this -> modelo -> generarVenta($_REQUEST['fecha'], $_REQUEST['total'], $_REQUEST['facturaId'], $_REQUEST['usuarioId']);
+						$venta = $this -> modelo -> generarVenta($_REQUEST['fecha'], $_REQUEST['total'], $_REQUEST['factura_id'], $_SESSION['id']);
 						if (is_array($venta))
 							include ('View/listaVenta.php');
 						else
@@ -50,7 +53,7 @@ class ventaCtl {
 				case  'cancelar' :
 					//Solo encargado de ventas cancela compras
 					if (isset($_SESSION['mail']) && $_SESSION['tipo'] == VENTAS) {
-						$venta = $this -> modelo -> cancelarVenta($_REQUEST['tipo'], $_REQUEST['dato']);
+						$venta = $this -> modelo -> cancelarVenta($_REQUEST['id']);
 						if ($venta == true)
 							include ('View/listaVenta.php');
 						else {
@@ -70,11 +73,16 @@ class ventaCtl {
 							include ('View/ventaError.php');
 						}
 					} else if (isset($_SESSION['mail']) && $_SESSION['tipo'] == CLIENTE) {
-						$venta = $this -> modelo -> consultar('id', $_SESSION['id']);
-						if (is_array($venta))
-							include ('View/listaVenta.php');
-						else {
+						if ($_SESSION['id'] == $_REQUEST['id']) {
+							$venta = $this -> modelo -> consultar('id', $_SESSION['id']);
+							if (is_array($venta)) {
+
+								include ('View/listaVenta.php');
+							}
+							
+						} else {
 							include ('View/ventaError.php');
+							echo 'No tienes permisos para consultar otras ventas';
 						}
 
 					} else
