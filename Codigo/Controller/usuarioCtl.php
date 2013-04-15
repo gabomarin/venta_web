@@ -117,6 +117,7 @@ class usuarioCtl {
 							
 						}
 						else if( isset($_SESSION['mail']) && $_REQUEST['id'] ==  $_SESSION['id'] ){//si es un cliente solo puede modificar su informacion 
+							include('validaciones.php');
 							if(isId($_REQUEST['id']) && isUsuarioAD($_REQUEST['atributo'],$_REQUEST['dato'])){
 								$usuario = $this->modelo->modificarDato($_REQUEST['id'],$_REQUEST['dato'],$_REQUEST['atributo']);
 								//var_dump($usuario);
