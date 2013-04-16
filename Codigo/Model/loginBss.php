@@ -4,9 +4,11 @@
  * @package mvc
  * @subpackage model
  */
-
-class loginBss{
+ 
+require('dbClass.php');
 	
+class loginBss extends DB{
+		
 	/**
 	 * @param string $nombre
 	 * @param string $mail
@@ -17,20 +19,12 @@ class loginBss{
 	function login($mail,$pass){
 		//Cargar clase usuario
 		require('loginClass.php');
-		
-		//Conectarse a la base de datos
-		require('dbdata.inc');
-		require('dbClass.php');
+
 		//echo $mail."     ".$pass;
-		$conexion  = new DB($hostdb, $userdb, $passdb, $db);
 		 
-		if(!$conexion -> conecta())
-			die('No se ha podido realizar la conexion a la bd');
-
-
 		//Limpiar las variables recibidas
-			$mail		=  $conexion->limpiarVariable($mail);
-			$pass		=  $conexion->limpiarVariable($pass);
+			$mail		=  parent::limpiarVariable($mail);
+			$pass		=  parent::limpiarVariable($pass);
 			
 
 		//Crear el query
@@ -40,12 +34,10 @@ class loginBss{
 				  	AND
 				  	pass= '$pass'"; 
 				  
-				  
-
 		//Ejecutar el query
 		//echo $query;
-		$resultado = $conexion -> ejecutarConsulta($query);
-		$conexion->cerrar();
+		$resultado = parent::ejecutarConsulta($query);
+		//$conexion->cerrar();
 		if($resultado == FALSE){
 			//Cerrar la conexion
 			return FALSE;
