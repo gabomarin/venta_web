@@ -121,10 +121,60 @@ Facturas: NO tiene permitido nunguna accion en esta seccion
 </li>
 </ol>
 
-###Encargado de ventas
-* Es el encargado de monitorear las compras que realiza el cliente y asegurarse de que hayan hecho correctamente,  
-* Consulta de productos
-* Consulta de clientes que han realizado pedido y expedirles factura
+###Encargado de ventas 
+Es el encargado de monitorear las compras que realiza el cliente y asegurarse de que hayan hecho correctamente.
+<ol>
+<li>
+Aspectos como Usuario
+    <ul>
+      <li>
+        Modificar: Puede modificar la informacion de cualquier usuario.
+      </li>
+      <li>
+        Consultar: Puede consultar cualquier usuario.
+      </li>
+      <li>
+        Insertar: Tiene permisos para esta accion.
+      </li>
+       <li>
+        Listar Todo: Puede listar todos los usuario para un mejor manejo de ellos.
+      </li>
+    </ul>
+</li>
+<li>Realizar compra
+    <ul>
+      <li>Que compras se han realizado</li>
+    </ul>
+</li>
+<li>
+Productos
+    <ul>
+      <li>
+        Modificar: No tiene control sobre esta opcion
+      </li>
+      <li>
+        Consultar: Puede consultar cualquier producto
+      </li>
+      <li>
+        Insertar: No tiene control sobre esta opcion
+      </li>
+       <li>
+        Listar Todo: No existe restriccion
+      </li>
+    </ul>
+</li>
+<li>
+Facturas
+    <ul>
+      <li>
+        Consulta de clientes que han realizado pedido y expedirles factura
+      </li>
+      <li>
+        Insertar: Es la funcion principal del encargado de ventas
+      </li>
+    </ul>
+</li>
+</ol>
  
 ###Visitante
 * Solo puede navegar por el sitio y ver los productos
