@@ -62,7 +62,7 @@ Productos
     </ul>
 </li>
 <li>
-Facturas propias
+Facturas
     <ul>
       <li>
         Modificar: solo se podra modificar las facturas propias.
@@ -81,8 +81,45 @@ Facturas propias
 </ol>
 
 ###Encargado del inventario
-* Puede consultar cantidad de producto consultar estado de producto(espera, disponible, agotado, descontinuado),
-* podra modificar campos como la cantidad de productos, el cual permitira modificar fallas en existencias.
+<ol>
+<li>
+Aspectos como Usuario
+    <ul>
+      <li>
+        Modificar: Solo podra modificar su propia informacion, dara error al querer modificar el de algun otro.
+      </li>
+      <li>
+        Consultar: Solo podra consultarse a si mismo de otra forma dara error
+      </li>
+      <li>
+        Insertar: No podra crear nuevos usuarios desde su cuenta
+      </li>
+       <li>
+        Listar Todo: No podra realizarlo, para hacer una consulta solo puede realizar la del punto anterior.
+      </li>
+    </ul>
+</li>
+<li>
+Realizar compra: No tiene permitido.
+</li>
+<li>
+Productos
+    <ul>
+      <li>
+      Su funcion principal es la de insertar productos.
+      </li>
+      <li>
+       Puede consultar cantidad de producto consultar estado de producto(espera, disponible, agotado, descontinuado),
+      </li>
+      <li>
+       Podra modificar campos como la cantidad de productos, el cual permitira modificar fallas en existencias.
+      </li>
+    </ul>
+</li>
+<li>
+Facturas: NO tiene permitido nunguna accion en esta seccion  
+</li>
+</ol>
 
 ###Encargado de ventas
 * Es el encargado de monitorear las compras que realiza el cliente y asegurarse de que hayan hecho correctamente,  
