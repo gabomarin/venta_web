@@ -184,6 +184,10 @@ Facturas
 * PHP
 * MySQL
 
+##   ---- Usuarios de Prueba del servidor ----
+* mail: jesus@gmail.com    pass: 1234   tipo: 1
+* mail: pedro@gmail.com    pass: 1234   tipo: 2
+* mail: pancho@gmail.com   pass: pancho tipo: 3
 
 ##Desarrolladores
 * Duarte Sánchez Alejandro
