@@ -25,7 +25,7 @@
 		return FALSE;
 	}
 	function isDireccion($direccion){
-		//if( preg_match('//',$direccion) )
+		if( preg_match('/^([a-zA-Z]{2,})+( {1}([a-zA-Z]|\d)+)* #\d+(-(\d|[a-zA-Z]){1,2})?$/',$direccion) )
 			return TRUE;
 		return FALSE;
 	}
