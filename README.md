@@ -7,7 +7,7 @@ Se lleva un control de usuarios con diferentes permisos entre ello
 (utilizando consultas en mysql), para ello se tiene un login y register
 Cada tipo de usuario tiene un rol diferente y tendra opciones o acceso a paginas diferentes segun su tipo de usuario.
 
-##Intervienen diferentes usuario:
+##Intervienen diferentes usuarios:
 * Visitante (no es asignado el tipo, si no hay sesion se sabe que es un visitante: isset)
 * Cliente ( tipo = 1 )
 * Encargado de ventas ( tipo = 2 )
