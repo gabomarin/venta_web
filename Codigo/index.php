@@ -55,7 +55,8 @@ if (isset($_GET['modulo'])) {
 
 	
 	
-} else {
+} 
+else {
 	include ("Controller/stdCtl.php");
 	$controlador = new stdCtl();
 	
