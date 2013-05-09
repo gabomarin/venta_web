@@ -23,7 +23,7 @@ class ventaCtl {
 	}
 
 	function ejecutar() {
-		session_start();
+		global $smarty;
 		//Si no tengo parametros, listo las ventas
 		if (!isset($_REQUEST['action'])) {
 
@@ -66,11 +66,22 @@ class ventaCtl {
 
 				case  'consulta' :
 					if (isset($_SESSION['mail']) && $_SESSION['tipo'] == VENTAS) {
+						if(isset($_REQUEST['tipo']) && isset($_REQUEST['dato'])){
 						$venta = $this -> modelo -> consultar($_REQUEST['tipo'], $_REQUEST['dato']);
 						if (is_array($venta))
 							include ('View/listaVenta.php');
 						else {
 							include ('View/ventaError.php');
+						}
+						
+						}
+						else {
+							
+							ob_start();
+						  require 'templates/consulta_venta.tpl';
+						  $panel = ob_get_clean();
+						  $smarty->assign('contenido',$panel);
+						  $smarty->assign('titulocontenido','');
 						}
 					} else if (isset($_SESSION['mail']) && $_SESSION['tipo'] == CLIENTE) {
 						if ($_SESSION['id'] == $_REQUEST['id']) {

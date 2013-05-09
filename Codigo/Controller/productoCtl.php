@@ -21,7 +21,7 @@ class productoCtl{
 	}
 
 	function ejecutar(){
-		session_start();
+		global $smarty;
 		//Si no tengo parametros, listo los productos
 		if( !isset($_REQUEST['action']) ){
 			//Obtengo los datos que se van a listar
@@ -34,16 +34,27 @@ class productoCtl{
 			case 'insertar'://solo el encargado de inventario puede insertar
 				include('validaciones.php');
 				if( isset($_SESSION['mail']) && $_SESSION['tipo'] == 3 ){
+					if(isset($_REQUEST['nombre']) && isset($_REQUEST['precio']) && isset($_REQUEST['existencia']) ){
+					
 					if(isNombre($_REQUEST['nombre']) && isEstatus($_REQUEST['estatus']) && isPrecio($_REQUEST['precio']) && isExistencia($_REQUEST['existencia'])){
-						$producto = $this->modelo->insertar($_REQUEST['nombre'],$_REQUEST['estatus'],$_REQUEST['precio'],$_REQUEST['existencia']);
+						$producto = $this->modelo->insertar($_REQUEST['nombre'],$_REQUEST['estatus'],$_REQUEST['precio'],$_REQUEST['existencia'], $_REQUEST['imagen'], $_REQUEST['categoria']);
 						if ( is_object($producto) )
 							include('View/productoInsertadoView.php');
 						else
-							echo 'Error no se pudo insertar';
+							echo ' Error no se pudo insertar';
 							//include('View/usuarioError.php');
 					}
 					else {
 						echo 'Datos no validos. Porfavor revise la sintaxis';
+					}
+					}
+					else
+					{
+						ob_start();
+						  require 'templates/registrar_producto.tpl';
+						  $panel = ob_get_clean();
+						  $smarty->assign('titulocontenido','');
+						  $smarty->assign('contenido',$panel);
 					}
 					
 				}
@@ -58,6 +69,9 @@ class productoCtl{
 					else
 						echo 'Error no se pudo listar';	
 					break;
+				
+				
+				
 			case 'consultarDato'://cualquiera puede consultar un producto
 						include('validaciones.php');
 						if(isProductoAD($_REQUEST['atributo'],$_REQUEST['dato'])){
@@ -74,6 +88,7 @@ class productoCtl{
 			case 'modificarDato'://solo el encargado de ventas e inventario pueden realizar esta accion
 						if( isset($_SESSION['mail']) && $_SESSION['tipo'] != 1  ){
 							include('validaciones.php');
+							if(isset($_REQUEST['nombre']) && isset($_REQUEST['precio']) && isset($_REQUEST['existencia']) ){
 							if(isId($_REQUEST['id']) && isProductoAD($_REQUEST['atributo'],$_REQUEST['dato'])){
 								$producto = $this->modelo->modificarDato($_REQUEST['id'],$_REQUEST['dato'],$_REQUEST['atributo']);
 								if($producto == TRUE)
@@ -84,6 +99,15 @@ class productoCtl{
 							}
 							else {
 								echo 'Datos no validos. Porfavor revise la sintaxis';
+							}
+							}
+							else
+							{
+								ob_start();
+						  require 'templates/modificar_producto.tpl';
+						  $panel = ob_get_clean();
+						  $smarty->assign('titulocontenido','');
+						  $smarty->assign('contenido',$panel);
 							}
 						}
 						else {

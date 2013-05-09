@@ -25,9 +25,7 @@ class facturaCtl {
 	}
 
 	function ejecutar() {
-		session_start();
 		
-
 		if (!isset($_REQUEST['action'])) {
 			if (isset($_SESSION['mail']) && $_SESSION['tipo'] == VENTAS){
 			//Obtengo los datos que se van a listar

@@ -158,7 +158,6 @@ class ventaBss {
 
 		if (!$resultado) {
 			echo 'FALLO la consulta';
-
 			//Cerrar la conexion
 			$conexion -> cerrar();
 			return FALSE;

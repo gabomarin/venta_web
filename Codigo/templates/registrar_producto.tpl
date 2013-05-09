@@ -1,0 +1,76 @@
+<style>
+	.error{
+	color:red;
+	}
+   </style> 
+	
+	<form class="form-horizontal" method="post" action="index.php/?modulo=usuario&action=insertar" name="productoR" id="productoR">
+		<fieldset>
+		
+		<!-- Form Name -->
+		<legend>Registrar Producto</legend>
+		
+		<!-- Text input-->
+		<div class="control-group">
+		  <label class="control-label">Nombre</label>
+		  <div class="controls">
+			<!-- pattern="^([a-zA-Z]{2,} ?)*[a-zA-Z]{2,}$" --> 
+		    <input id="nombre" name="nombre" type="text" class="input-xlarge" maxlength="25"  autocomplete="on">
+		    
+		  </div>
+		</div>
+		
+		<!-- Text input-->
+		<div class="control-group input-prepend input-append">
+		  <label class="control-label">Precio</label>
+		  <div class="controls">
+		  	<span class="add-on">$</span>
+		    <input id="precio" name="precio" type="text" class="input-small" pattern="^(\d)+(\.(\d){2})?$" maxlength="10" required="required" autocomplete="off">
+		  </div>
+		</div>
+		
+		<!-- Text input-->
+		<div class="control-group">
+		  <label class="control-label">Existencia</label>
+		  <div class="controls">
+		    <input id="existencia" name="existencia" type="number" class="input-small" pattern="^(\d)+$" min="0"  required="required">
+		    
+		  </div>
+		</div>
+		<!-- File Button --> 
+		<div class="control-group">
+		  <label class="control-label">Imagen</label>
+		  <div class="controls">
+		    <input id="imagen" name="imagen" class="input-file" type="file" accept="image/png,image/jpeg">
+		  </div>
+		</div>
+		<input type="hidden" id="estatus" name="estatus" value="1"/>
+		  <div class="controls">
+		    <button type="reset" id="limpiar" name="limpiar" class="btn btn-danger">Limpiar</button>
+			<button onclick="validaForm()"id="boton" name="boton" class="btn btn-success">Validar</button>
+		   <button type="submit" id="enviar" name="enviar" class="btn btn-success">Crear Producto</button>
+		</fieldset>
+	</form>
+
+<script type="text/javascript" >
+	function validaForm(){
+		valor = document.productoR.nombre.value;
+		form = document.getElementById('productoR');
+		//alert("Campo vacio!!");
+		//alert(valor);
+		if( valor==null || valor.length == ""  || /^([a-zA-Z]{2,} ?)*[a-zA-Z]{2,}$/.test(valor)){
+			//alert("Campo vacio!!");
+			var div = document.createElement('div');
+			div.setAttribute('class','error');
+			var msg = document.createTextNode('Nombre invalido');
+		    div.appendChild(msg);
+			form.insertBefore(div,valor.nextSibling);
+			
+			return false;
+			
+		}
+				
+	}
+	
+	
+</script>

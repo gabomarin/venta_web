@@ -23,8 +23,9 @@ class inventarioCtl {
 	}
 
 	function ejecutar() {
-		session_start();
+		global $smarty;
 		echo $_SESSION['tipo'];
+		echo $_SESSION['mail'];
 		if (!isset($_REQUEST['action'])) {
 			if (isset($_SESSION['mail']) && $_SESSION['tipo'] == INVENTARIO) {
 				//Si no tengo parametros, listo los usuarios
@@ -40,14 +41,28 @@ class inventarioCtl {
 			switch($_REQUEST['action']) {
 				case 'insertar' :
 					if (isset($_SESSION['mail']) && $_SESSION['tipo'] == INVENTARIO) {
+						if(isset($_REQUEST['cantidadProducto'])  && isset($_REQUEST['fecha']) && isset($_REQUEST['cantidadReal'])){
 						$inventario = $this -> modelo -> insertar($_REQUEST['cantidadProducto'], $_REQUEST['fecha'], $_REQUEST['cantidadReal'], $_REQUEST['cantidadEsperada'], $_REQUEST['descripcion']);
 						if (is_object($inventario))
 							include ('View/inventarioInsertadoView.php');
 						else
 							echo 'Error no se pudo insertar';
 						//include('View/usuarioError.php');
-					} else
+					}
+					else
+					{
+						
+						ob_start();
+						  require 'templates/registrar_inventario.tpl';
+						  $panel = ob_get_clean();
+						  $smarty->assign('titulocontenido','');
+						  $smarty->assign('contenido',$panel);
+					}
+					}
+					else
 						echo 'No tienes los permisos necesarios';
+					
+					
 					break;
 				case 'listar' :
 					if (isset($_SESSION['mail']) && $_SESSION['tipo'] == INVENTARIO) {
@@ -60,13 +75,24 @@ class inventarioCtl {
 						echo 'No tienes los permisos necesarios';
 					break;
 				case 'consultarDato' :
+					
 					if (isset($_SESSION['mail']) && $_SESSION['tipo'] == INVENTARIO) {
+						if(isset($_REQUEST['dato']) && isset($_REQUEST['tipo'])){
 						$inventario = $this -> modelo -> consultarDato($_REQUEST['dato'], $_REQUEST['tipo']);
 						if (is_object($inventario))
 							include ('View/inventarioListaView.php');
 						else
 							echo 'Error no se pudo listar';
-
+						}
+						else
+						{
+						
+							ob_start();
+							require 'templates/consulta_inventario.tpl';
+							$panel = ob_get_clean();
+							$smarty->assign('titulocontenido','');
+							$smarty->assign('contenido',$panel);
+						}	
 					} else
 						echo 'No tienes los permisos necesarios';
 					break;

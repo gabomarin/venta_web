@@ -19,7 +19,7 @@ class usuarioCtl {
 	}
 
 	function ejecutar(){
-		session_start();
+		global $smarty;
 		//Si no tengo parametros, listo los usuarios
 		if( !isset($_REQUEST['action']) ){
 			if(isset($_SESSION['mail']) && $_SESSION['tipo'] == 2){//solo el encargado de ventas puede consultar los usuarios
@@ -37,6 +37,8 @@ class usuarioCtl {
 			case 'insertar':
 				if( !isset($_SESSION['mail']) || $_SESSION['tipo'] == 2 ){//un visitante y el encargado de ventas puede crear un nuevo usuario
 					include('validaciones.php');
+					if(isset($_REQUEST['nombre']) &&isset($_REQUEST['mail']) && isset($_REQUEST['pass'])  && isset($_REQUEST['direccion'])
+					   && isset($_REQUEST['rfc']) && isset($_REQUEST['telefono']) && isset($_REQUEST['estatus']) && isset($_REQUEST['tipo'])){
 					if( isNombre($_REQUEST['nombre']) && isMail($_REQUEST['mail']) && isPass($_REQUEST['pass']) && isDireccion($_REQUEST['direccion']) && 
 						isRfc($_REQUEST['rfc']) && isTelefono($_REQUEST['telefono']) && isEstatus($_REQUEST['estatus']) && isTelefono($_REQUEST['tipo']) ){
 							 
@@ -49,12 +51,34 @@ class usuarioCtl {
 					}
 					else 
 						echo 'Datos no validos. Porfavor revise la sintaxis';
+					}
+					else
+					{
+						ob_start();
+						  require 'templates/registrar_usuario.tpl';
+						  $panel = ob_get_clean();
+						  $smarty->assign('contenido',$panel);
+						  
+					}
 					
 				}
 				else {
 					echo 'No tienes permisos para realizar esta accion';
 				}
 				break;
+			
+			
+			case 'registrar':
+				//echo $_SESSION['mail'];
+				if(!isset($_SESSION['mail'])){
+						ob_start();
+						  require 'templates/registrar_usuario.tpl';
+						  $panel = ob_get_clean();
+						  $smarty->assign('contenido',$panel);
+						  }
+				
+				break;
+			
 			case 'listar':
 				if(isset($_SESSION['mail']) && $_SESSION['tipo'] == 2){//solo el encargado de ventas puede consultar los usuarios
 					$usuario = $this->modelo->listar();
@@ -71,7 +95,8 @@ class usuarioCtl {
 			case 'consultarDato':
 					//echo $_SESSION['tipo'];
 					if( isset($_SESSION['mail']) ){//cualquiera puede consultar excepto un visitante
-					include('validaciones.php');
+						include('validaciones.php');
+						if(isset($_REQUEST['atributo']) && isset($_REQUEST['dato'])){
 						if(isUsuarioAD($_REQUEST['atributo'],$_REQUEST['dato'])){
 							$usuario = $this->modelo->consultarDato($_REQUEST['dato'],$_REQUEST['atributo']);
 							//var_dump($usuario);
@@ -93,7 +118,16 @@ class usuarioCtl {
 						}
 						else {
 								echo 'Datos no validos. Porfavor revise la sintaxis';
-							}	
+							}
+						}
+						else
+						{
+							ob_start();
+						  require 'templates/perfil.tpl';
+						  $panel = ob_get_clean();
+						  $smarty->assign('titulocontenido','');
+						  $smarty->assign('contenido',$panel);
+						}
 					}
 					else
 						echo 'No tienes permisos para consultar esta informacion' ;
@@ -113,7 +147,7 @@ class usuarioCtl {
 							}
 							else {
 								echo 'Datos no validos. Porfavor revise la sintaxis';
-							}
+								}
 							
 						}
 						else if( isset($_SESSION['mail']) && $_REQUEST['id'] ==  $_SESSION['id'] ){//si es un cliente solo puede modificar su informacion 

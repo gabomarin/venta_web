@@ -10,7 +10,7 @@ class productoBss{
 	/**
 	 * @return mixed productoClass object y en caso de falla un FALSE
 	 */
-	function insertar($nombre,$estatus,$precio,$existencia){
+	function insertar($nombre,$estatus,$precio,$existencia, $imagen, $categoria){
 		//Cargar clase usuario
 		require('productoClass.php');
 		
@@ -28,23 +28,28 @@ class productoBss{
 			$estatus	=  $conexion->limpiarVariable($estatus);
 			$precio		=  $conexion->limpiarVariable($precio);
 			$existencia	=  $conexion->limpiarVariable($existencia);
+			$imagen = $conexion->limpiarVariable($imagen);
+			
 
 		//Crear el query
-		$query = "INSERT INTO 
-				   producto(nombre,estatus,precio,existencia)
-				  VALUES
-				  ('$nombre',
+		$query ="INSERT INTO producto (nombre, imagen, estatus, precio, existencia, categoria_id)
+				VALUES ('$nombre',
+					'$imagen',
 				    $estatus,
 				    $precio,
-					$existencia)";
+					$existencia,
+					'$categoria');";
+		
 
 		//Ejecutar el query
+		var_dump($query);
 		$resultado = $conexion -> ejecutarConsulta($query);
 
 		if($resultado == FALSE){
 			echo 'FALLO la consulta';
 			//Cerrar la conexion
 			$conexion -> cerrar();
+
 			return FALSE;
 		}
 		else{
