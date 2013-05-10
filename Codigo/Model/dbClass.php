@@ -7,30 +7,32 @@
  */ 
  
 class DB{
-	public $host;
+	/*public $host;
 	public $user;
 	public $pass;
-	public $db;
-	public $cn;
-
-	function __construct($dbhost, $dbuser, $dbpass, $db){
-		$this -> host	= $dbhost;
-		$this -> user	= $dbuser;
-		$this -> pass	= $dbpass;
-		$this -> db		= $db;
+	public $db;*/
+	var $cn;
+	
+	function __construct(){
 		//$this->conecta();
+		//Conectarse a la base de datos
+		require('/Model/dbData.inc');
+		$cn  = new mysqli($hostdb,$userdb,$passdb,$db);
+		if($cn->connect_errno)
+			die('No se ha podido realizar la cn a la bd');
+		$this->cn = $cn;
 	}
 
-	/**
+	/** 
 	 * @return boolean
 	 */
-	function conecta(){
-		$conexion =  new mysqli($this->host, $this->user, $this->pass, $this->db);
-        if($conexion->connect_errno)
+	/*function conecta(){
+		$cn =  new mysqli($this->host, $this->user, $this->pass, $this->db);
+        if($cn->connect_errno)
             return FALSE;
-		$this -> cn = $conexion;
+		$this -> cn = $cn;
         return TRUE;
-    }
+    }*/
 
 	/**
 	 * @param string $query
