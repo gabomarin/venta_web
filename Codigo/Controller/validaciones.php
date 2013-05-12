@@ -112,4 +112,17 @@
 					break;
 		}
 	}
+	function isCategoriaAD($atributo,$dato){//verifica si el atributo pertenece a categoria y si el dato es valido para el 
+		switch( strtolower($atributo)){
+			case 'id':
+					return isId($dato);
+					break;
+			case 'nombre':
+					return isNombre($dato);
+					break;
+			default:
+					return FALSE;
+					break;
+		}
+	}
 ?>
