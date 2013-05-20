@@ -7,7 +7,7 @@
  */
 
 //Este controlador require tener acceso al modelo
-include_once ('Model/loginBss.php');
+include_once ('model/loginBss.php');
 
 //La clase controlador
 
@@ -41,7 +41,7 @@ class stdCtl {
 									$_SESSION['estatus'] = $user[0]['estatus'];
 									$_SESSION['tipo'] = $user[0]['tipo'];
 									$_SESSION['carro']='0';
-									echo 'Has iniciado Correctamente!';
+									//echo 'Has iniciado Correctamente!';
 											
 						} 
 						else 
@@ -49,7 +49,7 @@ class stdCtl {
 	
 					}
 					else
-						echo 'Usuario o contraseÃ±a invalidos';
+						echo 'Usuario o contraseña invalidos';
 				}
 				else {
 					
@@ -81,8 +81,9 @@ class stdCtl {
 									$_SESSION['estatus'] = $user[0]['estatus'];
 									$_SESSION['tipo'] = $user[0]['tipo'];
 									$_SESSION['carro']='0';
-									echo 'Has iniciado Correctamente!';
+									//echo 'Has iniciado Correctamente!';
 									header('Location: index.php');
+											
 											
 								} 
 								else 
@@ -90,7 +91,7 @@ class stdCtl {
 								
 							}
 							else
-								echo 'Usuario o contraseÃ±a invalidos';
+								echo 'Usuario o contraseña invalidos';
 						}
 						else {
 							ob_start();
@@ -101,7 +102,7 @@ class stdCtl {
 						
 					} 
 					else {
-						echo 'Ya iniciaste sesion eres: '.$_SESSION['nombre'];
+						//echo 'Ya iniciaste sesion eres: '.$_SESSION['nombre'];
 					}
 	
 					break;
@@ -110,7 +111,7 @@ class stdCtl {
 					
 					if (isset($_SESSION['mail'])) {
 						
-						echo 'Adios '.$_SESSION['nombre'].' vuelve pronto';
+						//echo 'Adios '.$_SESSION['nombre'].' vuelve pronto';
 						//Limpiamos la sesion
 						session_unset();
 						//destruyo sesion
@@ -126,6 +127,16 @@ class stdCtl {
 					else
 						echo 'No has iniciado sesion'; 
 
+					break;
+				
+				
+				case 'contacto':
+					
+					ob_start();
+						  require 'templates/contacto.tpl';
+						  $panel = ob_get_clean();
+						  $smarty->assign('contenido',$panel);
+						  $smarty->assign('titulocontenido','');
 					break;
 			}
 		}

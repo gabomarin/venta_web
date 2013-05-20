@@ -1,5 +1,5 @@
 <?php
-define ('RUTA','/smarty/');
+define ('RUTA','smarty/');
 include_once('smarty/Smarty.class.php');
 
 $smarty = new Smarty;

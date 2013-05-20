@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Registrar Usuario</title>
+    <meta name="author" content="Lex" />
+	<meta charset="UTF-8"/>
+	<meta name="keywords" content="Registrar Usuario"/>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap-responsive.css" rel="stylesheet" media="screen">
+	<link href="css/bootstrap.css" rel="stylesheet" media="screen">
+	<style type="text/css">
+		.datos{
+			color:#006DCC;
+			font-size:medium;
+			font-weight: bold;
+		}
+	</style>
+	
+  </head>
+  <body>
+    <form class="well form-horizontal" method="post" action="mailto: tdinformatica@gmail.com ">
+		<fieldset>
+		
+		<!-- Form Name -->
+		<legend>Contacto</legend>
+		
+		<div class="span7">
+			<!-- Text input-->
+			<div class="control-group">
+			  <label class="control-label">Nombre</label>
+			  <div class="controls">
+			    <input id="nombre" name="nombre" type="text" placeholder="Escriba su nombre completo" class="input-xlarge" pattern="^([a-zA-Z]{2,} ?)*[a-zA-Z]{2,}$" maxlength="25" required="required" autocomplete="on">
+			    
+			  </div>
+			</div>
+			
+			<!-- Text input-->
+			<div class="control-group">
+			  <label class="control-label">E-mail</label>
+			  <div class="controls">
+			    <input id="mail" name="mail" type="email" placeholder="ejemplo@dominio.com" class="input-xlarge" maxlength="25" required="required" autocomplete="off">
+			    
+			  </div>
+			</div>
+			<!-- Textarea -->
+			<div class="control-group">
+			  <label class="control-label" for="textarea" >Comentarios</label>
+			  <div class="controls">                     
+			    <textarea id="textarea" name="textarea" required="required" placeholder="Escriba Aqui..." cols="80" rows="8" wrap="hard"></textarea>
+			  </div>
+			</div>
+			<input type="hidden" id="tipo" name="tipo" value="0"/>
+			<input type="hidden" id="estatus" name="estatus" value="0"/>
+			  <div class="controls">
+			    <button type="reset" id="limpiar" name="limpiar" class="btn btn-danger">Limpiar</button>
+			    <button type="submit" id="enviar" name="enviar" class="btn btn-success">Enviar</button>
+			  </div>
+		</div>
+		<div class="span4">
+			<p class="datos">
+				Avenida de los perros #563-A
+				<br />
+				<br />
+				Telefono: 323232464	
+
+			</p>
+
+			
+		</div>
+		
+		</fieldset>
+	</form>
+
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>

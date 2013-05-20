@@ -24,18 +24,7 @@
         width: 300px;
       }
 
-      /* The white background content wrapper */
-      .container > .content {
-        background-color: #fff;
-        padding: 20px;
-        margin: 0 -20px; 
-        -webkit-border-radius: 10px 10px 10px 10px;
-           -moz-border-radius: 10px 10px 10px 10px;
-                border-radius: 10px 10px 10px 10px;
-        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
-           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
-                box-shadow: 0 1px 2px rgba(0,0,0,.15);
-      }
+      
 
           .login-form {
                 margin-left: 65px;
@@ -46,34 +35,37 @@
                 font-weight: bold;
                 color: #404040;
           }
+	.superior{
+			font-size:140%;
+	}
     </style>
 	
 	
-    <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
   </head>
   <body>
 <div class="navbar navbar-inverse navbar-fixed-top">
 	<div class="navbar-inner">
-		<div class="container-fluid">
+		<div class="span1">
+				<img src="images/logo.jpg" width=100px height=100px>
+			</div>
+		<div class="container-fluid span7">
 			<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
 			
-			<a class="brand" href="index.php">TD-Informatica</a>
 			<div class="nav-collapse collapse">
 
 					
 				<ul class="nav">
 					<li class="active">
-						<a href="index.php">Home</a>
+						<a class="superior" href="index.php">Home</a>
 					</li>
+					
 					<li>
-						<a href="index.php?modulo=about">About</a>
-					</li>
-					<li>
-						<a href="index.php?modulo=contact">Contact</a>
+						<a class="superior" href="index.php?modulo=estandar&action=contacto">Contacto</a>
 					</li>
 					{$user}
 				</ul>
@@ -94,7 +86,7 @@
 					</li>
 					{foreach item=categoria from=$categorias}
 					<li>
-						<a href="index.php?modulo=categoria&action=listar&id={$categoria.id}">{$categoria.nombre}</a>
+						<a href="index.php?modulo=categoria&action=consulta&id={$categoria.id}">{$categoria.nombre}</a>
 					</li>
 					{/foreach}
 					
@@ -103,11 +95,11 @@
 			<!--/.well -->
 		</div>
 		<div class="span7">
-			<h1>{$titulocontenido}</h1>
+			<h3>{$titulocontenido}</h3>
 			  <div class="well container span12">
 				{$contenido}
 
-			</div>
+		</div>
 			
 			
 		</div>
@@ -133,8 +125,9 @@
 							<h5>Ultimos Productos</h5>
 							
 							<p>
+							  
 								{foreach item=ultimo from=$ultimos}
-								<a href="index.php?modulo=producto&action=listar&id{$ultimo.id}">{$ultimo.nombre}</a>
+								<a href="index.php?modulo=producto&action=consultarDato&dato={$ultimo.id}&atributo=id">{$ultimo.nombre}</a>
 								<img src= "{$ultimo.imagen}" height=64 width=64/>
 								Precio: ${$ultimo.precio}
 								</br>
@@ -153,9 +146,11 @@
 	<!--/row-->
 	<hr>
 	<footer>
-		<a href="">Inicio</a> | <a href="">Nuevos Productos</a> | <a href="">Promociones</a> |
-		<a href="">FAQ</a> | <a href="">Contactanos</a> | <a href="" >Politicas de Privacidad</a> |
-		<a href="" >Terminos del servicio</a>
+		<div class="container span6 offset4">
+		  <a href="index.php">Inicio</a> | <a href="">FAQ</a> | <a href="">Contactanos</a> | <a href="" >Politicas de Privacidad</a> |
+	     	<a href="" >Terminos del servicio</a>
+		</div>
+	  
 	</footer>
 </div>
 <!--/.fluid-container-->

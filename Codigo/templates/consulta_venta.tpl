@@ -34,7 +34,7 @@
 	
 </head>
 <body>
-  <form class="form-search">
+  <form class="form-search" method="post" action="index.php?modulo=venta&action=consulta">
   	<div class="row-fluid">
   <div class="span12">
     <h1 class="titulo">Consulta de Venta</h1>

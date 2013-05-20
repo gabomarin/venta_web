@@ -10,7 +10,7 @@
 	<link href="css/bootstrap.css" rel="stylesheet" media="screen">
   </head>
   <body>
-    <form class="well form-horizontal" method="post" action="index.php?modulo=usuario&action=insertar">
+    <form class="well form-horizontal" method="post" action="index.php?modulo=usuario&action=modificar">
 		<fieldset>
 		
 		<!-- Form Name -->
@@ -20,7 +20,7 @@
 		<div class="control-group">
 		  <label class="control-label">Nombre</label>
 		  <div class="controls">
-		    <input id="nombre" name="nombre" type="text" class="input-xlarge" value="nada aun" readonly>
+		    <input id="nombre" name="nombre" type="text" class="input-xlarge" value="{$usuario}" readonly>
 		    
 		  </div>
 		</div>
@@ -29,7 +29,7 @@
 		<div class="control-group">
 		  <label class="control-label">E-mail</label>
 		  <div class="controls">
-		    <input id="mail" name="mail" type="email" class="input-xlarge" value="nada aun" readonly>
+		    <input id="mail" name="mail" type="email" class="input-xlarge" value="{$email}" readonly>
 		    
 		  </div>
 		</div>
@@ -47,7 +47,7 @@
 		<div class="control-group">
 		  <label class="control-label">Direccion</label>
 		  <div class="controls">
-		    <input id="direccion" name="direccion" type="text" placeholder="Ejemplo: Calle #0" class="input-xlarge" pattern="^([a-zA-Z]{2,})+( {1}([a-zA-Z]|\d)+)* #\d+(-(\d|[a-zA-Z]){1,2})?$" maxlength="25" required="required" autocomplete="on" value="aun nada">
+		    <input id="direccion" name="direccion" type="text" placeholder="Ejemplo: Calle #0" class="input-xlarge" pattern="^([a-zA-Z]{2,})+( {1}([a-zA-Z]|\d)+)* #\d+(-(\d|[a-zA-Z]){1,2})?$" maxlength="25" required="required" autocomplete="on" value="{$direccion}">
 		    
 		  </div>
 		</div>
@@ -56,7 +56,7 @@
 		<div class="control-group">
 		  <label class="control-label">RFC</label>
 		  <div class="controls">
-		    <input id="rfc" name="rfc" type="text" class="input-xlarge" value="nada aun" readonly>
+		    <input id="rfc" name="rfc" type="text" class="input-xlarge" value="{$rfc}" readonly>
 		    
 		  </div>
 		</div>
@@ -65,7 +65,7 @@
 		<div class="control-group">
 		  <label class="control-label">Telefono</label>
 		  <div class="controls">
-		    <input id="telefono" name="telefono" type="tel" class="input-xlarge" pattern="^(\d)+$" maxlength="15" required="required" autocomplete="on" value="aun nada">
+		    <input id="telefono" name="telefono" type="tel" class="input-xlarge" pattern="^(\d)+$" maxlength="15" required="required" autocomplete="on" value="{$telefono}">
 		    
 		  </div>
 		</div>

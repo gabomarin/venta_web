@@ -7,7 +7,7 @@
  */
 
 //Este controlador require tener acceso al modelo
-include_once ('Model/inventarioBss.php');
+include_once ('model/inventarioBss.php');
 define('INVENTARIO', 3);
 
 
@@ -24,8 +24,8 @@ class inventarioCtl {
 
 	function ejecutar() {
 		global $smarty;
-		echo $_SESSION['tipo'];
-		echo $_SESSION['mail'];
+		//echo $_SESSION['tipo'];
+		//echo $_SESSION['mail'];
 		if (!isset($_REQUEST['action'])) {
 			if (isset($_SESSION['mail']) && $_SESSION['tipo'] == INVENTARIO) {
 				//Si no tengo parametros, listo los usuarios

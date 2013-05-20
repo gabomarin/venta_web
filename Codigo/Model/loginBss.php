@@ -18,7 +18,7 @@ class loginBss extends DB{
 	 */
 	function login($mail,$pass){
 		//Cargar clase usuario
-		require('loginClass.php');
+		require_once('loginClass.php');
 
 		//echo $mail."     ".$pass;
 		 

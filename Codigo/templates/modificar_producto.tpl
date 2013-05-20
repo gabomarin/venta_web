@@ -10,7 +10,7 @@
 	<link href="css/bootstrap.css" rel="stylesheet" media="screen">
   </head>
   <body>
-    <form class="well form-horizontal" method="post" action="index.php/?modulo=usuario&action=insertar">
+    <form class="form-horizontal span6" method="post" action="index.php/?modulo=usuario&action=insertar">
 		<fieldset>
 		
 		<!-- Form Name -->
@@ -33,6 +33,16 @@
 		    <input id="precio" name="precio" type="text" class="input-small" pattern="^(\d)+(\.(\d){2})?$" maxlength="10" required="required" autocomplete="off" value="nada aun">
 		  </div>
 		</div>
+		
+		<div class="control-group input-prepend input-append">
+			<label class="control-label">Descripcion</label>
+			<div class="controls">
+				<textarea id="descripcion" name="precio" rows="8" cols="80" >
+					
+				</textarea>
+			</div>
+		</div>
+		
 		
 		<!-- Text input-->
 		<div class="control-group">

@@ -6,36 +6,36 @@
 
  
 require('include.php');
-
-
+if( !isset($_SESSION) ){
+	session_start();
+}
 
 class index {
              public function display()
              {
 			     
 				 global $smarty;
-				session_start();
+				
 						  //echo $_SESSION['mail'];
 				 if(isset($_SESSION['mail']))
 				 {
 						  require('model/dbdata.inc');
-						  $temp= "<li><a href= 'index.php?modulo=usuario&action=consultarDato'>Mi cuenta ($_SESSION[nombre])</a></li>  ";
+						  $temp= "<li><a class='superior' href= 'index.php?modulo=usuario&action=consultarDato'>Perfil ($_SESSION[nombre])</a></li>  ";
 						  if($_SESSION['tipo']==3)
 						  {
-						        $temp= $temp."<li><a href='index.php?modulo=producto&action=insertar'>Agregar Producto</a></li>";
-								$temp= $temp."<li><a href='index.php?modulo=producto&action=modificarDato'>Modificar Producto</a></li>";
-								
-								$temp= $temp."<li><a href='index.php?modulo=inventario&action=insertar'>Agregar Inventario</a></li>";
-								$temp= $temp."<li><a href='index.php?modulo=inventario&action=consultarDato'>Consultar Inventario</a></li>";
+						        $temp= $temp."<li><a class='superior' href='index.php?modulo=producto&action=insertar'>Agregar Producto</a></li>";
+								$temp= $temp."<li><a class='superior' href='index.php?modulo=producto&action=modificarDato'>Modificar Producto</a></li>";
+								$temp= $temp."<li><a class='superior' href='index.php?modulo=inventario&action=insertar'>Agregar Inventario</a></li>";
+								$temp= $temp."<li><a class='superior' href='index.php?modulo=inventario&action=consultarDato'>Consultar Inventario</a></li>";
 						  }
 						  
 						  if($_SESSION['tipo']==2)
 						  {
-						        $temp= $temp."<li><a href='index.php?modulo=usuario&action=consultarDato'>Consultar Usuario</a></li>";
-								$temp= $temp."<li><a href='index.php?modulo=venta&action=consulta'>Consultar Venta</a></li>";
+						        $temp= $temp."<li><a class='superior' href='index.php?modulo=usuario&action=consultarDato'>Consultar Usuario</a></li>";
+								$temp= $temp."<li><a class='superior' href='index.php?modulo=venta&action=consulta'>Consultar Venta</a></li>";
 						  }
 						  
-						  $temp.="<li><a href='index.php?modulo=estandar&action=logout'>Salir</a></li>";
+						  $temp.="<li><a class='superior' href='index.php?modulo=estandar&action=logout'>Salir</a></li>";
 						  
 						  $smarty->assign('user',$temp);
 						 
@@ -52,15 +52,15 @@ class index {
 						  //$smarty->assign('contenidos', $resultado);
 						  
 						  
-						  ob_start();
-				   while($fila = $resultado->fetch_assoc()){
+						ob_start();
+						while($fila = $resultado->fetch_assoc()){
 						  
-					echo "<div class='span4'>
+							echo "<div class='span4'>
 					
-					<a href=index.php?modulo=producto&action=consultarDato&dato=$fila[id]&atributo=id class='name'><img src=$fila[imagen] alt='' width='124' height='097' /></a>
-					<br><span>$ $fila[precio]</span>
-					<a href='index.php?modulo=producto&action=consultarDato&dato=$fila[id]&atributo=id'>Ver</a></div>";
-				   }
+							<a href=index.php?modulo=producto&action=consultarDato&dato=$fila[id]&atributo=id class='name'><img src=$fila[imagen] alt='' width='124' height='097' /></a>
+							<br><span>$ $fila[precio]</span>
+							<a href='index.php?modulo=producto&action=consultarDato&dato=$fila[id]&atributo=id'>Ver</a></div>";
+						}
 				   
 			       $resultado=ob_get_clean();
 				   
@@ -74,7 +74,8 @@ class index {
 				 
 				 else{
 						  
-						  $smarty->assign('user','<li><a href="index.php?modulo=estandar&action=login">Iniciar sesion</a></li><li><a href="index.php?modulo=usuario&action=insertar">Registrate</a></li>');
+						  $smarty->assign('user','<li><a class="superior" href="index.php?modulo=estandar&action=login">Iniciar sesion</a></li><li>
+						  <a class="superior" href="index.php?modulo=usuario&action=insertar">Registrate</a></li>');
 						  
 						  //lee un archivo y lo guardara en una variable
 						 
@@ -101,25 +102,29 @@ class index {
 			function getContenido()
 			{
 			 global $smarty;
-			     require('Model/dbdata.inc');
-				 //require('Model/dbClass.php');
+			     require('model/dbdata.inc');
+				 include_once('model/dbClass.php');
 			 //Obtenemos las categorias
-				   $conexion  = new mysqli($hostdb, $userdb, $passdb, $db);
-				   if(!$conexion)
-						  die('No se ha podido realizar la conexion a la bd');
+				//   $conexion  = new mysqli($hostdb, $userdb, $passdb, $db);
+				//   
+				//   if(!$conexion)
+				//		var_dump($conexion);
+				$conexion  = new DB($hostdb, $userdb, $passdb, $db);
 						  
-			       $query = "SELECT * FROM `categoria` ORDER BY `nombre`";
+			       $query = "SELECT * FROM categoria ORDER BY nombre";
 				   
-				   $resultado = $conexion -> query($query);
+				   
+				   $resultado = $conexion -> ejecutarConsulta($query);
+
 			       $smarty->assign('categorias', $resultado);
 				   
 				  
 				   $query = "SELECT * FROM `producto` LIMIT 0,5";
-				   $resultado = $conexion -> query($query);
+				   $resultado = $conexion -> ejecutarConsulta($query);
 			       $smarty->assign('ultimos', $resultado);
 				   
 				   
-				   $conexion->close();
+				   $conexion->cerrar();
 				   
 			}
 			
@@ -147,44 +152,45 @@ if (isset($_GET['modulo'])) {
 
 	switch($_REQUEST['modulo']) {
 		case 'usuario' :
-			include ('Controller/usuarioCtl.php');
+			include ('controller/usuarioCtl.php');
 			$controlador = new usuarioCtl();
 			break;
 		case 'producto' :
-			include ('Controller/productoCtl.php');
+			include ('controller/productoCtl.php');
 			$controlador = new productoCtl();
 			break;
 		case 'inventario' :
-			include ('Controller/inventarioCtl.php');
+			include ('controller/inventarioCtl.php');
 			$controlador = new inventarioCtl();
 			break;
 
 		case 'venta' :
-			include ('Controller/ventaCtl.php');
+			include ('controller/ventaCtl.php');
 			$controlador = new ventaCtl();
 			break;
 		case 'factura' :
-			include ('Controller/facturaCtl.php');
+			include ('controller/facturaCtl.php');
 			$controlador = new facturaCtl();
 			break;
 
        case 'categoria' :
-			include ('Controller/categoriaCtl.php');
+			include ('controller/categoriaCtl.php');
 			$controlador = new categoriaCtl();
 			break;
 
 		case 'estandar' :
-			include ('Controller/stdCtl.php');
+			include ('controller/stdCtl.php');
 			$controlador = new stdCtl();
 			break;
 
+
 		default :
 			//carga el controlador estandar
-			include ("Controller/stdCtl.php");
+			include ("controller/stdCtl.php");
 			$controlador = new stdCtl();
 			header("/index.php");	
 			$call = new index();
-			 $call->display();
+			$call->display();
 			
 			break;
 	}
@@ -194,7 +200,7 @@ if (isset($_GET['modulo'])) {
 	
 } 
 else {
-	include ("Controller/stdCtl.php");
+	include ("controller/stdCtl.php");
 	$controlador = new stdCtl();
 	
 			 

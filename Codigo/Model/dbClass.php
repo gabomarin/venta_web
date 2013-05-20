@@ -16,7 +16,7 @@ class DB{
 	function __construct(){
 		//$this->conecta();
 		//Conectarse a la base de datos
-		require('/Model/dbData.inc');
+		require('model/dbdata.inc');
 		$cn  = new mysqli($hostdb,$userdb,$passdb,$db);
 		if($cn->connect_errno)
 			die('No se ha podido realizar la cn a la bd');

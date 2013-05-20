@@ -10,7 +10,7 @@ define('VENTAS', 2);
 define('CLIENTE', 1);
 
 //Este controlador require tener acceso al modelo
-include_once ('Model/ventaBss.php');
+include_once ('model/ventaBss.php');
 //La clase controlador
 
 class ventaCtl {
@@ -78,23 +78,23 @@ class ventaCtl {
 						else {
 							
 							ob_start();
-						  require 'templates/consulta_venta.tpl';
+						  require 'templates/consulta_compra.tpl';
 						  $panel = ob_get_clean();
 						  $smarty->assign('contenido',$panel);
 						  $smarty->assign('titulocontenido','');
 						}
-					} else if (isset($_SESSION['mail']) && $_SESSION['tipo'] == CLIENTE) {
-						if ($_SESSION['id'] == $_REQUEST['id']) {
+					} else if (isset($_SESSION['mail']) && ($_SESSION['tipo']==CLIENTE || $_SESSION['tipo']== INVENTARIO)) {
+						//if ($_SESSION['id'] == $_REQUEST['id']) {
 							$venta = $this -> modelo -> consultar('id', $_SESSION['id']);
 							if (is_array($venta)) {
 
 								include ('View/listaVenta.php');
 							}
 							
-						} else {
-							include ('View/ventaError.php');
-							echo 'No tienes permisos para consultar otras ventas';
-						}
+						//} else {
+						//	include ('View/ventaError.php');
+						//	echo 'No tienes permisos para consultar otras ventas';
+						//}
 
 					} else
 						echo 'No tienes permisos para consultar';

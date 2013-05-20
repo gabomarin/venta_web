@@ -17,7 +17,7 @@ class facturaBss {
 
 		//Conectarse a la base de datos
 		require ('dbdata.inc');
-		require ('dbClass.php');
+		require_once('dbClass.php');
 		$conexion = new DB($hostdb, $userdb, $passdb, $db);
 		if (!$conexion -> conecta())
 			die('No se ha podido realizar la conexion a la bd');

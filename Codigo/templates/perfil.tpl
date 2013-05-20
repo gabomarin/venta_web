@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html lang="es">
-  <head>
-    <meta charset="utf-8">
-    <title>TD-informatica</title>
-    <meta name="description" content="Artículo en GenbetaDev sobre Bootstrap 2.0">
-    <meta name="author" content="Alejandro">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+
     <style>
 		span{color:#8B8B8B;}
 
@@ -24,18 +17,18 @@
 				</div>
 				<div class="span6">
 					<h3>
-						Aqui va nombre de usuario!
+						{$usuario}
 					</h3>
-					<p><span>Correo:</span> ----</p>
-					<p><span>Direccion:</span> ----</p>
-					<p><span>RFC:</span> ----</p>
-					<p><span>Telefono:</span> ----</p>
-					<a href="modificar_usuario.html">
+					<p><span>Correo:</span>{$correo}</p>
+					<p><span>Direccion:</span>{$direccion}</p>
+					<p><span>RFC:</span>{$rfc}</p>
+					<p><span>Telefono:</span>{$telefono}</p>
+					<a href="index.php?modulo=usuario&action=modificar">
 						<button type="button" class="btn btn-info btn-large" id="modificar" name="modificar">
 							Modificar 
 						</button>
 					</a>
-					<a href="consulta_compra.html">
+					<a href="index.php?modulo=venta&action=consulta">
 						<button type="button" class="btn btn-info btn-large" id="compra" name="compra">
 							Ver Compras 
 						</button>
@@ -46,8 +39,3 @@
 			<hr>
 
 
-<!--/.fluid-container-->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="bootstrap/js/bootstrap.min.js"></script>
-  </body>
-</html>

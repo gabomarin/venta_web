@@ -7,7 +7,7 @@
  */
 
 //Este controlador require tener acceso al modelo
-include_once('Model/usuarioBss.php');
+include_once('model/usuarioBss.php');
 //La clase controlador
 
 class usuarioCtl {
@@ -56,6 +56,7 @@ class usuarioCtl {
 					{
 						ob_start();
 						  require 'templates/registrar_usuario.tpl';
+						  //$smarty->assign('usuario',$_SESSION['usuario']);
 						  $panel = ob_get_clean();
 						  $smarty->assign('contenido',$panel);
 						  
@@ -125,8 +126,12 @@ class usuarioCtl {
 							ob_start();
 						  require 'templates/perfil.tpl';
 						  $panel = ob_get_clean();
+						  $smarty->assign('usuario',$_SESSION['nombre']);
 						  $smarty->assign('titulocontenido','');
 						  $smarty->assign('contenido',$panel);
+						
+						  
+
 						}
 					}
 					else
@@ -134,6 +139,7 @@ class usuarioCtl {
 						
 						break;
 			case 'modificarDato':
+				
 						if( isset($_SESSION['mail']) && $_SESSION['tipo'] == 2  ){//si es un encargado de ventas puede modificar cualquier usuario
 							include('validaciones.php');
 							
@@ -169,8 +175,48 @@ class usuarioCtl {
 							echo 'No tienes permisos para modificar la informacion de otro usuario';
 						
 						break;
+					
+			case 'modificar':
+				$modificar = new Smarty();
+				if( isset($_SESSION['mail']) ){
+					include('validaciones.php');
+					if(isset($_REQUEST['nombre']) &&isset($_REQUEST['mail']) && isset($_REQUEST['pass'])  && isset($_REQUEST['direccion'])
+					   && isset($_REQUEST['rfc']) && isset($_REQUEST['telefono']) && isset($_REQUEST['estatus']) && isset($_REQUEST['tipo'])){
+					if( isNombre($_REQUEST['nombre']) && isMail($_REQUEST['mail']) && isPass($_REQUEST['pass']) && isDireccion($_REQUEST['direccion']) && 
+						isRfc($_REQUEST['rfc']) && isTelefono($_REQUEST['telefono']) && isEstatus($_REQUEST['estatus']) && isTelefono($_REQUEST['tipo']) ){
+							 
+						$usuario = $this->modelo->modificar($_REQUEST['nombre'],$_REQUEST['mail'],$_REQUEST['pass'],$_REQUEST['direccion'],$_REQUEST['rfc'],$_REQUEST['telefono'],$_REQUEST['estatus'],$_REQUEST['tipo']);
+						//echo gettype($cadena);
+						if ( is_object($usuario) )
+							include('View/usuarioInsertadoView.php');
+						else
+							echo 'Error no se pudo insertar';
+					}
+					else 
+						echo 'Datos no validos. Porfavor revise la sintaxis';
+					}
+					else
+					{
+						ob_start();
+						  require 'templates/modificar_usuario.tpl';
+						  $panel = ob_get_clean();
+						  $smarty->assign('usuario',$_SESSION['nombre']);
+						  //$modificar->display('modificar_usuario.tpl');
+						  $smarty->assign('contenido',$panel);
+						  $smarty->assign('titulocontenido','');
+						  
+						  
+					}
+					
+				}
+				else {
+					echo 'No tienes permisos para realizar esta accion';
+				}
+				break;
+			
 			default:
 					echo 'Opcion no valida. Intente de nuevo';
+					break;
 		}				
 		
 		

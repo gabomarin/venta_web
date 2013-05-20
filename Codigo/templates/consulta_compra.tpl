@@ -14,8 +14,8 @@
 </head>
 <body>
   <div class="container">
-	<div class="container">
-		<div class="hero-unit">
+	<div class="hero-unit span10">
+		
 			<h1>
 				Consulta de Compras
 			</h1>
@@ -64,7 +64,7 @@
 									Valida
 								</td>
 								<td>
-									<a class="btn btn-primary btn-large" id="factura">PDF</a>
+									<a class="btn btn-primary btn-large" id="factura">Mostrar</a>
 								</td>
 							</tr>
 						</tbody>
@@ -74,7 +74,7 @@
 			<div class="row-fluid">
 			</div>
 			<hr>
-		</div>
+		
 	</div>
 </div>
 </html>

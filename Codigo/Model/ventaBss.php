@@ -17,11 +17,9 @@ class ventaBss {
 
 		//Conectarse a la base de datos
 		require ('dbdata.inc');
-		require ('dbClass.php');
+		require_once('dbClass.php');
 		$conexion = new DB($hostdb, $userdb, $passdb, $db);
-		if (!$conexion -> conecta())
-			die('No se ha podido realizar la conexion a la bd');
-
+		
 		//Limpiar las variables recibidas
 		$fecha = 		$conexion -> limpiarVariable($fecha);
 		$total = 		$conexion -> limpiarVariable($total);
@@ -105,7 +103,7 @@ class ventaBss {
 		require ('dbdata.inc');
 		require_once ('dbClass.php');
 		$conexion = new DB($hostdb, $userdb, $passdb, $db);
-		$conexion->conecta();
+		//$conexion->conecta();
 
 		if (!$conexion)
 			die('LIST. No se ha podido realizar la conexion a la bd');
@@ -139,13 +137,15 @@ class ventaBss {
 	 */
 
 	function consultar($tipo, $dato) {
-		require ('dbdata.inc');
-		require_once ('dbClass.php');
-		$conexion = new DB($hostdb, $userdb, $passdb, $db);
-		$conexion->conecta();
+		
+		require ('ventaClass.php');
+		//Conectarse a la base de datos
+		require('dbdata.inc');
+		require('dbClass.php');
+		$conexion  = new DB($hostdb, $userdb, $passdb, $db);
+		 
+		
 
-		if (!$conexion)
-			die('No se ha podido realizar la conexion a la bd');
 
 		//Crear el query
 		$query = "SELECT *

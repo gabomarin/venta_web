@@ -4,126 +4,109 @@
  * @package mvc
  * @subpackage model
  */
-
-class categoriaBss{
+require_once('dbClass.php');
+class categoriaBss extends DB{
 	
 	/**
-	 * @return mixed productoClass object y en caso de falla un FALSE
+	 * @param string $nombre
 	 */
-	function insertar($nombre,$estatus,$precio,$existencia){
+	function insertar($nombre){
+		//Cargar clase categoria
+		require('categoriaClass.php');
 		
+		//Limpiar las variables recibidas
+			$nombre		=  parent::limpiarVariable($nombre);
+
+
+		//Crear el query
+		$query = "INSERT INTO 
+				   categoria(nombre)
+				  VALUES
+				  ('$nombre')";
+
+		//Ejecutar el query
+		$resultado = parent::ejecutarConsulta($query);
+
+		if($resultado == FALSE){
+			echo 'FALLO la consulta';
+			return FALSE;
+		}
+		else{
+			$id = $resultado;
+			//Arreglo de categoria
+			$categoria = new categoriaClass($id,$nombre);
+	
+			return $categoria;
+		}
 	}
 
 	/**
 	 * @return mixed array with all the users, or FALSE in fail
 	 */
 	function listar(){
-		//Conectarse a la base de datos
-		require('dbdata.inc');
-		require('dbClass.php');
-		$conexion  = new DB($hostdb, $userdb, $passdb, $db); 
-
-		if(!$conexion-> conecta())
-			die('LIST. No se ha podido realizar la conexion a la bd');
-
 		//Crear el query
 		$query = 'SELECT
 					*
 				  FROM
-					producto';
-
+					categoria';
+		var_dump($query);
 		//Ejecutar el query
-		//echo $query;
-		$resultado = $conexion -> ejecutarConsulta($query);
-		
+		$resultado = parent::ejecutarConsulta($query);
+
 		if(!$resultado){
 			echo 'FALLO la consulta';
-			
-			//Cerrar la conexion
-			$conexion -> cerrar();
+
 			return FALSE;
 		}
 		else{
-			//Cerrar la conexion
-			$conexion -> cerrar();
 
 			return $resultado;			
 		}
 	}
 
 	/**
-	 * @param int $id del producto
+	 * @param int $id del categoria
 	 * @return object usuarioClass, FALSE en caso de falla
 	 */
-	function consultar($id){
+	function consultarDato($dato){
 		//Cargar clase usuario
-		require('productoClass.php');
-		
-		//Conectarse a la base de datos
-		require('dbdata.inc');
-		require('dbClass.php');
-		$conexion  = new DB($hostdb, $userdb, $passdb, $db); 
-
-		if(!$conexion->conecta())
-			die('No se ha podido realizar la conexion a la bd');
+		require('categoriaClass.php');
 
 		//Limpio las variables
-		$dato = $conexion->limpiarVariable($id);
+		$dato = parent::limpiarVariable($dato);
 
-		//echo $dato.'     ';
+
 		//Crear el query
 	
-		$query = "SELECT
-				*
-			    FROM
-			    	producto
-			    WHERE 
-					categoria_id = $id";
-
+		$query = "SELECT   producto.id, producto.nombre AS pnombre,producto.imagen, producto.estatus, producto.precio, categoria.nombre AS cnombre
+					FROM `producto` INNER JOIN categoria
+					WHERE
+						producto.categoria_id=categoria.id
+					AND
+						producto.categoria_id=$dato";
 		//Ejecutar el query
-		$resultado = $conexion -> ejecutarConsulta($query);
-		//var_dump($resultado);
+		$resultado = parent::ejecutarConsulta($query);
 		if(!$resultado){
-			echo 'FALLO la consulta';
 			
-			//Cerrar la conexion
-			$conexion -> cerrar();
 			return FALSE;
 		}
 		else{
-			//Cerrar la conexion
-			$conexion -> cerrar();
+
 			return $resultado;
-			
-			
-					
-		}
+		}			
 	}
-	function modificarDato($id,$dato,$atributo){
-		//Conectarse a la base de datos
-		require('dbdata.inc');
-		require('dbClass.php');
-		$conexion  = new DB($hostdb, $userdb, $passdb, $db);
-		
-		if( $conexion->conecta() == FALSE)
-			die('No se pudo hacer conexion a la BD');
-		
+	function modificarDato($id,$nombre){
+
 		//limpiar variable
-		$dato = $conexion->limpiarVariable($dato);
-		
-		if( $atributo == 'nombre' )
-			$temp = '"'.$dato.'"' ;
-		else
-			$temp = $dato; 
-		
+		$nombre = parent::limpiarVariable($nombre);
 		$query = "UPDATE
-					producto
+					categoria
 				  SET
-					$atributo = $temp
+					nombre = '$nombre'
 				  WHERE 
 						id = $id";
-		$resultado=$conexion ->ejecutarConsulta($query);
-		$conexion ->cerrar();
+		$resultado = parent::ejecutarConsulta($query);
+
 		if(!$resultado)
 			return FALSE;
 		else
@@ -131,4 +114,5 @@ class categoriaBss{
 				
 	}
 }
+
 ?>

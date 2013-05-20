@@ -10,13 +10,13 @@ class productoBss{
 	/**
 	 * @return mixed productoClass object y en caso de falla un FALSE
 	 */
-	function insertar($nombre,$estatus,$precio,$existencia, $imagen, $categoria){
+	function insertar($nombre,$descripcion,$estatus,$precio,$existencia, $imagen, $categoria){
 		//Cargar clase usuario
 		require('productoClass.php');
 		
 		//Conectarse a la base de datos
 		require('dbdata.inc');
-		require('dbClass.php');
+		require_once('dbClass.php');
 		$conexion  = new DB($hostdb, $userdb, $passdb, $db);
 		 
 		if(!$conexion -> conecta())
@@ -29,11 +29,13 @@ class productoBss{
 			$precio		=  $conexion->limpiarVariable($precio);
 			$existencia	=  $conexion->limpiarVariable($existencia);
 			$imagen = $conexion->limpiarVariable($imagen);
+			$descripcion = $conexion->limpiarVariable($descripcion);
 			
 
 		//Crear el query
-		$query ="INSERT INTO producto (nombre, imagen, estatus, precio, existencia, categoria_id)
+		$query ="INSERT INTO producto (nombre,descripcion, imagen, estatus, precio, existencia, categoria_id)
 				VALUES ('$nombre',
+					'$descripcion',
 					'$imagen',
 				    $estatus,
 				    $precio,
@@ -58,7 +60,7 @@ class productoBss{
 			$conexion -> cerrar();
 
 			//Arreglo del producto
-			$product = new productoClass($id,$nombre,$estatus,$precio,$existencia);
+			$product = new productoClass($id,$nombre,$descripcion,$estatus,$precio,$existencia);
 	
 			return $product;
 		}
@@ -111,11 +113,9 @@ class productoBss{
 		
 		//Conectarse a la base de datos
 		require('dbdata.inc');
-		require('dbClass.php');
-		$conexion  = new DB($hostdb, $userdb, $passdb, $db); 
-
-		if(!$conexion->conecta())
-			die('No se ha podido realizar la conexion a la bd');
+		require_once('dbClass.php');
+		$conexion  = new DB($hostdb, $userdb, $passdb, $db);
+		
 
 		//Limpio las variables
 		$dato = $conexion->limpiarVariable($dato);
@@ -148,7 +148,7 @@ class productoBss{
 			$conexion -> cerrar();
 
 			if( $resultado[0][$atributo] == $dato ){
-					$product = new productoClass($resultado[0]['id'],$resultado[0]['nombre'],$resultado[0]['estatus'],$resultado[0]['precio'],$resultado[0]['existencia']);
+					$product = new productoClass($resultado[0]['id'],$resultado[0]['nombre'],$resultado[0]['descripcion'],$resultado[0]['estatus'],$resultado[0]['precio'],$resultado[0]['existencia']);
 					
 					return $product;
 				}
@@ -162,8 +162,7 @@ class productoBss{
 		require('dbClass.php');
 		$conexion  = new DB($hostdb, $userdb, $passdb, $db);
 		
-		if( $conexion->conecta() == FALSE)
-			die('No se pudo hacer conexion a la BD');
+
 		
 		//limpiar variable
 		$dato = $conexion->limpiarVariable($dato);
