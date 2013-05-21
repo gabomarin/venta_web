@@ -4,20 +4,19 @@
  * @package mvc
  * @subpackage model
  */
-require_once('dbClass.php');
+require_once ('dbClass.php');
 
-class categoriaBss extends DB{
-	
+class categoriaBss extends DB {
+
 	/**
 	 * @param string $nombre
 	 */
-	function insertar($nombre){
+	function insertar($nombre) {
 		//Cargar clase categoria
-		require('categoriaClass.php');
-		
-		//Limpiar las variables recibidas
-			$nombre		=  parent::limpiarVariable($nombre);
+		require ('categoriaClass.php');
 
+		//Limpiar las variables recibidas
+		$nombre = parent::limpiarVariable($nombre);
 
 		//Crear el query
 		$query = "INSERT INTO 
@@ -28,15 +27,14 @@ class categoriaBss extends DB{
 		//Ejecutar el query
 		$resultado = parent::ejecutarConsulta($query);
 
-		if($resultado == FALSE){
+		if ($resultado == FALSE) {
 			echo 'FALLO la consulta';
 			return FALSE;
-		}
-		else{
+		} else {
 			$id = $resultado;
 			//Arreglo de categoria
-			$categoria = new categoriaClass($id,$nombre);
-	
+			$categoria = new categoriaClass($id, $nombre);
+
 			return $categoria;
 		}
 	}
@@ -44,7 +42,7 @@ class categoriaBss extends DB{
 	/**
 	 * @return mixed array with all the users, or FALSE in fail
 	 */
-	function listar(){
+	function listar() {
 		//Crear el query
 		$query = 'SELECT
 					*
@@ -54,14 +52,13 @@ class categoriaBss extends DB{
 		//Ejecutar el query
 		$resultado = parent::ejecutarConsulta($query);
 
-		if(!$resultado){
-			echo 'FALLO la consulta';
+		if (!$resultado) {
+			//echo 'FALLO la consulta';
 
 			return FALSE;
-		}
-		else{
+		} else {
 
-			return $resultado;			
+			return $resultado;
 		}
 	}
 
@@ -69,21 +66,17 @@ class categoriaBss extends DB{
 	 * @param int $id del categoria
 	 * @return object usuarioClass, FALSE en caso de falla
 	 */
-<<<<<<< HEAD
-	function consultarDato($dato){
-=======
-	function consultarDato($dato,$atributo){
->>>>>>> 7a152b0c39aa7c33c16605fb69348855d5c78d66
+
+	function consultarDato($dato) {
+
 		//Cargar clase usuario
-		require('categoriaClass.php');
+		require ('categoriaClass.php');
 
 		//Limpio las variables
 		$dato = parent::limpiarVariable($dato);
-<<<<<<< HEAD
-
 
 		//Crear el query
-	
+
 		$query = "SELECT   producto.id, producto.nombre AS pnombre,producto.imagen, producto.estatus, producto.precio, categoria.nombre AS cnombre
 					FROM `producto` INNER JOIN categoria
 					WHERE
@@ -92,62 +85,58 @@ class categoriaBss extends DB{
 						producto.categoria_id=$dato";
 		//Ejecutar el query
 		$resultado = parent::ejecutarConsulta($query);
-		if(!$resultado){
-			
-=======
-		if( $atributo != 'id')
-			$temp = '"'.$dato.'"' ;
-		else
-			$temp = $dato; 
+		if (!$resultado) {
 
-		//Crear el query
-	
-		$query = "SELECT
+			if ($atributo != 'id')
+				$temp = '"' . $dato . '"';
+			else
+				$temp = $dato;
+
+			//Crear el query
+
+			$query = "SELECT
 				*
 			    FROM
 			    	categoria
 			    WHERE 
 					$atributo = $temp";
-		//Ejecutar el query
-		$resultado = parent::ejecutarConsulta($query);
-		if(!$resultado){
-			echo 'FALLO la consulta';
->>>>>>> 7a152b0c39aa7c33c16605fb69348855d5c78d66
-			return FALSE;
-		}
-		else{
-
-<<<<<<< HEAD
-			return $resultado;
-=======
-			if( $resultado[0][$atributo] == $dato ){
-					$categoria = new categoriaClass($resultado[0]['id'],$resultado[0]['nombre']);
-					
-					return $categoria;
-				}
-			else
+			//Ejecutar el query
+			$resultado = parent::ejecutarConsulta($query);
+			if (!$resultado) {
+				//echo 'FALLO la consulta';
 				return FALSE;
->>>>>>> 7a152b0c39aa7c33c16605fb69348855d5c78d66
-		}			
-	}
-	function modificarDato($id,$nombre){
+			} else {
 
-		//limpiar variable
-		$nombre = parent::limpiarVariable($nombre);
-		$query = "UPDATE
+				return $resultado;
+				if ($resultado[0][$atributo] == $dato) {
+					$categoria = new categoriaClass($resultado[0]['id'], $resultado[0]['nombre']);
+
+					return $categoria;
+				} else
+					return FALSE;
+
+			}
+		}
+		function modificarDato($id, $nombre) {
+
+			//limpiar variable
+			$nombre = parent::limpiarVariable($nombre);
+			$query = "UPDATE
 					categoria
 				  SET
 					nombre = '$nombre'
 				  WHERE 
 						id = $id";
-		$resultado = parent::ejecutarConsulta($query);
+			$resultado = parent::ejecutarConsulta($query);
 
-		if(!$resultado)
-			return FALSE;
-		else
-			return TRUE;		
-				
+			if (!$resultado)
+				return FALSE;
+			else
+				return TRUE;
+
+		}
+
 	}
-}
 
+}
 ?>

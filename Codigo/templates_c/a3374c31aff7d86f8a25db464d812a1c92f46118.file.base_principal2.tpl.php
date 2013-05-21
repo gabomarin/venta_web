@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2013-05-19 19:18:24
+<?php /* Smarty version Smarty-3.1.13, created on 2013-05-20 22:21:05
          compiled from "templates\base_principal2.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:243675188f4338d70a8-71701891%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'a3374c31aff7d86f8a25db464d812a1c92f46118' => 
     array (
       0 => 'templates\\base_principal2.tpl',
-      1 => 1369004661,
+      1 => 1369065686,
       2 => 'file',
     ),
   ),
@@ -67,6 +67,9 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                 font-weight: bold;
                 color: #404040;
           }
+	.superior{
+			font-size:140%;
+	}
     </style>
 	
 	
@@ -75,24 +78,26 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   <body>
 <div class="navbar navbar-inverse navbar-fixed-top">
 	<div class="navbar-inner">
-		<div class="container-fluid">
+		<div class="span1">
+				<img src="images/logo.jpg" width=100px height=100px>
+			</div>
+		<div class="container-fluid span7">
 			<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
 			
-			<a class="brand" href="index.php">TD-Informatica</a>
 			<div class="nav-collapse collapse">
 
 					
 				<ul class="nav">
 					<li class="active">
-						<a href="index.php">Home</a>
+						<a class="superior" href="index.php">Home</a>
 					</li>
 					
 					<li>
-						<a href="index.php?modulo=estandar&action=contacto">Contacto</a>
+						<a class="superior" href="index.php?modulo=estandar&action=contacto">Contacto</a>
 					</li>
 					<?php echo $_smarty_tpl->tpl_vars['user']->value;?>
 
@@ -191,7 +196,7 @@ $_smarty_tpl->tpl_vars['ultimo']->_loop = true;
 	<!--/row-->
 	<hr>
 	<footer>
-		<div class="container span6 offset6">
+		<div class="container span6 offset4">
 		  <a href="index.php">Inicio</a> | <a href="">FAQ</a> | <a href="">Contactanos</a> | <a href="" >Politicas de Privacidad</a> |
 	     	<a href="" >Terminos del servicio</a>
 		</div>
