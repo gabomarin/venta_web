@@ -6,9 +6,14 @@
 
  
 require('include.php');
+include_once('model/dbClass.php');
 if( !isset($_SESSION) ){
 	session_start();
 }
+$band=0;
+require_once("dompdf/dompdf_config.inc.php");
+spl_autoload_register('DOMPDF_autoload'); 
+
 
 class index {
              public function display()
@@ -17,6 +22,12 @@ class index {
 				 global $smarty;
 				
 						  //echo $_SESSION['mail'];
+						  /*$_SESSION['nombre']="jesus";
+						  $_SESSION['mail']="jesus@gmail.com";
+						  $_SESSION['pass']="1234";
+						  $_SESSION['carro']="0";
+						  $_SESSION['tipo']="1";*/
+						  
 				 if(isset($_SESSION['mail']))
 				 {
 						  require('model/dbdata.inc');
@@ -31,8 +42,8 @@ class index {
 						  
 						  if($_SESSION['tipo']==2)
 						  {
-						        $temp= $temp."<li><a class='superior' href='index.php?modulo=usuario&action=consultarDato'>Consultar Usuario</a></li>";
-								$temp= $temp."<li><a class='superior' href='index.php?modulo=venta&action=consulta'>Consultar Venta</a></li>";
+						        $temp= $temp."<li><a class='superior' href='index.php?modulo=usuario&action=consultar'>Consultar Usuario</a></li>";
+								$temp= $temp."<li><a class='superior' href='index.php?modulo=venta&action=consulta'>Consultar Ventas</a></li>";
 						  }
 						  
 						  $temp.="<li><a class='superior' href='index.php?modulo=estandar&action=logout'>Salir</a></li>";
@@ -48,22 +59,25 @@ class index {
 						   die('No se ha podido realizar la conexion a la bd');
 						   $query = "SELECT * FROM `producto` LIMIT 0,5";
 						    $resultado = $conexion -> query($query);	
-						  $smarty->assign('titulocontenido','Ultimos Productos');
+						  $smarty->assign('titulocontenido',"");
 						  //$smarty->assign('contenidos', $resultado);
 						  
 						  
 						ob_start();
+						/*echo "<div class='well span7'><legend><h1>Ultimos Productos</h1>";
 						while($fila = $resultado->fetch_assoc()){
 						  
-							echo "<div class='span4'>
+							echo "<div class='span2 offset1'>
 					
 							<a href=index.php?modulo=producto&action=consultarDato&dato=$fila[id]&atributo=id class='name'><img src=$fila[imagen] alt='' width='124' height='097' /></a>
 							<br><span>$ $fila[precio]</span>
 							<a href='index.php?modulo=producto&action=consultarDato&dato=$fila[id]&atributo=id'>Ver</a></div>";
 						}
+						echo "</legend></div>";*/
+						require_once("templates/portada.tpl");
 				   
 			       $resultado=ob_get_clean();
-				   
+				   $smarty->assign('titulo',"Inicio");
 				   $smarty->assign('contenido',$resultado);
 			 
 			 
@@ -73,22 +87,39 @@ class index {
 				 }
 				 
 				 else{
-						  
+						  require('model/dbdata.inc');
 						  $smarty->assign('user','<li><a class="superior" href="index.php?modulo=estandar&action=login">Iniciar sesion</a></li><li>
 						  <a class="superior" href="index.php?modulo=usuario&action=insertar">Registrate</a></li>');
-						  
-						  //lee un archivo y lo guardara en una variable
 						 
-						  $smarty->assign('numero','0');
 						  
-						  ob_start();
-						  require 'templates/login.tpl';
-						  //require 'templates/registrar_usuario.tpl';
+						  $smarty->assign('numero',"0");
 						  
-						  $panel = ob_get_clean();
-						  $smarty->assign('contenido', $panel);
-						  $smarty->assign('contenidos','');
-						  $smarty->assign('titulocontenido', '');
+						  
+						  $conexion  = new mysqli($hostdb, $userdb, $passdb, $db);
+						  if(!$conexion)
+						   die('No se ha podido realizar la conexion a la bd');
+						   $query = "SELECT * FROM `producto` LIMIT 0,5";
+						    $resultado = $conexion -> query($query);	
+						  $smarty->assign('titulocontenido',"");
+						  //$smarty->assign('contenidos', $resultado);
+						  
+						  
+						ob_start();
+						/*echo "<div class='well span7'><legend><h1>Ultimos Productos</h1>";
+						while($fila = $resultado->fetch_assoc()){
+						  
+							echo "<div class='span2 offset1'>
+					
+							<a href=index.php?modulo=producto&action=consultarDato&dato=$fila[id]&atributo=id class='name'><img src=$fila[imagen] alt='' width='124' height='097' /></a>
+							<br><span>$ $fila[precio]</span>
+							<a href='index.php?modulo=producto&action=consultarDato&dato=$fila[id]&atributo=id'>Ver</a></div>";
+						}
+						echo "</legend></div>";*/
+						require_once("templates/portada.tpl");
+				   
+			       $resultado=ob_get_clean();
+				   $smarty->assign('titulo',"Inicio");
+				   $smarty->assign('contenido',$resultado);
 				 }
 				 
 			 
@@ -103,8 +134,7 @@ class index {
 			{
 			 global $smarty;
 			     require('model/dbdata.inc');
-				 include_once('model/dbClass.php');
-			 //Obtenemos las categorias
+							 //Obtenemos las categorias
 				//   $conexion  = new mysqli($hostdb, $userdb, $passdb, $db);
 				//   
 				//   if(!$conexion)
@@ -128,27 +158,28 @@ class index {
 				   
 			}
 			
-			function ultimosProductos()
-			{
-			  global $smarty;
-			 
-				  $conexion  = new DB($hostdb, $userdb, $passdb, $db);
-				   if(!$conexion -> conecta())
-						  die('No se ha podido realizar la conexion a la bd');
-			       $query = "SELECT * FROM `categoria` LIMIT 0,5";
-				   $resultado = $conexion -> ejecutarConsulta($query);
-			       $conexion->cerrar();
-				   $smarty->assign('ultimos', $resultado);
-				   
-				   
-				 
-			}
+			//function ultimosProductos()
+			//{
+			//  global $smarty;
+			// 
+			//	  $conexion  = new DB($hostdb, $userdb, $passdb, $db);
+			//	   if(!$conexion -> conecta())
+			//			  die('No se ha podido realizar la conexion a la bd');
+			//       $query = "SELECT * FROM `categoria` LIMIT 0,5";
+			//	   $resultado = $conexion -> ejecutarConsulta($query);
+			//       $conexion->cerrar();
+			//	   $smarty->assign('ultimos', $resultado);
+			//	   
+			//	   
+			//	 
+			//}
 }
 
 
 //Creamos el contralador en base a lo requerido y lo mandamos a ejecutar
 
 if (isset($_GET['modulo'])) {
+	
 
 	switch($_REQUEST['modulo']) {
 		case 'usuario' :
@@ -182,6 +213,16 @@ if (isset($_GET['modulo'])) {
 			include ('controller/stdCtl.php');
 			$controlador = new stdCtl();
 			break;
+		
+		case 'v_ventas':
+			//echo 'hola';
+			
+						  $band=1;
+			break;
+		
+		case 'v_inventario':
+			$band=2;
+			break;
 
 
 		default :
@@ -211,7 +252,26 @@ else {
 $call = new index();
 $call->display();
 $call->getContenido();
+if($band==0)
 $controlador -> ejecutar();
+else if ($band==1)
+{
+	$smarty->assign('titulo',"Ventas");
+	ob_start();
+	require 'templates/venta.tpl';
+	$panel = ob_get_clean();
+	$smarty->assign('contenido',$panel);
+	$smarty->assign('titulocontenido','');
+}
+else
+{
+	$smarty->assign('titulo',"Inventario");
+	ob_start();
+	require 'templates/inventario.tpl';
+	$panel = ob_get_clean();
+	$smarty->assign('contenido',$panel);
+	$smarty->assign('titulocontenido','');
+}
 
 
 $smarty->display('base_principal2.tpl');

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>Consulta Compras</title>
     <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="author" content="Lex" >
 
     <!-- Le styles -->
     <!-- Bootstrap -->
@@ -13,9 +13,8 @@
 
 </head>
 <body>
-  <div class="container">
-	<div class="hero-unit span10">
-		
+  <div class="well span7">
+
 			<h1>
 				Consulta de Compras
 			</h1>
@@ -35,7 +34,10 @@
 									Cantidad
 								</th>
 								<th>
-									Precio
+									Precio(C/U)
+								</th>
+								<th>
+									Total
 								</th>
 								<th>
 									Estatus
@@ -61,15 +63,17 @@
 									150
 								</td>
 								<td>
+									750
+								</td>
+								<td>
 									Valida
 								</td>
 								<td>
-									<a class="btn btn-primary btn-large" id="factura">Mostrar</a>
+									<a href="docs/factura.pdf"  target="_blank" class="btn btn-primary btn-large" id="factura">PDF</a>
 								</td>
 							</tr>
 						</tbody>
 					</table>
-				</div>
 			</div>
 			<div class="row-fluid">
 			</div>

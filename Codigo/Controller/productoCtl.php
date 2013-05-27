@@ -30,8 +30,9 @@ class productoCtl{
 			include('View/productoListaView.php');
 		} else switch($_REQUEST['action']){
 			case 'insertar'://solo el encargado de inventario puede insertar
-				include('validaciones.php'); if( isset($_SESSION['mail']) &&
-				$_SESSION['tipo'] == 3 ){
+				include('validaciones.php');
+				if( isset($_SESSION['mail']) && $_SESSION['tipo'] == 3 ){
+					//echo 'entre';
 					if(isset($_REQUEST['nombre']) && isset($_REQUEST['precio'])
 					&& isset($_REQUEST['existencia']) && isset($_REQUEST['descripcion'])){
 					
@@ -40,8 +41,7 @@ class productoCtl{
 					isPrecio($_REQUEST['precio']) &&
 					isExistencia($_REQUEST['existencia'])){
 						$producto =
-						$this->modelo->insertar($_REQUEST['nombre'],$_REQUEST['descripcion'],$_REQUEST['estatus'],$_REQUEST['precio'],$_REQUEST['existencia'],
-						$_REQUEST['imagen'], $_REQUEST['categoria']);
+						$this->modelo->insertar($_REQUEST['nombre'],$_REQUEST['descripcion'],$_REQUEST['estatus'],$_REQUEST['precio'],$_REQUEST['existencia'],$_REQUEST['imagen'], $_REQUEST['categoria']);
 						if (is_object($producto) )
 							include('View/productoInsertadoView.php');
 						else
@@ -93,9 +93,8 @@ class productoCtl{
 							echo 'Datos no validos. Porfavor revise la
 							sintaxis';
 						} break;
-			case 'modificarDato'://solo el encargado de ventas e inventariopueden realizar esta accion
-						if( isset($_SESSION['mail']) && $_SESSION['tipo'] != 1
-						){
+			case 'modificarDato'://solo el encargado de ventas e inventario pueden realizar esta accion
+						if( isset($_SESSION['mail']) && $_SESSION['tipo'] != 1){
 							include('validaciones.php');
 							if(isset($_REQUEST['nombre']) &&
 							isset($_REQUEST['precio']) &&

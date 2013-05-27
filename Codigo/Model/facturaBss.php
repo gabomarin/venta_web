@@ -5,7 +5,7 @@
  * @subpackage clase VentaBss
  * @author Gabriel Ortiz Valdovinos <gabrielortiz_26@hotmail.com>
  */
-class facturaBss {
+class facturaBss extends DB{
 
 	/**
 	 * @param string $fecha de la creacion de la venta, double $total de la venta realizada
@@ -15,18 +15,11 @@ class facturaBss {
 
 		require ('facturaClass.php');
 
-		//Conectarse a la base de datos
-		require ('dbdata.inc');
-		require_once('dbClass.php');
-		$conexion = new DB($hostdb, $userdb, $passdb, $db);
-		if (!$conexion -> conecta())
-			die('No se ha podido realizar la conexion a la bd');
-
 		//Limpiar las variables recibidas
-		$fecha = $conexion -> limpiarVariable($fecha);
-		$cantidad = $conexion -> limpiarVariable($cantidad);
-		$precio = $conexion -> limpiarVariable($precio);
-		$estatus = $conexion -> limpiarVariable($estatus);
+		$fecha = parent::limpiarVariable($fecha);
+		$cantidad = parent::limpiarVariable($cantidad);
+		$precio = parent::limpiarVariable($precio);
+		$estatus = parent::limpiarVariable($estatus);
 
 		//Crear el query
 		$query = "INSERT INTO 
@@ -39,17 +32,17 @@ class facturaBss {
 					 )";
 
 		//Ejecutar el query
-		$resultado = $conexion -> ejecutarConsulta($query);
+		$resultado = parent::ejecutarConsulta($query);
 
 		if ($resultado == FALSE) {
 			echo 'FALLO la consulta';
 			//Cerrar la conexion
-			$conexion -> cerrar();
+			parent::cerrar();
 			return FALSE;
 		} else {
 			$folio = $resultado;
 			//Cerrar la conexion
-			$conexion -> cerrar();
+			parent::cerrar();
 
 			$factura = new facturaClass($folio, $fecha, $cantidad, $precio, $estatus);
 
@@ -64,14 +57,6 @@ class facturaBss {
 	 */
 	function modificarEstatus($id, $estatus) {
 
-		require ('dbdata.inc');
-		require ('dbClass.php');
-		$conexion = new DB($hostdb, $userdb, $passdb, $db);
-
-		if (!$conexion -> conecta())
-			die('LIST. No se ha podido realizar la conexion a la bd');
-
-		$id = $conexion -> limpiarVariable($id);
 
 		//Crear el query
 		$query = "UPDATE factura
@@ -79,16 +64,16 @@ class facturaBss {
 					WHERE id=$id";
 
 		//Ejecutar el query
-		$resultado = $conexion -> ejecutarConsulta($query);
+		$resultado =parent::ejecutarConsulta($query);
 
 		if (!$resultado) {
 			echo 'FALLO la consulta';
 
 			//Cerrar la conexion
-			$conexion -> cerrar();
+			parent::cerrar();
 			return FALSE;
 		} else {
-			$conexion -> cerrar();
+			parent::cerrar();
 			return TRUE;
 		}
 
@@ -98,30 +83,24 @@ class facturaBss {
 	 * @return mixed. bool FALSE si no se realizo la consulta, venta $resultado con los datos del objeto encontrado
 	 */
 	function listar() {
-		require ('dbdata.inc');
-		require ('dbClass.php');
-		$conexion = new DB($hostdb, $userdb, $passdb, $db);
-
-		if (!$conexion -> conecta())
-			die('LIST. No se ha podido realizar la conexion a la bd');
-
+		
 		//Crear el query
 		$query = 'SELECT *
 					FROM  
 					factura';
 
 		//Ejecutar el query
-		$resultado = $conexion -> ejecutarConsulta($query);
+		$resultado = parent::ejecutarConsulta($query);
 
 		if (!$resultado) {
 			echo 'FALLO la consulta';
 
 			//Cerrar la conexion
-			$conexion -> cerrar();
+			parent::cerrar();
 			return FALSE;
 		} else {
 			//Cerrar la conexion
-			$conexion -> cerrar();
+			parent::cerrar();
 
 			return $resultado;
 		}
@@ -134,15 +113,9 @@ class facturaBss {
 	 */
 
 	function consultar($tipo, $dato, $bandera) {
-		require ('dbdata.inc');
-		require ('dbClass.php');
-		$conexion = new DB($hostdb, $userdb, $passdb, $db);
-
-		if (!$conexion -> conecta())
-			die('No se ha podido realizar la conexion a la bd');
-
-		$tipo = $conexion -> limpiarVariable($tipo);
-		$dato = $conexion -> limpiarVariable($dato);
+		
+		$tipo = parent::limpiarVariable($tipo);
+		$dato = parent::limpiarVariable($dato);
 		//Crear el query
 		if ($bandera == false) {
 			$query = "SELECT *
@@ -158,17 +131,17 @@ class facturaBss {
 
 		}
 		//Ejecutar el query
-		$resultado = $conexion -> ejecutarConsulta($query);
+		$resultado = parent::ejecutarConsulta($query);
 
 		if (!$resultado) {
 			echo 'FALLO la consulta';
 
 			//Cerrar la conexion
-			$conexion -> cerrar();
+			parent::cerrar();
 			return FALSE;
 		} else {
 			//Cerrar la conexion
-			$conexion -> cerrar();
+			parent::cerrar();
 
 			return $resultado;
 		}

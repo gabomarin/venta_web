@@ -84,15 +84,16 @@ class categoriaCtl {
 							$categoria = $this -> modelo -> consultarDato($_REQUEST['id'] );
 							if($categoria==FALSE)
 							{
-								$smarty->assign('titulocontenido', 'Error');
-								$smarty->assign('contenido','No se pudo procesar la solicitud');
+								$smarty->assign('titulocontenido',"");
+								$smarty->assign('contenido',"<div class='well span7'><legend><h1>ERROR</h1></legend><p>No se pudo mostrar</p></div>");
 							}
 							else{
-								$smarty->assign('titulocontenido',$categoria[0]['cnombre']);
+								$smarty->assign('titulocontenido',"");
 									//$smarty->assign('contenidos', $categoria);
 						  
-						  
+						  			
 									ob_start();
+									echo "<div class='well span7'><legend><h1>".$categoria[0]['cnombre']."</h1></legend>";
 									 for($i=0;$i<count($categoria);++$i){
 										$fila = $categoria[$i];	
 									  echo "<div class='span3'>
@@ -102,6 +103,7 @@ class categoriaCtl {
 									  <a href='index.php?modulo=producto&action=consultarDato&dato=$fila[id]&atributo=id'>Ver</a></div>";
 									  
 									 }
+									 echo "</div>"; 
 									 
 									 $categoria=ob_get_clean();
 									 

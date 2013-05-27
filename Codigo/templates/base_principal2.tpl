@@ -2,11 +2,12 @@
 <html lang="es">
   <head>
     <meta charset="utf-8">
-    <title>TD-informatica</title>
+    <title>TD-informatica | {$titulo}</title>
     <meta name="description" content="Artículo en GenbetaDev sobre Bootstrap 2.0">
-    <meta name="author" content="Alejandro">
+    <meta name="author" content="Lex" >
     <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet" media="screen">
 	<link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+
     <style>
       body { padding-top: 60px; }
 		.arriba{
@@ -37,7 +38,12 @@
           }
 	.superior{
 			font-size:140%;
+			margin-top: 15px;
 	}
+	.barra{
+	margin-top: 2em;
+	}
+
     </style>
 	
 	
@@ -46,10 +52,7 @@
   <body>
 <div class="navbar navbar-inverse navbar-fixed-top">
 	<div class="navbar-inner">
-		<div class="span1">
-				<img src="images/logo.jpg" width=100px height=100px>
-			</div>
-		<div class="container-fluid span7">
+		<div>
 			<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
@@ -60,6 +63,10 @@
 
 					
 				<ul class="nav">
+					<li>
+						<img src="images/logo.jpg" width=80% height=80%>
+					</li>
+				
 					<li class="active">
 						<a class="superior" href="index.php">Home</a>
 					</li>
@@ -75,7 +82,7 @@
 	</div>
 </div>
 
-<div class="container-fluid">
+<div class="container-fluid barra">
 	<div class="row-fluid">
 		<!--/span-->
 		<div class="span2">
@@ -94,51 +101,38 @@
 			</div>
 			<!--/.well -->
 		</div>
-		<div class="span7">
-			<h3>{$titulocontenido}</h3>
-			  <div class="well container span12">
 				{$contenido}
 
-		</div>
-			
-			
-		</div>
 		<!--/span-->
-		<div class="span3">
-			<div id="right">
-				<br />
-				<div class="well sidebar-nav">
-				<img src="images/shopping.gif" alt="" width="24" height="24" class="shopping" />
-				<p>
-					Carro de compra
-				</p>
-				<p>
-					<strong>{$numero}</strong><span> articulos</span>
-				</p>
-			</div>
-						
-					</div>
-					
-					<div class="well sidebar-nav">
-						
-						
-							<h5>Ultimos Productos</h5>
-							
-							<p>
-							  
-								{foreach item=ultimo from=$ultimos}
-								<a href="index.php?modulo=producto&action=consultarDato&dato={$ultimo.id}&atributo=id">{$ultimo.nombre}</a>
-								<img src= "{$ultimo.imagen}" height=64 width=64/>
-								Precio: ${$ultimo.precio}
-								</br>
-								{/foreach}
-							</p>
-
-					</div>
-					
-
-					
-				</div>
+		<div class="row-fluid span3">
+		      <div class="well sidebar-nav span8">
+		      <img src="images/shopping.gif" alt="" width="24" height="24" class="shopping" />
+		      <p>
+			      Carro de compra
+		      </p>
+		      <p>
+			      <strong>{$numero}</strong><span> articulos</span>
+		      </p>
+		      </div>
+		      
+		      <div class="well sidebar-nav span8">
+			  <h4>Ultimos Productos</h4>
+			  <hr>
+			  
+			  <div class="row-fluid">
+			    
+				  {foreach item=ultimo from=$ultimos}
+				  <div class="container span7">
+				    <a href="index.php?modulo=producto&action=consultarDato&dato={$ultimo.id}&atributo=id">{$ultimo.nombre}</a>
+				    <img src= "{$ultimo.imagen}" height=120 width=120/>
+				    <p>Precio: ${$ultimo.precio}</p>  
+				  </div>
+				  {/foreach}
+			  </div>
+	
+		      </div>
+		
+		</div>
 			</div>
 		</div>
 		</div>

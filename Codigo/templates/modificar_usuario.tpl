@@ -1,84 +1,97 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Modificar Usuario</title>
-    <meta name="author" content="Lex" />
-	<meta charset="UTF-8"/>
-	<meta name="keywords" content="modificar Usuario"/>
-    <!-- Bootstrap -->
-    <link href="css/bootstrap-responsive.css" rel="stylesheet" media="screen">
-	<link href="css/bootstrap.css" rel="stylesheet" media="screen">
-  </head>
-  <body>
-    <form class="well form-horizontal" method="post" action="index.php?modulo=usuario&action=modificar">
+<style>
+	  .mensaje{
+	    height: 15px;
+	  }
+	  .contenedorAlto{
+	    height: 48px;
+	  }
+	  
+	  .texto{
+		background-color: rgba(180, 180, 180, 0.2);
+		color: rgba(1,1,1,.5);
+		margin-top: .2em;
+		display: inline-block;
+		padding-left: 1.5em;
+		padding-right: 1.5em;
+		padding-top: .1em;
+		padding-bottom: .1em;
+		border-radius: 2px;
+		cursor: not-allowed;
+		border: 1px solid rgba(4, 4, 3,.2);
+		min-width: 1em;
+		min-height:1.5em; 
+		
+		
+	  }
+	  
+	  .etiqueta
+	  {
+		color: rgba(1,1,1,.5);
+	  }
+</style>
+
+	<script type="text/javascript" src="bootstrap/js/validaciones.js"></script>
+    <form class="well form-horizontal well span7" method="post" enctype="multipart/form-data" action="index.php?modulo=usuario&action=insertar" id="registrar"  name="registrar">
 		<fieldset>
 		
 		<!-- Form Name -->
-		<legend>Modificar Usuario</legend>
+		<legend><h1>Modificar Usuario</h1></legend>
 		
 		<!-- Text input-->
-		<div class="control-group">
-		  <label class="control-label">Nombre</label>
-		  <div class="controls">
-		    <input id="nombre" name="nombre" type="text" class="input-xlarge" value="{$usuario}" readonly>
-		    
+		<div class="contenedorAlto control-group">
+		  <label class="control-label etiqueta">Nombre</label>
+		  <div class="span4" id="contenedorNombre">
+			<div class="texto">{$usuario}</div>
 		  </div>
 		</div>
 		
 		<!-- Text input-->
-		<div class="control-group">
-		  <label class="control-label">E-mail</label>
-		  <div class="controls">
-		    <input id="mail" name="mail" type="email" class="input-xlarge" value="{$email}" readonly>
-		    
+		<div class="contenedorAlto  control-group">
+		  <label class="control-label etiqueta">E-mail</label>
+		  <div class="span4" id="contenedorMail">
+		   <div class="texto">{$correo}</div>
 		  </div>
 		</div>
 		
 		<!-- Password input-->
-		<div class="control-group">
+		<div class="contenedorAlto control-group">
 		  <label class="control-label">Contraseña</label>
-		  <div class="controls">
-		    <input id="pass" name="pass" type="password" class="input-xlarge" pattern="^([a-zA-Z]|\d){6,}$" maxlength="25" required="required" value="aun nada">
+		  <div class="span4" id="contenedorPass">
+		    <input id="pass" class="input-medium" name="pass" type="password" class="input-xlarge" value="" maxlength="25" required="required">
 		    
 		  </div>
 		</div>
 		
 		<!-- Text input-->
-		<div class="control-group">
+		<div class="contenedorAlto  control-group">
 		  <label class="control-label">Direccion</label>
-		  <div class="controls">
-		    <input id="direccion" name="direccion" type="text" placeholder="Ejemplo: Calle #0" class="input-xlarge" pattern="^([a-zA-Z]{2,})+( {1}([a-zA-Z]|\d)+)* #\d+(-(\d|[a-zA-Z]){1,2})?$" maxlength="25" required="required" autocomplete="on" value="{$direccion}">
+		  <div class="span4" id="contenedorDireccion">
+		    <input id="direccion" class="input-xmedium" name="direccion" type="text" value="{$direccion}" placeholder="Ejemplo: Calle #0" class="input-xlarge"  maxlength="25" required="required" autocomplete="on">
 		    
 		  </div>
 		</div>
 		
 		<!-- Text input-->
-		<div class="control-group">
-		  <label class="control-label">RFC</label>
-		  <div class="controls">
-		    <input id="rfc" name="rfc" type="text" class="input-xlarge" value="{$rfc}" readonly>
-		    
+		<div class="contenedorAlto control-group">
+		  <label class="control-label etiqueta">RFC</label>
+		  <div class="span4" id="contenedorRfc">
+		    <div class="texto">{$rfc}</div>
 		  </div>
 		</div>
 		
 		<!-- Text input-->
-		<div class="control-group">
+		<div class="contenedorAlto control-group">
 		  <label class="control-label">Telefono</label>
-		  <div class="controls">
-		    <input id="telefono" name="telefono" type="tel" class="input-xlarge" pattern="^(\d)+$" maxlength="15" required="required" autocomplete="on" value="{$telefono}">
+		  <div class="span4" id="contenedorTelefono">
+		    <input id="telefono" class="input-medium" name="telefono" type="tel" value="{$telefono}" class="input-xlarge" pattern="^(\d){10}$" maxlength="10" required="required" autocomplete="on">
 		    
 		  </div>
 		</div>
-		<input type="hidden" id="tipo" name="tipo" value="0"/>
+		<input type="hidden" id="tipo" name="tipo" value="1"/>
 		<input type="hidden" id="estatus" name="estatus" value="0"/>
 		  <div class="controls">
-		  	<button type="button" id="cancelar" name="cancelar" class="btn btn-danger">Cancelar</button>
-		    <button type="submit" id="enviar" name="enviar" class="btn btn-success">Modificar Datos</button>
+		    <button type="button" id="cancelar" name="cancelar" class="btn btn-danger">cancelar</button>
+		    <button type="button" id="enviar" name="enviar" class="btn btn-success" onclick="envia()">Modificar</button>
 		  </div>
 		</fieldset>
-	</form>
-
-    <script src="http://code.jquery.com/jquery.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-  </body>
-</html>
+</form>

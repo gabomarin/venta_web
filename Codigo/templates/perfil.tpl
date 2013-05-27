@@ -1,21 +1,18 @@
-
-    <style>
-		span{color:#8B8B8B;}
-
-    </style>
-
-  </head>
+<style>
+	  span{
+			color:#8B8B8B;
+  	  }
+</style>
   <body>
-
+		<div class="well span7">
 			<h1>
 				Perfil de Usuario
 			</h1>
-			<hr>
 			<div class="row-fluid">
 				<div class="span4">
 					<img src="https://s3.amazonaws.com/jetstrap-site/images/what_icon.png">
 				</div>
-				<div class="span6">
+				<div class="span6 ">
 					<h3>
 						{$usuario}
 					</h3>
@@ -28,7 +25,7 @@
 							Modificar 
 						</button>
 					</a>
-					<a href="index.php?modulo=venta&action=consulta">
+					<a href="index.php?modulo=venta&action=consultaCompra">
 						<button type="button" class="btn btn-info btn-large" id="compra" name="compra">
 							Ver Compras 
 						</button>
@@ -36,6 +33,6 @@
 	
 				</div>
 			</div>
-			<hr>
-
-
+		</div>
+			
+</body>

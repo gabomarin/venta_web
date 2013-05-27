@@ -68,21 +68,119 @@ class inventarioCtl {
 					if (isset($_SESSION['mail']) && $_SESSION['tipo'] == INVENTARIO) {
 						$inventario = $this -> modelo -> listar();
 						if (is_array($inventario))
-							include ('View/inventarioListaView.php');
+							{
+
+								$smarty->assign('inventarios', $inventario);
+								$name="";
+								for($i=0;$i<7;$i++)
+								{
+									$name=$name.chr(rand(97,122));
+								}
+								$name="inventario_pdf";
+								
+								$smarty->assign('pdf',$name);
+								echo $name;
+								$var=$smarty->fetch("inventario.tpl");
+								ob_start();
+								echo $var;
+								//var_dump($usuario);
+								$panel = ob_get_clean();
+						  
+								//echo $count+"  saasdasd";
+								$smarty->assign('titulocontenido','');
+								$smarty->assign('contenido',$panel);
+								
+								
+
+								$html =$var;
+								$html= str_replace( "Generar Reporte","", $html); 
+								$dompdf = new DOMPDF();
+								$dompdf->load_html($html);
+								$dompdf->render();
+								$output=$dompdf->output();
+								
+								if(!file_exists('temp/'))
+								{
+									mkdir('temp',777);
+								}
+								file_put_contents("temp/$name.pdf", $output);
+								
+								
+								
+								
+							}
 						else
-							echo 'Error no se pudo listar';
+							{
+								
+								$smarty->assign('inventarios', 'No se encontraron resultados');
+								$var=$smarty->fetch("inventario.tpl");
+								ob_start();
+								echo $var;
+								//var_dump($usuario);
+								$panel = ob_get_clean();
+						  
+								//echo $count+"  saasdasd";
+								$smarty->assign('titulocontenido','');
+								$smarty->assign('contenido',$panel);
+							}
 					} else
 						echo 'No tienes los permisos necesarios';
 					break;
-				case 'consultarDato' :
-					
+				case 'consultarDato':
 					if (isset($_SESSION['mail']) && $_SESSION['tipo'] == INVENTARIO) {
 						if(isset($_REQUEST['dato']) && isset($_REQUEST['tipo'])){
 						$inventario = $this -> modelo -> consultarDato($_REQUEST['dato'], $_REQUEST['tipo']);
-						if (is_object($inventario))
-							include ('View/inventarioListaView.php');
+						if (is_array($inventario))
+							{
+								$smarty->assign('inventarios', $inventario);
+								$name="";
+								for($i=0;$i<7;$i++)
+								{
+									$name=$name.chr(rand(97,122));
+								}
+								$name="inventario_pdf";
+								
+								$smarty->assign('pdf',$name);
+								echo $name;
+								$var=$smarty->fetch("inventario.tpl");
+								ob_start();
+								echo $var;
+								//var_dump($usuario);
+								$panel = ob_get_clean();
+						  
+								//echo $count+"  saasdasd";
+								$smarty->assign('titulocontenido','');
+								$smarty->assign('contenido',$panel);
+								
+								
+
+								$html =$var;
+								$html= str_replace( "Generar Reporte","", $html); 
+								$dompdf = new DOMPDF();
+								$dompdf->load_html($html);
+								$dompdf->render();
+								$output=$dompdf->output();
+								
+								if(!file_exists('temp/'))
+								{
+									mkdir('temp',777);
+								}
+								file_put_contents("temp/$name.pdf", $output);
+								
+							}
 						else
-							echo 'Error no se pudo listar';
+							{
+								$smarty->assign('inventarios', 'No se encontraron resultados en esa fecha');
+								$var=$smarty->fetch("inventario.tpl");
+								ob_start();
+								echo $var;
+								//var_dump($usuario);
+								$panel = ob_get_clean();
+						  
+								//echo $count+"  saasdasd";
+								$smarty->assign('titulocontenido','');
+								$smarty->assign('contenido',$panel);
+							}
 						}
 						else
 						{
@@ -91,6 +189,7 @@ class inventarioCtl {
 							require 'templates/consulta_inventario.tpl';
 							$panel = ob_get_clean();
 							$smarty->assign('titulocontenido','');
+							//$smarty->assign('titulo', 'Consultar');
 							$smarty->assign('contenido',$panel);
 						}	
 					} else

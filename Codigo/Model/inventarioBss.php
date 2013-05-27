@@ -5,7 +5,7 @@
  * @subpackage model
  */
 
-class inventarioBss{
+class inventarioBss extends DB{
 	
 	/**
 	 * @param string $nombre
@@ -18,21 +18,12 @@ class inventarioBss{
 		//Cargar clase inventario
 		require('inventarioClass.php');
 		
-		//Conectarse a la base de datos
-		require('dbdata.inc');
-		require_once('dbClass.php');
-		$conexion  = new DB($hostdb, $userdb, $passdb, $db);
-		 
-		if(!$conexion -> conecta())
-			die('No se ha podido realizar la conexion a la bd');
-
-
 		//Limpiar las variables recibidas
-			$cantidadProducto		=  $conexion->limpiarVariable($cantidadProducto);
-			$fecha					=  $conexion->limpiarVariable($fecha);
-			$cantidadReal			=  $conexion->limpiarVariable($cantidadReal);
-			$cantidadEsperada		=  $conexion->limpiarVariable($cantidadEsperada);
-			$descripcion			=  $conexion->limpiarVariable($descripcion);
+			$cantidadProducto		=  parent::limpiarVariable($cantidadProducto);
+			$fecha					=  parent::limpiarVariable($fecha);
+			$cantidadReal			=  parent::limpiarVariable($cantidadReal);
+			$cantidadEsperada		=  parent::limpiarVariable($cantidadEsperada);
+			$descripcion			=  parent::limpiarVariable($descripcion);
 
 		//Crear el query
 		$query = "INSERT INTO 
@@ -46,18 +37,18 @@ class inventarioBss{
 
 		//Ejecutar el query
 		//echo $query.'   ';
-		$resultado = $conexion -> ejecutarConsulta($query);
+		$resultado = parent::ejecutarConsulta($query);
 
 		if($resultado == FALSE){
 			echo 'FALLO la consulta';
 			//Cerrar la conexion
-			$conexion -> cerrar();
+			parent::cerrar();
 			return FALSE;
 		}
 		else{
 			$id = $resultado;
 			//Cerrar la conexion
-			$conexion -> cerrar();
+			parent::cerrar();
 
 			//Arreglo del inventario
 			$inventario = new inventarioClass($id,$cantidadProducto,$fecha,$cantidadReal,$cantidadEsperada,$descripcion);
@@ -70,14 +61,7 @@ class inventarioBss{
 	 * @return mixed array with all the users, or FALSE in fail
 	 */
 	function listar(){
-		//Conectarse a la base de datos
-		require('dbdata.inc');
-		require('dbClass.php');
-		$conexion  = new DB($hostdb, $userdb, $passdb, $db); 
-
-		if(!$conexion-> conecta())
-			die('LIST. No se ha podido realizar la conexion a la bd');
-
+		
 		//Crear el query
 		$query = 'SELECT
 					*
@@ -85,18 +69,18 @@ class inventarioBss{
 					inventario';
 
 		//Ejecutar el query
-		$resultado = $conexion -> ejecutarConsulta($query);
+		$resultado =parent::ejecutarConsulta($query);
 
 		if(!$resultado){
 			echo 'FALLO la consulta';
 			
 			//Cerrar la conexion
-			$conexion -> cerrar();
+			parent::cerrar();
 			return FALSE;
 		}
 		else{
 			//Cerrar la conexion
-			$conexion -> cerrar();
+			parent::cerrar();
 
 			return $resultado;			
 		}
@@ -110,16 +94,9 @@ class inventarioBss{
 		//Cargar clase inventario
 		require('inventarioClass.php');
 		
-		//Conectarse a la base de datos
-		require('dbdata.inc');
-		require('dbClass.php');
-		$conexion  = new DB($hostdb, $userdb, $passdb, $db); 
-
-		if(!$conexion->conecta())
-			die('No se ha podido realizar la conexion a la bd');
-
+		
 		//Limpio las variables
-		$dato = $conexion->limpiarVariable($dato);
+		$dato = parent::limpiarVariable($dato);
 		if( $tipo == 'fecha' || $tipo == 'descripcion')
 			$temp = '"'.$dato.'"' ;
 		else
@@ -135,26 +112,20 @@ class inventarioBss{
 					$tipo = $temp";
 
 		//Ejecutar el query
-		$resultado = $conexion -> ejecutarConsulta($query);
+		$resultado = parent::ejecutarConsulta($query);
 		//var_dump($resultado);
 		if(!$resultado){
 			echo 'FALLO la consulta';
 			
 			//Cerrar la conexion
-			$conexion -> cerrar();
+			parent::cerrar();
 			return FALSE;
 		}
 		else{
 			//Cerrar la conexion
-			$conexion -> cerrar();
+			parent::cerrar();
+			return $resultado;
 
-			if( $resultado[0][$tipo] == $dato ){
-					$inventario = new inventarioClass($resultado[0]['id'],$resultado[0]['cantidadProducto'],$resultado[0]['fecha'],$resultado[0]['cantidadReal'],$resultado[0]['cantidadEsperada'],$resultado[0]['descripcion']);
-					
-					return $inventario;
-				}
-			else
-				return FALSE;
 		}			
 	}
 

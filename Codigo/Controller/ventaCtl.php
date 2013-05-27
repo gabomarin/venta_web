@@ -63,9 +63,7 @@ class ventaCtl {
 						echo 'No tienes los privilegios para cancelar la compra';
 					}
 					break;
-
-				case  'consulta' :
-					if (isset($_SESSION['mail']) && $_SESSION['tipo'] == VENTAS) {
+				case  'consultaCompra' :
 						if(isset($_REQUEST['tipo']) && isset($_REQUEST['dato'])){
 						$venta = $this -> modelo -> consultar($_REQUEST['tipo'], $_REQUEST['dato']);
 						if (is_array($venta))
@@ -83,13 +81,47 @@ class ventaCtl {
 						  $smarty->assign('contenido',$panel);
 						  $smarty->assign('titulocontenido','');
 						}
-					} else if (isset($_SESSION['mail']) && ($_SESSION['tipo']==CLIENTE || $_SESSION['tipo']== INVENTARIO)) {
+					
+					break;
+				case  'consulta' :
+					//var_dump($_SESSION['tipo']);
+					if (isset($_SESSION['mail']) && $_SESSION['tipo'] == VENTAS) {
+						if(isset($_REQUEST['tipo']) && isset($_REQUEST['dato'])){
+						$venta = $this -> modelo -> consultar($_REQUEST['tipo'], $_REQUEST['dato']);
+						if (is_array($venta))
+							include ('View/listaVenta.php');
+						else {
+							include ('View/ventaError.php');
+						}
+						
+						}
+						else {
+							
+							ob_start();
+						  require 'templates/consulta_venta.tpl';
+						  $panel = ob_get_clean();
+						  $smarty->assign('contenido',$panel);
+						  $smarty->assign('titulocontenido','');
+						}
+					} else if (isset($_SESSION['mail']) && ($_SESSION['tipo']==CLIENTE || $_SESSION['tipo']==INVENTARIO )  ) {
+						var_dump($_REQUEST);
 						//if ($_SESSION['id'] == $_REQUEST['id']) {
+						if(isset($_REQUEST['tipo']) && isset($_REQUEST['dato'])){
 							$venta = $this -> modelo -> consultar('id', $_SESSION['id']);
 							if (is_array($venta)) {
 
 								include ('View/listaVenta.php');
 							}
+						}
+						else {
+							
+							ob_start();
+						  require 'templates/consulta_compra.tpl';
+						  $panel = ob_get_clean();
+						  $smarty->assign('contenido',$panel);
+						  $smarty->assign('titulocontenido','');
+						}
+						
 							
 						//} else {
 						//	include ('View/ventaError.php');
@@ -105,9 +137,56 @@ class ventaCtl {
 					if (isset($_SESSION['mail']) && $_SESSION['tipo'] == VENTAS) {
 						$venta = $this -> modelo -> listar();
 						if (is_array($venta))
-							include ('View/listaVenta.php');
+							{
+								$smarty->assign('ventas', $venta);
+								$name="";
+								for($i=0;$i<7;$i++)
+								{
+									$name=$name.chr(rand(97,122));
+								}
+								$name="reporte_ventas";
+								
+								$smarty->assign('pdf',$name);
+								echo $name;
+								$var=$smarty->fetch("venta.tpl");
+								ob_start();
+								echo $var;
+								//var_dump($usuario);
+								$panel = ob_get_clean();
+						  
+								//echo $count+"  saasdasd";
+								$smarty->assign('titulocontenido','');
+								$smarty->assign('contenido',$panel);
+								
+								
+
+								$html =$var;
+								$html= str_replace( "Generar Reporte","", $html); 
+								$dompdf = new DOMPDF();
+								$dompdf->load_html($html);
+								$dompdf->render();
+								$output=$dompdf->output();
+								
+								if(!file_exists('temp/'))
+								{
+									mkdir('temp',777);
+								}
+								file_put_contents("temp/$name.pdf", $output);
+								
+							}
 						else {
-							include ('View/ventaError.php');
+							$smarty->assign('ventas', 'No se encontraron resultados');
+								$var=$smarty->fetch("venta.tpl");
+								ob_start();
+								echo $var;
+								//var_dump($usuario);
+								$panel = ob_get_clean();
+						  
+								//echo $count+"  saasdasd";
+								$smarty->assign('titulocontenido','');
+								$smarty->assign('contenido',$panel);
+								
+							
 						}
 
 					} else

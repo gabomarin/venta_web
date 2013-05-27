@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2013-05-14 07:12:10
+<?php /* Smarty version Smarty-3.1.13, created on 2013-05-25 22:51:04
          compiled from "templates/base_principal2.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:1805972346518896f62e8ab7-38896015%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '4cf56932cade6cd523a96b666a0cb2112e38fcbb' => 
     array (
       0 => 'templates/base_principal2.tpl',
-      1 => 1368507251,
+      1 => 1369538940,
       2 => 'file',
     ),
   ),
@@ -19,10 +19,10 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   'unifunc' => 'content_518896f637c1d4_56467935',
   'variables' => 
   array (
+    'titulo' => 0,
     'user' => 0,
     'categorias' => 0,
     'categoria' => 0,
-    'titulocontenido' => 0,
     'contenido' => 0,
     'numero' => 0,
     'ultimos' => 0,
@@ -34,11 +34,13 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 <html lang="es">
   <head>
     <meta charset="utf-8">
-    <title>TD-informatica</title>
+    <title>TD-informatica | <?php echo $_smarty_tpl->tpl_vars['titulo']->value;?>
+</title>
     <meta name="description" content="Artículo en GenbetaDev sobre Bootstrap 2.0">
-    <meta name="author" content="Alejandro">
+    <meta name="author" content="Lex" >
     <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet" media="screen">
 	<link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+
     <style>
       body { padding-top: 60px; }
 		.arriba{
@@ -67,6 +69,14 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                 font-weight: bold;
                 color: #404040;
           }
+	.superior{
+			font-size:140%;
+			margin-top: 15px;
+	}
+	.barra{
+	margin-top: 2em;
+	}
+
     </style>
 	
 	
@@ -75,24 +85,27 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   <body>
 <div class="navbar navbar-inverse navbar-fixed-top">
 	<div class="navbar-inner">
-		<div class="container-fluid">
+		<div>
 			<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
 			
-			<a class="brand" href="index.php">TD-Informatica</a>
 			<div class="nav-collapse collapse">
 
 					
 				<ul class="nav">
+					<li>
+						<img src="images/logo.jpg" width=80% height=80%<?php ?>>
+					</li>
+				
 					<li class="active">
-						<a href="index.php">Home</a>
+						<a class="superior" href="index.php">Home</a>
 					</li>
 					
 					<li>
-						<a href="index.php?modulo=estandar&action=contacto">Contacto</a>
+						<a class="superior" href="index.php?modulo=estandar&action=contacto">Contacto</a>
 					</li>
 					<?php echo $_smarty_tpl->tpl_vars['user']->value;?>
 
@@ -103,7 +116,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 	</div>
 </div>
 
-<div class="container-fluid">
+<div class="container-fluid barra">
 	<div class="row-fluid">
 		<!--/span-->
 		<div class="span2">
@@ -128,62 +141,48 @@ $_smarty_tpl->tpl_vars['categoria']->_loop = true;
 			</div>
 			<!--/.well -->
 		</div>
-		<div class="span7">
-			<h3><?php echo $_smarty_tpl->tpl_vars['titulocontenido']->value;?>
-</h3>
-			  <div class="well container span12">
 				<?php echo $_smarty_tpl->tpl_vars['contenido']->value;?>
 
 
-		</div>
-			
-			
-		</div>
 		<!--/span-->
-		<div class="span3">
-			<div id="right">
-				<br />
-				<div class="well sidebar-nav">
-				<img src="images/shopping.gif" alt="" width="24" height="24" class="shopping" />
-				<p>
-					Carro de compra
-				</p>
-				<p>
-					<strong><?php echo $_smarty_tpl->tpl_vars['numero']->value;?>
+		<div class="row-fluid span3">
+		      <div class="well sidebar-nav span8">
+		      <img src="images/shopping.gif" alt="" width="24" height="24" class="shopping" />
+		      <p>
+			      Carro de compra
+		      </p>
+		      <p>
+			      <strong><?php echo $_smarty_tpl->tpl_vars['numero']->value;?>
 </strong><span> articulos</span>
-				</p>
-			</div>
-						
-					</div>
-					
-					<div class="well sidebar-nav">
-						
-						
-							<h5>Ultimos Productos</h5>
-							
-							<p>
-							  
-								<?php  $_smarty_tpl->tpl_vars['ultimo'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['ultimo']->_loop = false;
+		      </p>
+		      </div>
+		      
+		      <div class="well sidebar-nav span8">
+			  <h4>Ultimos Productos</h4>
+			  <hr>
+			  
+			  <div class="row-fluid">
+			    
+				  <?php  $_smarty_tpl->tpl_vars['ultimo'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['ultimo']->_loop = false;
  $_from = $_smarty_tpl->tpl_vars['ultimos']->value; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
 foreach ($_from as $_smarty_tpl->tpl_vars['ultimo']->key => $_smarty_tpl->tpl_vars['ultimo']->value){
 $_smarty_tpl->tpl_vars['ultimo']->_loop = true;
 ?>
-								<a href="index.php?modulo=producto&action=consultarDato&dato=<?php echo $_smarty_tpl->tpl_vars['ultimo']->value['id'];?>
+				  <div class="container span7">
+				    <a href="index.php?modulo=producto&action=consultarDato&dato=<?php echo $_smarty_tpl->tpl_vars['ultimo']->value['id'];?>
 &atributo=id"><?php echo $_smarty_tpl->tpl_vars['ultimo']->value['nombre'];?>
 </a>
-								<img src= "<?php echo $_smarty_tpl->tpl_vars['ultimo']->value['imagen'];?>
-" height=64 width=64/>
-								Precio: $<?php echo $_smarty_tpl->tpl_vars['ultimo']->value['precio'];?>
-
-								</br>
-								<?php } ?>
-							</p>
-
-					</div>
-					
-
-					
-				</div>
+				    <img src= "<?php echo $_smarty_tpl->tpl_vars['ultimo']->value['imagen'];?>
+" height=120 width=120/>
+				    <p>Precio: $<?php echo $_smarty_tpl->tpl_vars['ultimo']->value['precio'];?>
+</p>  
+				  </div>
+				  <?php } ?>
+			  </div>
+	
+		      </div>
+		
+		</div>
 			</div>
 		</div>
 		</div>
@@ -191,7 +190,7 @@ $_smarty_tpl->tpl_vars['ultimo']->_loop = true;
 	<!--/row-->
 	<hr>
 	<footer>
-		<div class="container span6 offset6">
+		<div class="container span6 offset4">
 		  <a href="index.php">Inicio</a> | <a href="">FAQ</a> | <a href="">Contactanos</a> | <a href="" >Politicas de Privacidad</a> |
 	     	<a href="" >Terminos del servicio</a>
 		</div>

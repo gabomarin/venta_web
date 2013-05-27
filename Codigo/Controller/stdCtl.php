@@ -26,10 +26,10 @@ class stdCtl {
 		//opcion por default
 		if (!isset($_REQUEST['action'])) {
 			if (!isset($_SESSION['mail'])) {
-				if( isset($_REQUEST['mail']) && isset($_REQUEST['pass']) ){
-					$user = $this -> modelo -> login($_REQUEST['mail'], $_REQUEST['pass']);
-					if (is_array($user)) {
-						if( $user[0]['estatus'] == 1  ){
+						if( isset($_REQUEST['mail']) && isset($_REQUEST['pass']) ){
+							$user = $this -> modelo -> login($_REQUEST['mail'], $_REQUEST['pass']);
+							if ( is_array( $user ) ) {
+								if( $user[0]['estatus'] == 1  ){
 									//Se hace el login
 									$_SESSION['id'] = $user[0]['id'];
 									$_SESSION['nombre'] = $user[0]['nombre'];
@@ -42,25 +42,29 @@ class stdCtl {
 									$_SESSION['tipo'] = $user[0]['tipo'];
 									$_SESSION['carro']='0';
 									//echo 'Has iniciado Correctamente!';
+									header('Location: index.php');
 											
-						} 
-						else 
-							echo 'cuenta inactiva. Porfavor contacte al administrador de cuentas.';
-	
+											
+								} 
+								else 
+									echo 'cuenta inactiva. Porfavor contacte al administrador de cuentas.';
+								
+							}
+							else
+								echo 'Usuario o contraseña invalidos';
+						}
+						else {
+							$smarty->assign('titulo',"Iniciar sesion");
+							ob_start();
+						  require 'templates/portada.tpl';
+						  $panel = ob_get_clean();
+						  $smarty->assign('contenido',$panel);
+						}
+						
+					} 
+					else {
+						//echo 'Ya iniciaste sesion eres: '.$_SESSION['nombre'];
 					}
-					else
-						echo 'Usuario o contraseña invalidos';
-				}
-				else {
-					
-						//echo 'ERROR: no se encontraron datos de entrada en el login, porfavor de revisar las variables';
-					}
-				
-				
-			} 
-			//else {
-			//	echo 'Ya iniciaste sesion eres: '.$_SESSION['nombre'];
-			//}
 		} 
 		else{
 			switch($_REQUEST['action']) {
@@ -94,6 +98,7 @@ class stdCtl {
 								echo 'Usuario o contraseña invalidos';
 						}
 						else {
+							$smarty->assign('titulo',"Iniciar Sesion");
 							ob_start();
 						  require 'templates/login.tpl';
 						  $panel = ob_get_clean();
@@ -131,7 +136,7 @@ class stdCtl {
 				
 				
 				case 'contacto':
-					
+					$smarty->assign('titulo',"Contacto");
 					ob_start();
 						  require 'templates/contacto.tpl';
 						  $panel = ob_get_clean();

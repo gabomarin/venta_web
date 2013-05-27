@@ -4,7 +4,6 @@
  * @package mvc
  * @subpackage model
  */
-require_once ('dbClass.php');
 
 class categoriaBss extends DB {
 
@@ -85,7 +84,7 @@ class categoriaBss extends DB {
 						producto.categoria_id=$dato";
 		//Ejecutar el query
 		$resultado = parent::ejecutarConsulta($query);
-		if (!$resultado) {
+		/*if (!$resultado) {
 
 			if ($atributo != 'id')
 				$temp = '"' . $dato . '"';
@@ -102,6 +101,7 @@ class categoriaBss extends DB {
 					$atributo = $temp";
 			//Ejecutar el query
 			$resultado = parent::ejecutarConsulta($query);
+			*/
 			if (!$resultado) {
 				//echo 'FALLO la consulta';
 				return FALSE;
@@ -117,6 +117,9 @@ class categoriaBss extends DB {
 
 			}
 		}
+
+
+		
 		function modificarDato($id, $nombre) {
 
 			//limpiar variable
@@ -136,7 +139,7 @@ class categoriaBss extends DB {
 
 		}
 
-	}
+	
 
 }
 ?>

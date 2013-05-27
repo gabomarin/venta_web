@@ -1,36 +1,59 @@
-
- <h1 class="titulo">Consulta de Inventario</h1>
+<div class="well span7">
+ <legend><h1>Consulta de Inventario</h1></legend>
  
   
  <br>
   <br>
- <form class="form-search" action="index.php?modulo=inventario&action=cosultarDato" method="post">
+ <form action="index.php?modulo=inventario&action=consultarDato&tipo=fecha" method="post">
 
-			<div class="control-group">
-				<h2 class=>Listar por Fecha</h2>
-				<div class="controls">
-				    <input id="dato" name="dato" type="date" required="required">
-					  <input type="hidden" >
-				    <button type="submit" id="action" name="singlebutton" class="btn btn-primary">Buscar</button>
-			  	</div>
-			</div>
+   <div class="span12">
+	   <h2 class=>Listar por Fecha</h2>
+	   <div class="control-group" style="height: 70px">
+	     <div class="span12">
+	       <input id="dato" name="dato" required="required">		
 
-  
+	       </div>
+	     <div class="controls">
+	       <button type="submit" id="action" name="fecha" class="btn btn-primary">Buscar</button>
+	       </div>
+	   </div>
+   </div>
  </form>
  
  
  <br>
-  <form class="form-search" action="index.php?modulo=inventario&action=listar">
+  <form  action="index.php?modulo=inventario&action=listar" method="post">
 	<div class="control-group">
 		  <h2 class="titulo">Listar todos</h2>
 		  <div class="controls">
-		    <a href="index.php?modulo=inventario&action=listar">
-			  <button id="listar" name="listar" type="button" class="btn btn-success">Buscar</button></a>
+		    
+			  <button id="listar" name="listar" type="submit" class="btn btn-success">Buscar</button>
 		  </div>
 		</div>
 
 	
   </form>
+
+</div>
+
+   
+   <script type="text/javascript" src="datepicker/ng_all.js"></script>
+<script type="text/javascript" src="datepicker/components/calendar.js"></script>
+<script type="text/javascript">
+	 
+ng.ready( function() {
+    var my_cal = new ng.Calendar({
+        input:'dato',
+        date_format:'Y-m-d',
+        server_date_format:'Y-m-d',
+        start_date:'year-8',
+        display_date:'today',
+        allow_weekend_selection:true
+    });
+});
+</script>
+
+
  
  
  

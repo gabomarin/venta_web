@@ -4,8 +4,7 @@
  * @package mvc
  * @subpackage model
  */
-
-class usuarioBss{
+class usuarioBss extends DB{
 	
 	/**
 	 * @param string $nombre
@@ -19,23 +18,23 @@ class usuarioBss{
 		require('usuarioClass.php');
 		
 		//Conectarse a la base de datos
-		require('dbdata.inc');
-		require_once('dbClass.php');
-		$conexion  = new DB($hostdb, $userdb, $passdb, $db);
+		//require('dbdata.inc');
+		//require_once('dbClass.php');
+		//$conexion  = new DB($hostdb, $userdb, $passdb, $db);
 		 
-		if(!$conexion -> conecta())
-			die('No se ha podido realizar la conexion a la bd');
+		//if(!$conexion -> conecta())
+			//die('No se ha podido realizar la conexion a la bd');
 
 
 		//Limpiar las variables recibidas
-			$nombre		=  $conexion->limpiarVariable($nombre);
-			$mail		=  $conexion->limpiarVariable($mail);
-			$pass		=  $conexion->limpiarVariable($pass);
-			$direccion	=  $conexion->limpiarVariable($direccion);
-			$rfc		=  $conexion->limpiarVariable($rfc);
-			$elefono	=  $conexion->limpiarVariable($telefono);
-			$estatus	=  $conexion->limpiarVariable($estatus);
-			$tipo		=  $conexion->limpiarVariable($tipo);
+			$nombre		=  parent::limpiarVariable($nombre);
+			$mail		=  parent::limpiarVariable($mail);
+			$pass		=  parent::limpiarVariable($pass);
+			$direccion	=  parent::limpiarVariable($direccion);
+			$rfc		=  parent::limpiarVariable($rfc);
+			$elefono	=  parent::limpiarVariable($telefono);
+			$estatus	=  parent::limpiarVariable($estatus);
+			$tipo		=  parent::limpiarVariable($tipo);
 
 		//Crear el query
 		$query = "INSERT INTO 
@@ -51,18 +50,18 @@ class usuarioBss{
 				    $tipo)";
 
 		//Ejecutar el query
-		$resultado = $conexion -> ejecutarConsulta($query);
+		$resultado = parent::ejecutarConsulta($query);
 
 		if($resultado == FALSE){
 			echo 'FALLO la consulta';
 			//Cerrar la conexion
-			$conexion -> cerrar();
+			parent::cerrar();
 			return FALSE;
 		}
 		else{
 			$id = $resultado;
 			//Cerrar la conexion
-			$conexion -> cerrar();
+			parent::cerrar();
 
 			//Arreglo del usuario
 			$user = new usuarioClass($id,$nombre,$mail,$pass,$direccion,$rfc,$telefono,$estatus,$tipo);
@@ -75,13 +74,7 @@ class usuarioBss{
 	 * @return mixed array with all the users, or FALSE in fail
 	 */
 	function listar(){
-		//Conectarse a la base de datos
-		require('dbdata.inc');
-		require('dbClass.php');
-		$conexion  = new DB($hostdb, $userdb, $passdb, $db); 
-
-		if(!$conexion-> conecta())
-			die('LIST. No se ha podido realizar la conexion a la bd');
+	
 
 		//Crear el query
 		$query = 'SELECT
@@ -90,18 +83,18 @@ class usuarioBss{
 					usuario';
 
 		//Ejecutar el query
-		$resultado = $conexion -> ejecutarConsulta($query);
+		$resultado = parent::ejecutarConsulta($query);
 
 		if(!$resultado){
 			echo 'FALLO la consulta';
 			
 			//Cerrar la conexion
-			$conexion -> cerrar();
+			parent::cerrar();
 			return FALSE;
 		}
 		else{
 			//Cerrar la conexion
-			$conexion -> cerrar();
+			parent::cerrar();
 
 			return $resultado;			
 		}
@@ -116,17 +109,17 @@ class usuarioBss{
 		require('usuarioClass.php');
 		
 		//Conectarse a la base de datos
-		require('dbdata.inc');
-		require('dbClass.php');
-		$conexion  = new DB($hostdb, $userdb, $passdb, $db); 
+		//require('dbdata.inc');
+		//require('dbClass.php');
+		//$conexion  = new DB($hostdb, $userdb, $passdb, $db); 
 
-		if(!$conexion->conecta())
-			die('No se ha podido realizar la conexion a la bd');
+		//if(!$conexion->conecta())
+			//die('No se ha podido realizar la conexion a la bd');
 
 		//Limpio las variables
-		$dato = $conexion->limpiarVariable($dato);
+		$dato = parent::limpiarVariable($dato);
 		if( $atributo != 'id' && $atributo != 'estatus' && $atributo != '$atributo' )
-			$temp = '"'.$dato.'"' ;
+			$temp = $dato;
 		else
 			$temp = $dato; 
 		//echo $dato.'     ';
@@ -137,44 +130,47 @@ class usuarioBss{
 			    FROM
 			    	usuario
 			    WHERE 
-					$atributo = $temp";
+					$atributo ='$dato'";
+					echo $query;
+
 
 		//Ejecutar el query
-		$resultado = $conexion -> ejecutarConsulta($query);
+		$resultado = parent::ejecutarConsulta($query);
 		//var_dump($resultado);
 		if(!$resultado){
-			echo 'FALLO la consulta';
+			//echo 'FALLO la consulta';
 			
 			//Cerrar la conexion
-			$conexion -> cerrar();
+			parent::cerrar();
 			return FALSE;
 		}
 		else{
 			//Cerrar la conexion
-			$conexion -> cerrar();
-
-			if( $resultado[0][$atributo] == $dato ){
-					$user = new usuarioClass($resultado[0]['id'],$resultado[0]['nombre'],$resultado[0]['mail'],
-											$resultado[0]['pass'],$resultado[0]['direccion'],$resultado[0]['rfc'],
-											$resultado[0]['telefono'],$resultado[0]['estatus'],$resultado[0]['tipo']);
-					
-					return $user;
-				}
-			else
-				return FALSE;
+			parent::cerrar();
+			
+			//echo '<script>alert("consulta exitosa");</script>';
+			//
+			//if( $resultado[0][$atributo] == $dato ){
+			//		$user = new usuarioClass($resultado[0]['id'],$resultado[0]['nombre'],$resultado[0]['mail'],
+			//								$resultado[0]['pass'],$resultado[0]['direccion'],$resultado[0]['rfc'],
+			//								$resultado[0]['telefono'],$resultado[0]['estatus'],$resultado[0]['tipo']);
+			//		//var_dump($resultado);
+			//		
+					return $resultado;
+				//}
+			//else
+			//	return FALSE;
 		}			
 	}
 	function modificarDato($id,$dato,$atributo){
 		//Conectarse a la base de datos
-		require('dbdata.inc');
-		require('dbClass.php');
-		$conexion  = new DB($hostdb, $userdb, $passdb, $db);
+		//require('dbdata.inc');
+		//require('dbClass.php');
+		//$conexion  = new DB($hostdb, $userdb, $passdb, $db);
 		
-		if( $conexion->conecta() == FALSE)
-			die('No se pudo hacer conexion a la BD');
 		
 		//limpiar variable
-		$dato = $conexion->limpiarVariable($dato);
+		$dato = parent::limpiarVariable($dato);
 		
 		if( $atributo != 'id' && $atributo != 'estatus' && $atributo != 'tipo' )
 			$temp = '"'.$dato.'"' ;
@@ -187,8 +183,8 @@ class usuarioBss{
 					$atributo = $temp
 				  WHERE 
 						id = $id";
-		$resultado=$conexion ->ejecutarConsulta($query);
-		$conexion ->cerrar();
+		$resultado=parent::ejecutarConsulta($query);
+		parent::cerrar();
 		if(!$resultado)
 			return FALSE;
 		else

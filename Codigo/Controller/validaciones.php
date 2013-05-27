@@ -30,7 +30,7 @@
 		return FALSE;
 	}
 	function isTelefono($telefono){
-		if( preg_match('/^(\d)+$/',$telefono) )
+		if( preg_match('/^(\d){10}$/',$telefono) )
 			return TRUE;
 		return FALSE;
 	}

@@ -8,6 +8,10 @@
 		<!-- Bootstrap -->
     <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet" media="screen">
 	<link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+	<script type="text/javascript">
+	
+	</script>
 	</head>
 
 	<body>

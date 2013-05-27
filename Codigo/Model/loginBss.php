@@ -5,7 +5,7 @@
  * @subpackage model
  */
  
-require('dbClass.php');
+//require('dbClass.php');
 	
 class loginBss extends DB{
 		

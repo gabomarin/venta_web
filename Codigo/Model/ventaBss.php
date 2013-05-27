@@ -5,7 +5,7 @@
  * @subpackage clase VentaBss
  * @author Gabriel Ortiz Valdovinos <gabrielortiz_26@hotmail.com>
  */
-class ventaBss {
+class ventaBss extends DB {
 
 	/**
 	 * @param string $fecha de la creacion de la venta, double $total de la venta realizada
@@ -16,15 +16,14 @@ class ventaBss {
 		require ('ventaClass.php');
 
 		//Conectarse a la base de datos
-		require ('dbdata.inc');
-		require_once('dbClass.php');
-		$conexion = new DB($hostdb, $userdb, $passdb, $db);
+		//require ('dbdata.inc');
+		//require_once('dbClass.php');
 		
 		//Limpiar las variables recibidas
-		$fecha = 		$conexion -> limpiarVariable($fecha);
-		$total = 		$conexion -> limpiarVariable($total);
-		$facturaId	= 	$conexion -> limpiarVariable($facturaId);
-		$usuarioId 	=	$conexion -> limpiarVariable($usuarioId);
+		$fecha = 		parent::limpiarVariable($fecha);
+		$total = 		parent::limpiarVariable($total);
+		$facturaId	= 	parent::limpiarVariable($facturaId);
+		$usuarioId 	=	parent::limpiarVariable($usuarioId);
 
 
 		//Crear el query
@@ -37,7 +36,7 @@ class ventaBss {
 					 '$usuarioId')";
 
 		//Ejecutar el query
-		$resultado = $conexion -> ejecutarConsulta($query);
+		$resultado = parent::ejecutarConsulta($query);
 
 		if ($resultado == FALSE) {
 			echo 'FALLO la consulta';
@@ -48,7 +47,7 @@ class ventaBss {
 		else {
 			$id = $resultado;
 			//Cerrar la conexion
-			$conexion -> cerrar();
+			parent::cerrar();
 
 			//venta
 			$venta = new usuarioClass($id, $fecha, $total);
@@ -64,22 +63,14 @@ class ventaBss {
 	 */
 	function cancelarVenta($id) {
 
-		require ('dbdata.inc');
-		require ('dbClass.php');
-		$conexion = new DB($hostdb, $userdb, $passdb, $db);
-		$conexion->conecta();
 
-		if (!$conexion)
-			die('LIST. No se ha podido realizar la conexion a la bd');
-
-
-		$id = $conexion -> limpiarVariable($id);
+		$id = parent::limpiarVariable($id);
 		//Crear el query
 		$query = "DELETE FROM venta
 					WHERE id=$id";
 
 		//Ejecutar el query
-		$resultado = $conexion -> ejecutarConsulta($query);
+		$resultado = parent::ejecutarConsulta($query);
 
 		if (!$resultado) {
 			echo 'FALLO la consulta';
@@ -100,31 +91,26 @@ class ventaBss {
 	 * @return mixed. bool FALSE si no se realizo la consulta, venta $resultado con los datos del objeto encontrado
 	 */
 	function listar() {
-		require ('dbdata.inc');
-		require_once ('dbClass.php');
-		$conexion = new DB($hostdb, $userdb, $passdb, $db);
-		//$conexion->conecta();
-
-		if (!$conexion)
-			die('LIST. No se ha podido realizar la conexion a la bd');
-
+		
+		
+			
 		//Crear el query
 		$query = 'SELECT *
 					FROM  
 					venta';
 
 		//Ejecutar el query
-		$resultado = $conexion -> ejecutarConsulta($query);
+		$resultado = parent:: ejecutarConsulta($query);
 
 		if (!$resultado) {
 			echo 'FALLO la consulta';
 
 			//Cerrar la conexion
-			$conexion -> cerrar();
+			parent::cerrar();
 			return FALSE;
 		} else {
 			//Cerrar la conexion
-			$conexion -> cerrar();
+			parent::cerrar();
 
 			return $resultado;
 		}
@@ -140,11 +126,7 @@ class ventaBss {
 		
 		require ('ventaClass.php');
 		//Conectarse a la base de datos
-		require('dbdata.inc');
-		require('dbClass.php');
-		$conexion  = new DB($hostdb, $userdb, $passdb, $db);
-		 
-		
+
 
 
 		//Crear el query
@@ -154,16 +136,16 @@ class ventaBss {
 					WHERE $tipo = $dato";
 
 		//Ejecutar el query
-		$resultado = $conexion -> ejecutarConsulta($query);
+		$resultado =parent::ejecutarConsulta($query);
 
 		if (!$resultado) {
 			echo 'FALLO la consulta';
 			//Cerrar la conexion
-			$conexion -> cerrar();
+			parent::cerrar();
 			return FALSE;
 		} else {
 			//Cerrar la conexion
-			$conexion -> cerrar();
+			parent::cerrar();
 
 			return $resultado;
 		}
