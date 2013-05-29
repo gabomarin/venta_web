@@ -189,6 +189,9 @@ Facturas
 * mail: pedro@gmail.com    pass: 1234   tipo: 2
 * mail: pancho@gmail.com   pass: pancho tipo: 3
 
+http://alanturing.cucei.udg.mx/cc409/virtualtd/
+
+
 ##Desarrolladores
 * Duarte Sánchez Alejandro
    * Codigo: 206587844
