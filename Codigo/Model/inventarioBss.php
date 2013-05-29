@@ -26,14 +26,24 @@ class inventarioBss extends DB{
 			$descripcion			=  parent::limpiarVariable($descripcion);
 
 		//Crear el query
-		$query = "INSERT INTO 
-				   inventario(cantidadProducto,fecha,cantidadReal,cantidadEsperada,descripcion)
+		
+		
+		$query= "INSERT INTO inventario(`fecha`, `cantidadProducto`, `cantidadReal`, `cantidadEsperada`, `descripcion`, `usuario_id`)
+		VALUES ('$fecha',$cantidadProducto,$cantidadReal,$cantidadEsperada,'$descripcion',$_SESSION[id])";
+		
+		
+		
+		/*$query = "INSERT INTO 
+				   inventario(cantidadProducto,fecha,cantidadReal,cantidadEsperada,descripcion,usuario_id)
 				  VALUES
 				  ($cantidadProducto,
 				   '$fecha',
 				    $cantidadReal,
 					$cantidadEsperada,
-					'$descripcion')";
+					'$descripcion',
+					3";*/
+					
+					echo $query;
 
 		//Ejecutar el query
 		//echo $query.'   ';

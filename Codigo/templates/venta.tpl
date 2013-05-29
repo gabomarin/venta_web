@@ -1,0 +1,67 @@
+ <div class="well span7">
+
+			<h1>
+				Consulta de Ventas
+			</h1>
+			<hr>
+			<div class="row-fluid">
+				<div class="span">
+					<table class="table table-hover table-bordered tabla">
+						<thead>
+							<tr>
+								<th>
+									Folio
+								</th>
+								<th>
+									Fecha
+								</th>
+								<th>
+									Cantidad
+								</th>
+								<th>
+									Precio(C/U)
+								</th>
+								<th>
+									Total
+								</th>
+								<th>
+									Estatus
+								</th>
+								
+							</tr>
+						</thead>
+						<tbody>
+							<!-- Crear el Script para la consulta SQL -->
+							<tr>
+								<td>
+									1
+								</td>
+								<td>
+									2012-04-11
+								</td>
+								<td>
+									15
+								</td>
+								<td>
+									150
+								</td>
+								<td>
+									750
+								</td>
+								<td>
+									Valida
+								</td>
+								
+							</tr>
+						</tbody>
+					</table>
+					<a href="temp/{$pdf}.pdf" target="_blank"> <button class="btn btn-primary">Generar Reporte</button></a>
+                    
+			</div>
+			<div class="row-fluid">
+			</div>
+			<hr>
+					  
+		
+	</div>
+</div>
