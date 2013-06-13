@@ -22,15 +22,26 @@
 	            <fieldset>
 		      <div class="tam">
 			<div class="prueba" id="contenedorMail">
-			  <input id="mail" name="mail" type="email" placeholder="Email" required="required" autocomplete="on" autofocus>
+			  <input id="mail" class="input-large" name="mail" type="email" placeholder="Email" required="required" autocomplete="on" autofocus onkeypress="mandar(event);">
 			</div>
-		      </div>
+		    </div>
 			<div class="tam">
-			<div class="prueba" id="contenedorPass">
-			  <input id="pass" name="pass" type="password" placeholder="Pass" required="required">
+			  <div class="prueba" id="contenedorPass">
+			  <input id="pass" class="input-large" name="pass" type="password" placeholder="Pass" required="required" onkeypress="mandar(event);">
+			
+			  </div>
+		    </div>
+			<div class="span8">
+			  <button class="btn btn-primary prueba" type="button" onclick="envia()">Sign in</button>
 			</div>
-		      </div>
-	              <button class="btn btn-primary prueba" type="button" onclick="envia()">Sign in</button>
+		      {if $error != ""}
+			<div class="tam" style="margin-top: 10%;">
+			<div class="prueba alert alert-error">
+			
+			  {$error}
+			  </div>
+			</div>
+			{/if}
 	            </fieldset>
 	          </form>
 	        </div>

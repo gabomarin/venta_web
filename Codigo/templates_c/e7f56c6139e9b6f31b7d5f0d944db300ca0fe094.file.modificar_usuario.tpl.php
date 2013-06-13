@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2013-05-28 07:29:47
+<?php /* Smarty version Smarty-3.1.13, created on 2013-06-06 23:06:05
          compiled from "templates/modificar_usuario.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:74325980151a186fea64bc0-74920056%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'e7f56c6139e9b6f31b7d5f0d944db300ca0fe094' => 
     array (
       0 => 'templates/modificar_usuario.tpl',
-      1 => 1369622752,
+      1 => 1370574906,
       2 => 'file',
     ),
   ),
@@ -59,7 +59,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 	  }
 </style>
 
-	<script type="text/javascript" src="bootstrap/js/validaciones.js"></script>
+	<script type="text/javascript" src="bootstrap/js/validaUsuario.js"></script>
     <form class="well form-horizontal well span7" method="post" enctype="multipart/form-data" action="index.php?modulo=usuario&action=insertar" id="registrar"  name="registrar">
 		<fieldset>
 		
@@ -83,16 +83,6 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 </div>
 		  </div>
 		</div>
-		
-		<!-- Password input-->
-		<div class="contenedorAlto control-group">
-		  <label class="control-label">Contraseña</label>
-		  <div class="span4" id="contenedorPass">
-		    <input id="pass" class="input-medium" name="pass" type="password" class="input-xlarge" value="" maxlength="25" required="required">
-		    
-		  </div>
-		</div>
-		
 		<!-- Text input-->
 		<div class="contenedorAlto  control-group">
 		  <label class="control-label">Direccion</label>

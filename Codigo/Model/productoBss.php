@@ -36,7 +36,6 @@ class productoBss extends DB{
 		
 
 		//Ejecutar el query
-		var_dump($query);
 		$resultado = parent::ejecutarConsulta($query);
 
 		if($resultado == FALSE){
@@ -52,7 +51,7 @@ class productoBss extends DB{
 			parent::cerrar();
 
 			//Arreglo del producto
-			$product = new productoClass($id,$nombre,$descripcion,$estatus,$precio,$existencia);
+			$product = new productoClass($id,$nombre,$descripcion,$estatus,$precio,$existencia,$imagen,$categoria);
 	
 			return $product;
 		}
@@ -128,7 +127,7 @@ class productoBss extends DB{
 			parent::cerrar();
 
 			if( $resultado[0][$atributo] == $dato ){
-					$product = new productoClass($resultado[0]['id'],$resultado[0]['nombre'],$resultado[0]['descripcion'],$resultado[0]['estatus'],$resultado[0]['precio'],$resultado[0]['existencia']);
+					$product = new productoClass($resultado[0]['id'],$resultado[0]['nombre'],$resultado[0]['descripcion'],$resultado[0]['estatus'],$resultado[0]['precio'],$resultado[0]['existencia'],$resultado[0]['imagen']);
 					
 					return $product;
 				}

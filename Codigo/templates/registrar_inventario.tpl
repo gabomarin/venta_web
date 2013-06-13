@@ -5,7 +5,7 @@
 		    height: 48px;
 		  }
 		  .bajar{
-			margin-top: 140px;
+			margin-top: 170px;
 		  }
 	</style>
 	<script type="text/javascript" src="bootstrap/js/validaInventario.js"></script>

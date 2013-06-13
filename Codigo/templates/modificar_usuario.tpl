@@ -30,7 +30,7 @@
 	  }
 </style>
 
-	<script type="text/javascript" src="bootstrap/js/validaciones.js"></script>
+	<script type="text/javascript" src="bootstrap/js/validaUsuario.js"></script>
     <form class="well form-horizontal well span7" method="post" enctype="multipart/form-data" action="index.php?modulo=usuario&action=insertar" id="registrar"  name="registrar">
 		<fieldset>
 		
@@ -52,16 +52,6 @@
 		   <div class="texto">{$correo}</div>
 		  </div>
 		</div>
-		
-		<!-- Password input-->
-		<div class="contenedorAlto control-group">
-		  <label class="control-label">Contraseña</label>
-		  <div class="span4" id="contenedorPass">
-		    <input id="pass" class="input-medium" name="pass" type="password" class="input-xlarge" value="" maxlength="25" required="required">
-		    
-		  </div>
-		</div>
-		
 		<!-- Text input-->
 		<div class="contenedorAlto  control-group">
 		  <label class="control-label">Direccion</label>

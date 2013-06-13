@@ -16,7 +16,7 @@
 	<script type="text/javascript" src="bootstrap/js/validaProducto.js"></script>
   </head>
 	
-	<form class="form-horizontal well span7" method="post" enctype="multipart/form-data" action="index.php/?modulo=producto&action=insertar" id="registrar"  name="registrar">
+	<form class="form-horizontal well span7" method="post" enctype="multipart/form-data" action="index.php?modulo=producto&action=insertar" id="registrar"  name="registrar">
 		<fieldset>
 		
 		<!-- Form Name -->
@@ -44,6 +44,29 @@
 		  <label class="control-label">Existencia</label>
 		  <div class="span4" id="contenedorExistencia">
 		    <input id="existencia" class="input-mini" name="existencia" type="text" class="input-small" pattern="^(\d)+$" min="0"  required="required">
+		    
+		  </div>
+		</div>
+		<!-- Text input-->
+		<div class="contenedorAlto control-group">
+		  <label class="control-label">Categoria</label>
+		  <div class="span4" id="contenedorCategoria">
+		    <select id="categoria" name="categoria">
+			<option value="1">Procesadores</option>
+			<option value="2">Gabinetes</option>
+			<option value="3">Memorias Usb</option>
+			<option value="4">Tarjetas de Video</option>
+			<option value="5">Discos Duros</option>
+			<option value="6">Mouses</option>
+			<option value="7">Laptops</option>
+			<option value="8">Tablets</option>
+			<option value="9">Bocinas</option>
+			<option value="10">Audifonos</option>
+			<option value="11">Microfonos</option>
+			<option value="12">PC de Escritorio</option>
+			<option value="13">Monitor</option>
+			<option value="14">Teclados</option>
+		    </select>
 		    
 		  </div>
 		</div>

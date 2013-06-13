@@ -90,3 +90,8 @@ function envia() {
        
     }
 }
+function mandar(key) {
+        if (key.charCode == 13){
+                envia();
+        } 
+}

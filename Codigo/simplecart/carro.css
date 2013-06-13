@@ -1,0 +1,145 @@
+
+	.cartHeaders,.totalRow{
+		  display:none;
+		  }
+		.simpleCart_items{
+
+			
+			margin-bottom:20px;
+            border:  solid 1px black;
+            border-radius: 7px;
+           background: #d4d4d2; /* Old browsers */
+            background: -moz-linear-gradient(top, #d4d4d2 0%, #bfbfbf 38%, #a1a1a1 100%); /* FF3.6+ */
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#d4d4d2), color-stop(38%,#bfbfbf), color-stop(100%,#a1a1a1)); /* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(top, #d4d4d2 0%,#bfbfbf 38%,#a1a1a1 100%); /* Chrome10+,Safari5.1+ */
+            background: -o-linear-gradient(top, #d4d4d2 0%,#bfbfbf 38%,#a1a1a1 100%); /* Opera 11.10+ */
+            background: -ms-linear-gradient(top, #d4d4d2 0%,#bfbfbf 38%,#a1a1a1 100%); /* IE10+ */
+            background: linear-gradient(to bottom, #d4d4d2 0%,#bfbfbf 38%,#a1a1a1 100%); /* W3C */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d4d4d2', endColorstr='#a1a1a1',GradientType=0 ); /* IE6-9 */         
+            padding: 3px;
+			
+			
+		}
+        
+        .simpleCart_items>table{
+            
+            
+            width: 100%;
+        }
+        
+        
+        .simpleCart_items tr{
+            
+            text-align: center;
+            line-height: 1.4em;
+            width: 98%;
+        }
+        
+		.itemContainer{
+			clear:both;
+			
+	
+			font-size:11px;
+		}
+		.item-thumb{
+			border-left:  solid 1px black;
+            width: 70px;
+            margin: 0;
+            padding: 0;
+            padding-left: 10px;
+            
+                        
+            
+
+		}
+        
+        .item-thumb>img{
+            border-radius: 4px;
+            position: relative;
+            left:20%;
+            margin-top: 3px;
+            margin-bottom: 3px;
+            box-shadow: -3px 3px 6px 1px #262626;
+        }
+		.item-name{
+            padding: 0px;
+            margin: 0px;
+            
+            border-right:   solid 1px black;
+			
+		}
+		.item-price{
+			
+			
+			color:#418932;
+			
+		}
+		.item-quantity{
+			
+
+            padding: 0px;
+            margin: 12px;
+            width: 10%;
+			
+
+
+		}
+		.item-quantity input{
+			
+			border:1px solid #ccc;
+            padding: 0px;
+            margin: 0px;
+			
+		}
+		
+		.item-total{
+			border-right:  solid 1px black;
+			color:#c23f26;
+			
+
+		}
+        
+          .total{
+            font-size:  1.3em;
+            font-style: italic;
+            color: rgba(1, 0, 109,.7);
+            font-weight: bold;
+            text-decoration: underline;
+            float: right;
+            margin-right: 10px;
+        }
+		.item-increment{
+            text-align: left;
+            border-right:  solid 1px black;
+            
+            padding: 0px;
+            margin: 0px;
+		  
+		  
+		}
+        
+        
+		.item-decrement{
+            border-left:  solid 1px black;
+            padding: 0px;
+            margin: 0px;
+		}
+        .item_id_prod
+        {
+            float: left;
+        }
+        
+		.headerRow{
+		  
+		 border-bottom:   solid 1px black;
+		  height: 1.3em;
+		  
+		}
+		.itemRow{
+		
+		  
+		  height: 1.3em;
+	
+		}
+        
+        

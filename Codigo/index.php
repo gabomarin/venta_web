@@ -9,6 +9,7 @@ require('include.php');
 include_once('model/dbClass.php');
 if( !isset($_SESSION) ){
 	session_start();
+	$compra=0;
 }
 $band=0;
 require_once("dompdf/dompdf_config.inc.php");
@@ -52,6 +53,12 @@ class index {
 						 
 						  
 						  $smarty->assign('numero',$_SESSION['carro']);
+						  if($_SESSION['carro']>0)
+						  {
+							$smarty->assign('boton','<button class="btn btn-success">Comprar</button>');
+						  }
+						  else
+						  $smarty->assign('boton','');
 						  
 						  
 						  $conexion  = new mysqli($hostdb, $userdb, $passdb, $db);
@@ -93,6 +100,7 @@ class index {
 						 
 						  
 						  $smarty->assign('numero',"0");
+						  $smarty->assign('boton','');
 						  
 						  
 						  $conexion  = new mysqli($hostdb, $userdb, $passdb, $db);
@@ -101,6 +109,8 @@ class index {
 						   $query = "SELECT * FROM `producto` LIMIT 0,5";
 						    $resultado = $conexion -> query($query);	
 						  $smarty->assign('titulocontenido',"");
+						  
+						  
 						  //$smarty->assign('contenidos', $resultado);
 						  
 						  
@@ -204,7 +214,7 @@ if (isset($_GET['modulo'])) {
 			$controlador = new facturaCtl();
 			break;
 
-       case 'categoria' :
+		 case 'categoria' :
 			include ('controller/categoriaCtl.php');
 			$controlador = new categoriaCtl();
 			break;
@@ -213,18 +223,6 @@ if (isset($_GET['modulo'])) {
 			include ('controller/stdCtl.php');
 			$controlador = new stdCtl();
 			break;
-		
-		case 'v_ventas':
-			//echo 'hola';
-			
-						  $band=1;
-			break;
-		
-		case 'v_inventario':
-			$band=2;
-			break;
-
-
 		default :
 			//carga el controlador estandar
 			include ("controller/stdCtl.php");
@@ -234,6 +232,7 @@ if (isset($_GET['modulo'])) {
 			$call->display();
 			
 			break;
+		
 	}
 
 
@@ -273,7 +272,12 @@ else
 	$smarty->assign('titulocontenido','');
 }
 
+$smarty->assign('compra',$compra);
+
 
 $smarty->display('base_principal2.tpl');
+if($compra==1)
+	$compra=0;
+
 
 ?>

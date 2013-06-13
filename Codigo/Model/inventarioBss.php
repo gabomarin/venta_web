@@ -26,24 +26,14 @@ class inventarioBss extends DB{
 			$descripcion			=  parent::limpiarVariable($descripcion);
 
 		//Crear el query
-		
-		
-		$query= "INSERT INTO inventario(`fecha`, `cantidadProducto`, `cantidadReal`, `cantidadEsperada`, `descripcion`, `usuario_id`)
-		VALUES ('$fecha',$cantidadProducto,$cantidadReal,$cantidadEsperada,'$descripcion',$_SESSION[id])";
-		
-		
-		
-		/*$query = "INSERT INTO 
-				   inventario(cantidadProducto,fecha,cantidadReal,cantidadEsperada,descripcion,usuario_id)
+		$query = "INSERT INTO 
+				   inventario(cantidadProducto,fecha,cantidadReal,cantidadEsperada,descripcion)
 				  VALUES
 				  ($cantidadProducto,
 				   '$fecha',
 				    $cantidadReal,
 					$cantidadEsperada,
-					'$descripcion',
-					3";*/
-					
-					echo $query;
+					'$descripcion')";
 
 		//Ejecutar el query
 		//echo $query.'   ';
@@ -74,9 +64,16 @@ class inventarioBss extends DB{
 		
 		//Crear el query
 		$query = 'SELECT
-					*
-				  FROM
-					inventario';
+				inventario.id,
+				inventario.fecha,
+				inventario.cantidadProducto,
+				inventario.cantidadReal,
+				inventario.cantidadEsperada,
+				inventario.descripcion,
+				usuario.nombre
+			  FROM
+				usuario,inventario
+			  WHERE usuario.id=inventario.usuario_id';
 
 		//Ejecutar el query
 		$resultado =parent::ejecutarConsulta($query);

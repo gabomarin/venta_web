@@ -21,8 +21,18 @@ class ventaCtl {
 	function __construct() {
 		$this -> modelo = new ventaBss();
 	}
+	
+	
+	function limpiaCarro()
+	{
+		
+		echo "<script type='text/javascript'>
+				simpleCart.empty()
+			</script>";
+	}
 
 	function ejecutar() {
+		global $compra;
 		global $smarty;
 		//Si no tengo parametros, listo las ventas
 		if (!isset($_REQUEST['action'])) {
@@ -39,15 +49,132 @@ class ventaCtl {
 		} else
 			switch($_REQUEST['action']) {
 				case 'generar' :
+					
+					
+					//var_dump($_REQUEST);
+					date_default_timezone_set('UTC'); 
+					$fecha= date('Y-m-d');
+					//echo $fecha;
+					
+					//die(var_dump( $_COOKIE));
+					
+					//ob_start();
+					//echo "<div class='simpleCart_quantity'></div>";
+					//$count=ob_get_clean();
+					//die($count);
+					if($_REQUEST['itemCount']<=0)
+					{
+								$smarty->assign('bandera',3);
+								$var=$smarty->fetch("venta_completada.tpl");
+								ob_start();
+								echo $var;
+								//var_dump($usuario);
+								$panel = ob_get_clean();
+						  
+								//echo $count+"  saasdasd";
+								$smarty->assign('titulocontenido','');
+								$smarty->assign('contenido',$panel);
+					}
 					//Cualquiera puede comprar, menos los visitantes
-					if (isset($_SESSION['mail'])) {
-						$venta = $this -> modelo -> generarVenta($_REQUEST['fecha'], $_REQUEST['total'], $_REQUEST['factura_id'], $_SESSION['id']);
-						if (is_array($venta))
-							include ('View/listaVenta.php');
+					else if (isset($_SESSION['mail'])) {
+						$venta = $this -> modelo -> generarVenta($_REQUEST, $_SESSION['id'],$fecha);
+						if (is_object($venta))
+						{
+								$compra= 1;
+								$smarty->assign('bandera',1);
+								$var=$smarty->fetch("venta_completada.tpl");
+								ob_start();
+								echo $var;
+								//var_dump($usuario);
+								$panel = ob_get_clean();
+						  
+								//echo $count+"  saasdasd";
+								$smarty->assign('titulocontenido','');
+								$smarty->assign('contenido',$panel);
+								
+								
+								
+								
+								//Ahora envia el email
+								
+								
+								
+								require_once('phpmail/class.phpmailer.php');
+								require_once('phpmail/class.smtp.php');
+								
+								$mail = new PHPMailer();
+								$mail->IsSMTP();
+								$mail->SMTPAuth = true;
+								$mail->SMTPSecure = "ssl";
+								$mail->Host = "smtp.gmail.com";
+								$mail->Port = 465;
+		
+								$mail->Username = 'virtual.td.26@gmail.com';
+								$mail->Password = 'virtualtd';
+								
+								
+								
+								ob_start();
+								echo "div class='simpleCart_items'></div>";
+								$carro= ob_get_clean();
+								
+								
+								$mensaje=  '<style>'.file_get_contents('bootstrap/css/bootstrap.css').'</style>';
+								$mensaje.= '<p class="well span7">'.$carro.'</p>';
+								
+								
+								
+								
+								$para      = $_SESSION['mail'];
+								
+								$titulo = 'Contacto';
+								
+								$cabeceras = 'From: '. 'virtual.td.26@gmail.com' . "\r\n" .
+									'Reply-To: virtual.td.26@gmail.com' . "\r\n";
+								$cabeceras.='MIME-Version: 1.0' . "\r\n";
+								$cabeceras .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+								
+								$log= fopen('mail_log.txt','a+');	
+								if(mail($para, $titulo, $mensaje, $cabeceras))
+								{
+									fwrite($log,'Email  enviado correctamente el dia '.date('l jS \of F Y ').'a las '.date('h:i:s A').'\n');
+								}
+								
+								else
+								{
+									fwrite($log,'No se pudo enviar el email');
+								}
+								fclose($log);
+								
+							
+						}
 						else
-							include ('View/ventaError.php');
-					} else
-						echo 'logueate para poder realizar la compra';
+						{
+								$smarty->assign('bandera',0);
+								$var=$smarty->fetch("venta_completada.tpl");
+								ob_start();
+								echo $var;
+								//var_dump($usuario);
+								$panel = ob_get_clean();
+						  
+								//echo $count+"  saasdasd";
+								$smarty->assign('titulocontenido','');
+								$smarty->assign('contenido',$panel);
+						}
+					}
+					else
+					{
+						$smarty->assign('bandera',2);
+						$var=$smarty->fetch("venta_completada.tpl");
+							ob_start();
+							echo $var;
+							//var_dump($usuario);
+							$panel = ob_get_clean();
+					  
+							//echo $count+"  saasdasd";
+							$smarty->assign('titulocontenido','');
+							$smarty->assign('contenido',$panel);
+					}
 					break;
 
 				case  'cancelar' :
@@ -64,23 +191,51 @@ class ventaCtl {
 					}
 					break;
 				case  'consultaCompra' :
-						if(isset($_REQUEST['tipo']) && isset($_REQUEST['dato'])){
-						$venta = $this -> modelo -> consultar($_REQUEST['tipo'], $_REQUEST['dato']);
-						if (is_array($venta))
-							include ('View/listaVenta.php');
-						else {
-							include ('View/ventaError.php');
-						}
+					if (isset($_SESSION['mail'])) {
 						
-						}
+						$venta = $this -> modelo -> listarCompra($_SESSION['id']);
+						/*var_dump($venta);
+						die();*/
+						
+						if (is_array($venta))
+						{
+								
+								$smarty->assign('ventas', $venta);
+								$name="";
+								for($i=0;$i<7;$i++)
+								{
+									$name=$name.chr(rand(97,122));
+								}
+								$name="reporte_ventas";
+								
+								$smarty->assign('pdf',$name);
+								echo $name;
+								$var=$smarty->fetch("consulta_compra.tpl");
+								ob_start();
+								echo $var;
+								//var_dump($usuario);
+								$panel = ob_get_clean();
+						  
+								//echo $count+"  saasdasd";
+								$smarty->assign('titulocontenido','');
+								$smarty->assign('contenido',$panel);
+								
+							}
 						else {
+							$smarty->assign('ventas', 'No se encontraron resultados');
+								$var=$smarty->fetch("consulta_compra.tpl");
+								ob_start();
+								echo $var;
+								//var_dump($usuario);
+								$panel = ob_get_clean();
+						  
+								//echo $count+"  saasdasd";
+								$smarty->assign('titulocontenido','');
+								$smarty->assign('contenido',$panel);
+								
 							
-							ob_start();
-						  require 'templates/consulta_compra.tpl';
-						  $panel = ob_get_clean();
-						  $smarty->assign('contenido',$panel);
-						  $smarty->assign('titulocontenido','');
 						}
+					}
 					
 					break;
 				case  'consulta' :
@@ -191,6 +346,21 @@ class ventaCtl {
 
 					} else
 						echo 'No tienes permisos para listar';
+					break;
+				
+				
+				case 'carro':
+							//$smarty->assign('bandera',2);
+							$var=$smarty->fetch("detalle_carro.tpl");
+							ob_start();
+							echo $var;
+							//var_dump($usuario);
+							$panel = ob_get_clean();
+					  
+							//echo $count+"  saasdasd";
+							$smarty->assign('titulocontenido','');
+							$smarty->assign('contenido',$panel);
+					
 					break;
 
 				default :

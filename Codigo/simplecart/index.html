@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+	<title>simpleCart (js) Demo</title>
+	<link rel="stylesheet" href="example.css" type="text/css" media="screen" charset="utf-8" />
+	<!--[if lte IE 6]><link rel="stylesheet" href="ie6.css" type="text/css" media="screen" charset="utf-8" /><![endif]-->
+	<!--[if IE 7]><link rel="stylesheet" href="ie7.css" type="text/css" media="screen" charset="utf-8" /><![endif]-->
+	<!--Include the SimpleCart(js) script-->
+	<script src="javascripts/simpleCart.js" type="text/javascript" charset="utf-8"></script>
+	
+	<!--Make a new cart instance with your paypal login email-->
+	<script type="text/javascript">
+		simpleCart = new cart("brett@wojodesign.com");
+	</script>
+	
+	<!--CSS for the Cart. Customize anything you damn well please.
+		Use Firebug or Webkit's Element Inspector to get a more 
+		indepth idea of what simpleCart Generates.
+	-->
+	<style>
+		.cartHeaders,.totalRow{display:none;}
+		.simpleCart_items{
+			overflow-y:auto;
+			overflow-x:hidden;
+			height:324px;
+			width:243px;
+			margin-bottom:20px;
+		}
+		.itemContainer{
+			clear:both;
+			width:229px;
+			padding:11px 0;
+			font-size:11px;
+		}
+		.itemImage{
+			float:left;
+			width:60px;
+		}
+		.itemName{
+			float:left;
+			width:85px;
+		}
+		.itemPrice{
+			float:left;
+			width:85px;
+			color:#418932;
+		}
+		.itemQuantity{
+			float:left;
+			width:33px;
+			margin-top:-12px;
+			vertical-align:middle;
+		}
+		.itemQuantity input{
+			width:20px;
+			border:1px solid #ccc;
+			padding:3px 2px;
+		}
+		
+		.itemTotal{
+			float:left;
+			color:#c23f26;
+			margin-top:-6px
+		}
+	</style>
+	
+	
+	
+</head>
+
+<body>
+	<div id="topFrame"><img src="images/greenLogo.gif" alt="simpleCart(js)" style="vertical-align:middle;margin:-1px 20px 0 0" /> <a href="#">Docs</a> &nbsp;&nbsp;&nbsp;<a href="#">Download</a></div>
+		<div id="content">
+			<div id="header">
+				<h1>simpleCart (js)</h1>
+			</div>
+			
+			<!--Here's the Catalog Items. You can make anything into a product, 
+				just copy and paste the onclick attribute from one of the products 
+				below.
+			-->
+			<ul id="catalog">
+				
+				<li>
+					<img src="images/products/redShoe.jpg" alt="Red Shoe" />
+					<span class="price">$50</span><b>Red Shoe<br/><a href="#" onclick="simpleCart.add('name=Red Shoe','price=50','image=images/thumbs/redShoe.jpg');return false;"> add to cart</a></b>
+				</li>
+				
+				<li>
+					<img src="images/products/goldShoe.jpg" alt="Gold Shoe" />
+					<span class="price">$70</span><b>Gold Shoe<br/><a href="#" onclick="simpleCart.add('name=Gold Shoe','price=70','image=images/thumbs/goldShoe.jpg');return false;"> add to cart</a></b>
+				</li>
+				
+				<li>
+					<img src="images/products/whiteSlipon.jpg" alt="White Slip-on" />
+					<span class="price">$45</span><b>White Slip-on<br/><a href="#" onclick="simpleCart.add('name=White Slip-on','price=45','image=images/thumbs/whiteSlipon.jpg');return false;"> add to cart</a></b>
+				</li>
+				
+				<li>
+					<img src="images/products/blackGold.jpg" alt="Black Gold" />
+					<span class="price">$58</span><b>Black Gold<br/><a href="#" onclick="simpleCart.add('name=Black Gold','price=58','image=images/thumbs/blackGold.jpg');return false;"> add to cart</a></b>
+				</li>
+				
+				<li>
+					<img src="images/products/greenStripe.jpg" alt="Green Stripe" />
+					<span class="price">$90</span><b>Green Stripe<br/><a href="#" onclick="simpleCart.add('name=Green Stripe','price=90','image=images/thumbs/greenStripe.jpg');return false;"> add to cart</a></b>
+				</li>
+				
+				<li>
+					<img src="images/products/redStripe.jpg" alt="Red Stripe" />
+					<span class="price">$59</span><b>Red Stripe<br/><a href="#" onclick="simpleCart.add('name=Red Stripe','price=59','image=images/thumbs/redStripe.jpg');return false;"> add to cart</a></b>
+				</li>
+				
+				<li>
+					<img src="images/products/whiteStripe.jpg" alt="White Stripe" />
+					<span class="price">$75</span><b>White Stripe<br/><a href="#" onclick="simpleCart.add('name=White Stripe','price=75','image=images/thumbs/whiteStripe.jpg');return false;"> add to cart</a></b>
+				</li>
+				
+				<li>
+					<img src="images/products/creamSlipon.jpg" alt="Cream Slip-on" />
+					<span class="price">$45</span><b>Cream Slip-on<br/><a href="#" onclick="simpleCart.add('name=Cream Slip-on','price=45','image=images/thumbs/creamSlipon.jpg');return false;"> add to cart</a></b>
+				</li>
+
+			</ul>
+			<!--/ Catalog-->
+			
+			
+			<div id="sidebar">
+				<h2>Your Cart</h2>
+				
+				
+				<!--Add a Div with the class "simpleCart_items" to show your shopping cart area.-->
+				<div class="simpleCart_items" >
+				</div>
+				
+				
+				<!--Here's the Links to Checkout and Empty Cart-->
+				<a href="#" class="simpleCart_empty">empty cart</a>
+				<a href="#" class="simpleCart_checkout">Checkout</a>
+				
+				
+				
+				<!--Nothing below this has to do with simpleCart (js) functionality-->
+				<div id="downloadContainer">
+					<h3>Download</h3>
+					<a href="#"><img src="images/smallLogo.gif" alt="Download simpleCart(js)" id="smallLogo" /></a>&nbsp;&nbsp;&nbsp;&nbsp;
+					<a href="#">Version 1.0</a>&nbsp;&nbsp;<a href="#"><img src="images/arrow.gif" alt="Download simpleCart(js)"></a>
+				</div>	
+			<!--End #sidebar-->	
+			</div>
+			<div id="footer">
+				Created by <a href="http://thewojogroup.com"><img src="images/wojo.gif" alt="The Wojo Group" /></a> <a href="http://thewojogroup.com">The Wojo Group</a> &nbsp;&nbsp;
+				&bull;&nbsp;&nbsp;<img src="images/microLogo.gif" alt="simple cart js" style="vertical-align:bottom" /> is licensed under <a href="#">MIT License</a>
+			</div>	
+		<!--End #content-->		
+		</div>
+</body>
+</html>

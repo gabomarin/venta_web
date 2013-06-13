@@ -46,10 +46,95 @@ class usuarioCtl {
 						$tipo=1;
 						$usuario = $this->modelo->insertar($_REQUEST['nombre'],$_REQUEST['mail'],$_REQUEST['pass'],$_REQUEST['direccion'],$_REQUEST['rfc'],$_REQUEST['telefono'],$estatus,$tipo);
 						//echo gettype($cadena);
+
 						if ( is_object($usuario) )
-							include('View/usuarioInsertadoView.php');
+						{
+							require_once('phpmail/class.phpmailer.php');
+							require_once('phpmail/class.smtp.php');
+							
+							
+							$smarty->assign('registro', 'Registro Exitoso');
+							$enlace= '<a class="btn btn-success" href="http://alanturing.cucei.udg.mx/cc409/virtualtd/index.php?modulo=estandar&action=login">AQUI</a>';
+							
+							
+							
+							
+							
+							
+							
+							$mensaje.= 'Gracias <b>'.$usuario->nombre.'</b> por registrarte en <em><strong>TD-INFORMATICA</strong></em>,
+							ahora mismo puedes iniciar sesion y comenzar a realizar compras haciendo click'.'&nbsp;&nbsp;'.$enlace;
+							$mensaje.= '</br></br>Tu correo de acceso es  '. $usuario->mail; 
+							
+							
+							
+							$smarty->assign('mensaje', $mensaje);
+							$msg=  '<style>'.file_get_contents('bootstrap/css/bootstrap.css').'</style>';
+							$msg.= '<div class="well span7 text-center">';
+							$msg.='<a class="text-center" href="http://alanturing.cucei.udg.mx/cc409/virtualtd/index.php"><img class="img-rounded" src="images/logo_mail.jpg"  /></a></br>';
+							$msg.=$mensaje.'</div>';
+							
+									
+							$var=$smarty->fetch("usuario_registrado.tpl");
+							ob_start();
+							echo $var;
+							//var_dump($usuario);
+							$panel = ob_get_clean();
+						  
+						   //echo $count+"  saasdasd";
+							$smarty->assign('titulocontenido','');
+							$smarty->assign('contenido',$panel);
+							
+							
+							
+							//Enviamos el correo
+							$mail = new PHPMailer();
+							$mail->IsSMTP();
+							$mail->SMTPAuth = true;
+							$mail->SMTPSecure = "ssl";
+							$mail->Host = "smtp.gmail.com";
+							$mail->Port = 465;
+
+							
+							$mail->Username = 'virtual.td.26@gmail.com';
+							$mail->Password = 'virtualtd';
+							
+							$mail->From= 'virtual.td.26@gmail.com';
+							$mail->FromName= 'Le Administradore';
+							$mail->Subject = 'Registro en TD-INOFRMATICA';
+							$mail->AltBody = 'No se puede mostrar el correo, por favor actualiza tu navegador';
+							$mail->MsgHTML($msg);
+							
+
+							$mail->AddAddress($usuario->mail, $usuario->nombre);
+							
+							$log= fopen('mail_log.txt','a+');	
+							
+							if($mail->Send()) {
+								//echo 'Email para '.$usuario->mail.' enviado correctamente el dia '.date('l jS \of F Y ').'a las '.date('h:i:s A')."\n";
+								fwrite($log,'Email para '. $usuario->mail.' enviado correctamente el dia '.date('l jS \of F Y ').'a las '.date('h:i:s A')."\n");
+							
+							} else {
+								fwrite($log,'No se pudo enviar el email a '.$usuario->mail.'\n');
+							}
+							fclose($log);
+
+							
+						}
 						else
-							echo 'Error no se pudo insertar';
+						{
+							$smarty->assign('registro','Fallo el registro');
+							$smarty->assign('mensaje','Lo sentimos, no se pudo completar el registro, intenta de nuevo');
+							$var=$smarty->fetch("usuario_registrado.tpl");
+							ob_start();
+							echo $var;
+							//var_dump($usuario);
+							$panel = ob_get_clean();
+						   //echo $count+"  saasdasd";
+							$smarty->assign('titulocontenido','');
+							$smarty->assign('contenido',$panel);
+							
+						}
 					}
 					else 
 						echo 'Datos no validos. Porfavor revise la sintaxis';
@@ -73,17 +158,7 @@ class usuarioCtl {
 				break;
 			
 			
-			case 'registrar':
-				//echo $_SESSION['mail'];
-				if(!isset($_SESSION['mail'])){
-					$smarty->assign('titulo',"Registrar cuenta");
-						ob_start();
-						  require 'templates/registrar_usuario.tpl';
-						  $panel = ob_get_clean();
-						  $smarty->assign('contenido',$panel);
-						  }
-				
-				break;
+
 			
 			case 'listar':
 				if(isset($_SESSION['mail']) && $_SESSION['tipo'] == 2){//solo el encargado de ventas puede consultar los usuarios
@@ -266,37 +341,38 @@ class usuarioCtl {
 				
 			break;
 			
-			case 'modificarDato':
+			case 'modificarPass':
 				
-						if( isset($_SESSION['mail']) && $_SESSION['tipo'] == 2  ){//si es un encargado de ventas puede modificar cualquier usuario
+						 if( isset($_SESSION['mail'])  ){//si es un cliente solo puede modificar su informacion 
 							include('validaciones.php');
 							
-							if(isId($_REQUEST['id']) && isUsuarioAD($_REQUEST['atributo'],$_REQUEST['dato'])){
-								$usuario = $this->modelo->modificarDato($_REQUEST['id'],$_REQUEST['dato'],$_REQUEST['atributo']);
-								if($usuario == TRUE)
-									echo 'El campo fue modificado exitosamente';
+							if( isset($_REQUEST['passNuevo'])){
+							
+								if(isUsuarioAD('pass',$_REQUEST['passNuevo'])){
+									$usuario = $this->modelo->modificarDato($_SESSION['id'],$_REQUEST['passNuevo'],'pass');
+									//var_dump($usuario);
+									if($usuario == TRUE)
+										echo 'El campo fue modificado exitosamente';
+									else {
+										echo 'El campo no pudo ser modificado';
+									}
+								}
 								else {
-									echo 'El campo no pudo ser modificado';
-								}	
-							}
-							else {
-								echo 'Datos no validos. Porfavor revise la sintaxis';
+									echo 'Datos no validos. Porfavor revise la sintaxis';
 								}
 							
-						}
-						else if( isset($_SESSION['mail']) && $_REQUEST['id'] ==  $_SESSION['id'] ){//si es un cliente solo puede modificar su informacion 
-							include('validaciones.php');
-							if(isId($_REQUEST['id']) && isUsuarioAD($_REQUEST['atributo'],$_REQUEST['dato'])){
-								$usuario = $this->modelo->modificarDato($_REQUEST['id'],$_REQUEST['dato'],$_REQUEST['atributo']);
-								//var_dump($usuario);
-								if($usuario == TRUE)
-									echo 'El campo fue modificado exitosamente';
-								else {
-									echo 'El campo no pudo ser modificado';
-								}
 							}
-							else {
-								echo 'Datos no validos. Porfavor revise la sintaxis';
+							else
+							{
+
+										$smarty->assign('titulo',"Modificar contraseña");
+										ob_start();
+										require 'templates/modificar_pass.tpl';
+										$panel = ob_get_clean();
+										$smarty->assign('contenido',$panel);
+										$smarty->assign('titulocontenido','');
+										
+	
 							}
 						} 
 						else

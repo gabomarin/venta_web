@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2013-05-26 15:50:07
+<?php /* Smarty version Smarty-3.1.13, created on 2013-06-07 22:07:14
          compiled from "templates\perfil.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:1160951a13084e45875-20375645%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'a99aba8a065ce60cd0524f3f3219dea8b293f693' => 
     array (
       0 => 'templates\\perfil.tpl',
-      1 => 1369595045,
+      1 => 1370656339,
       2 => 'file',
     ),
   ),
@@ -41,7 +41,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 				<div class="span4">
 					<img src="https://s3.amazonaws.com/jetstrap-site/images/what_icon.png">
 				</div>
-				<div class="span6 ">
+				<div class="span8">
 					<h3>
 						<?php echo $_smarty_tpl->tpl_vars['usuario']->value;?>
 
@@ -56,8 +56,13 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 </p>
 					<a href="index.php?modulo=usuario&action=modificar">
 						<button type="button" class="btn btn-info btn-large" id="modificar" name="modificar">
-							Modificar 
+							Modificar
 						</button>
+					</a>
+					<a href="index.php?modulo=usuario&action=modificarPass">
+						  <button type="button" class="btn btn-info btn-large" id="pass" name="pass">
+								  Cambiar Contrase&ntilde;a
+						  </button>
 					</a>
 					<a href="index.php?modulo=venta&action=consultaCompra">
 						<button type="button" class="btn btn-info btn-large" id="compra" name="compra">

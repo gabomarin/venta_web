@@ -1,0 +1,118 @@
+/*****************************************
+SimpleCart(js)
+Written By Brett Wejrowski
+Demo Site by Stephen McKinney
+
+The Style's for the SimpleCart(js) are in
+the Header of index.html. The following
+Just makes the rest of the site look
+pretty
+*****************************************/
+
+
+
+
+
+body{
+	background:url("../images/bg.jpg");
+	
+}
+
+
+
+#catalog{
+	width:770px;
+	margin:30px 0 0 10px;
+	float:left;
+	height:444px;
+}
+#catalog li{
+	float:left;
+	margin:25px 25px 75px 25px;
+}
+#catalog li img{
+	display:block;
+}
+.price{
+	display:block;
+	float:left;
+	background:url(images/span.png);
+	width:33px;
+	height:21px;
+	line-height:20px;
+	margin:6px 4px 0 0;
+	color:#fff;
+	font-size:15px;
+	padding:2px 0 0 5px;
+	font-weight:lighter;
+	
+}
+
+#sidebar{
+	float:right;
+	margin-right:5px;
+	width:248px;
+	margin-top:-70px;
+	
+}
+#sidebar a{
+	font-size:11px;
+	color:#000;
+}
+#sidebar a.simpleCart_checkout,
+.checkoutEmptyLinks a.simpleCart_checkout{
+	display:-moz-inline-box;
+	display:inline-block;
+	width:87px;
+	height:25px;
+	background:url(images/btnCheckout.gif);
+	overflow:hidden;
+	margin-left:100px;
+	vertical-align:middle;
+	text-indent:-9999px;
+	font-size:0;
+}
+a.btnCheckout:hover{
+	background-position:87px 0;
+}
+
+
+
+/*************************
+my cart page
+*************************/
+.alsoContainer{
+	float:left;
+	clear:left;
+	padding:15px 0;
+}
+.alsoInfo,
+.alsoImage,
+.alsoPrice{
+	float:left;
+}
+.alsoImage{
+	margin-right:8px;
+}
+.alsoInfo{
+	margin-right:9px;
+	width:90px;
+}
+#sidebar .alsoContainer a{
+	color:#c23f26;
+}
+.alsoPrice{
+	color:#418932;
+	font-size:13px;
+	padding-top:5px;
+}
+.checkoutEmptyLinks{
+	float:left;
+	clear:left;
+	width:500px;
+	padding-left:221px;
+}
+.checkoutEmptyLinks a{
+	color:#000;
+	font-size:11px;
+}

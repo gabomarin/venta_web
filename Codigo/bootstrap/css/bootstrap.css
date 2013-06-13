@@ -652,6 +652,7 @@ a:focus {
 
 p {
   margin: 0 0 10px;
+  word-wrap:break-word;
 }
 
 .lead {
@@ -763,6 +764,7 @@ h1,
 h2,
 h3 {
   line-height: 40px;
+  word-wrap:break-word;
 }
 
 h1 {
@@ -1961,13 +1963,31 @@ legend + .control-group {
   clear: both;
 }
 
-.form-horizontal .control-label {
-  float: left;
-  width: 160px;
-  padding-top: 5px;
-  text-align: right;
-}
 
+@media (min-width:767px)and( max-width: 974px){
+  .form-horizontal .control-label {
+    float: left;
+    width: 80px;
+    padding-top: 5px;
+    text-align: left;
+  }
+}
+@media (min-width: 975px){
+  .form-horizontal .control-label {
+    float: left;
+    width: 160px;
+    padding-top: 5px;
+    text-align: right;
+  }
+}
+@media(max-width:766px){
+  .form-horizontal .control-label {
+    float: left;
+    width: 160px;
+    padding-top: 5px;
+    text-align: right;
+  }
+}
 .form-horizontal .controls {
   *display: inline-block;
   *padding-left: 20px;
@@ -4402,10 +4422,6 @@ input[type="submit"].btn.btn-mini {
   width: auto;
 }
 
-.nav-collapse.collapse {
-  height: auto;
-  overflow: visible;
-}
 
 .navbar .brand {
   display: block;

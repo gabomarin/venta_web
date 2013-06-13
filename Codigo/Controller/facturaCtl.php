@@ -7,7 +7,8 @@
  */
 
 //Este controlador require tener acceso al modelo
-include_once ('Model/facturaBss.php');
+include_once ('model/facturaBss.php');
+include_once ('factura/factura.php');
 define('VENTAS', 2);
 define('CLIENTE', 1);
 define('INVENTARIO',3);
@@ -22,6 +23,7 @@ class facturaCtl {
 	//Cuando se crea el controlador crea el modelo de venta
 	function __construct() {
 		$this -> modelo = new facturaBss();
+		$this -> modeloFactura = new facturaPdfBss();
 	}
 
 	function ejecutar() {
@@ -102,6 +104,11 @@ class facturaCtl {
 						echo 'No tienes permisos para realizar esta accion';
 						
 						break;
+				case 'pdf':
+					if(isset( $_REQUEST['id'] )){	
+						$facuraPdf = $this -> modeloFactura -> crearFactura($_REQUEST['id']);
+					}
+					break;
 			}
 
 	}

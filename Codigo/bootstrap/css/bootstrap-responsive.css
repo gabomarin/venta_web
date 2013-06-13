@@ -865,7 +865,7 @@
   textarea[class*="span"],
   .uneditable-input {
     display: block;
-    width: 100%;
+    width: auto;
     min-height: 30px;
     -webkit-box-sizing: border-box;
        -moz-box-sizing: border-box;
@@ -1101,7 +1101,7 @@
   }
 }
 
-@media (min-width: 980px) {
+@media (min-width: 1215px) {
   .nav-collapse.collapse {
     height: auto !important;
     overflow: visible !important;

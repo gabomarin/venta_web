@@ -145,7 +145,8 @@ function validaForm(){
                 if( typeof(div_error) == 'object' )
                         valor2.parentNode.removeChild(div_error);
         }
-        if( valor.value == null || valor.value.length == "" || !/^(\s){1,}$/){
+        valor.value=jQuery.trim(valor.value);
+        if( valor.value == null || valor.value.length == ""){
                 if ( !document.getElementById('errorDescripcion')) {
                     //alert('AQUI!');
                     var div = document.createElement('div');

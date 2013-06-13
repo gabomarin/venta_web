@@ -95,14 +95,37 @@ class stdCtl {
 								
 							}
 							else
-								echo 'Usuario o contraseña invalidos';
+								{
+									$error='Error: Usuario o contraseña invalidos';
+									$smarty->assign('titulo',"Iniciar Sesion");
+									$smarty->assign('error',$error);
+									//ob_start();
+								  //require 'templates/login.tpl';
+								  //$panel = ob_get_clean();
+								  
+									$var=$smarty->fetch("login.tpl");
+									
+									ob_start();
+									echo $var;
+									//var_dump($usuario);
+									$panel = ob_get_clean();
+									$smarty->assign('contenido',$panel);
+								}
 						}
 						else {
 							$smarty->assign('titulo',"Iniciar Sesion");
+							$smarty->assign('error','');
+							//ob_start();
+						  //require 'templates/login.tpl';
+						  //$panel = ob_get_clean();
+						  
+							$var=$smarty->fetch("login.tpl");
+							
 							ob_start();
-						  require 'templates/login.tpl';
-						  $panel = ob_get_clean();
-						  $smarty->assign('contenido',$panel);
+							echo $var;
+							//var_dump($usuario);
+							$panel = ob_get_clean();
+							$smarty->assign('contenido',$panel);
 						}
 						
 					} 
@@ -136,12 +159,94 @@ class stdCtl {
 				
 				
 				case 'contacto':
-					$smarty->assign('titulo',"Contacto");
-					ob_start();
-						  require 'templates/contacto.tpl';
-						  $panel = ob_get_clean();
-						  $smarty->assign('contenido',$panel);
-						  $smarty->assign('titulocontenido','');
+					if(isset($_REQUEST['nombre']) && isset($_REQUEST['mail']) && isset($_REQUEST['descripcion']))
+					{
+						
+						require_once('phpmail/class.phpmailer.php');
+						require_once('phpmail/class.smtp.php');
+						
+						$mail = new PHPMailer();
+						$mail->IsSMTP();
+						$mail->SMTPAuth = true;
+						$mail->SMTPSecure = "ssl";
+						$mail->Host = "smtp.gmail.com";
+						$mail->Port = 465;
+
+						$mail->Username = 'virtual.td.26@gmail.com';
+						$mail->Password = 'virtualtd';
+						
+						
+						
+						$para      = 'virtual.td.26@gmail.com';
+						$titulo = 'Contacto';
+						$mensaje=  '<style>'.file_get_contents('bootstrap/css/bootstrap.css').'</style>';
+						$mensaje.= '<p class="well span7">'.$_REQUEST['descripcion'].'</p>';
+						$cabeceras = 'From: '.$_REQUEST['mail'] . "\r\n" .
+							'Reply-To: virtual.td.26@gmail.com' . "\r\n";
+						$cabeceras.='MIME-Version: 1.0' . "\r\n";
+						$cabeceras .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+						
+						
+						
+						$log= fopen('mail_log.txt','a+');	
+						// se manda el email al administrador
+						if(mail($para, $titulo, $mensaje, $cabeceras)) {  // Si fue envieado entonces tambien se manda un correo de respuesta temporal al usuario
+							
+							$smarty->assign('registro', 'Contacto');
+							
+							$mensaje= 'Tu correo ha sido enviado correctamente.';
+							
+							
+							
+							$smarty->assign('mensaje', $mensaje);
+									
+							$var=$smarty->fetch("usuario_registrado.tpl");
+							ob_start();
+							echo $var;
+							//var_dump($usuario);
+							$panel = ob_get_clean();
+						  
+						   //echo $count+"  saasdasd";
+							$smarty->assign('titulocontenido','');
+							$smarty->assign('contenido',$panel);
+							
+							
+							$mail->From= 'virtual.td.26@gmail.com';
+							$mail->FromName= 'Le Administradore';
+							$mail->Subject = 'Gracias por Contactarnos';
+							$mail->AltBody = 'No se puede mostrar el correo, por favor actualiza tu navegador';
+							$msg=  '<style>'.file_get_contents('bootstrap/css/bootstrap.css').'</style>';
+							$msg.= '<div class="well span7 text-center">';
+							$msg.= '<a class="text-center" href="http://alanturing.cucei.udg.mx/cc409/virtualtd/index.php"><img class="img-rounded" src="images/logo_mail.jpg"  /></a>';
+							$msg.= '<p class="hero-unit lead">Gracias por utilizar nuestro formulario de contacto, revisaremos tu solicitud y te responderemos lo mas rapido posible
+									<br>
+									<blockquote><small><strong>Atentamente "El Admin"</strong></small></blockquote>
+									</p>';
+							$msg.= '</div>';
+							
+							$mail->MsgHTML($msg);
+					
+							$mail->AddAddress($_REQUEST['mail'], $_REQUEST['nombre']);
+							
+							$mail->Send();
+							
+							//echo 'Email enviado correctamente el dia '.date('l jS \of F Y ').'a las '.date('h:i:s A').'\n';
+							fwrite($log,'Email  enviado correctamente el dia '.date('l jS \of F Y ').'a las '.date('h:i:s A').'\n');
+						
+						} else {
+							fwrite($log,'No se pudo enviar el email');
+						}
+							fclose($log);
+					}
+					else{
+							$smarty->assign('titulo',"Contacto");
+							ob_start();
+							require 'templates/contacto.tpl';
+							$panel = ob_get_clean();
+							$smarty->assign('contenido',$panel);
+							$smarty->assign('titulocontenido','');
+					}
+					
 					break;
 			}
 		}

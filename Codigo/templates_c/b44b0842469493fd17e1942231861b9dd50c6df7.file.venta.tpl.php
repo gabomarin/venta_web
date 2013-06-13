@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2013-05-26 22:30:11
+<?php /* Smarty version Smarty-3.1.13, created on 2013-06-08 20:08:30
          compiled from "templates\venta.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:43351a2c533cb9189-90436124%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'b44b0842469493fd17e1942231861b9dd50c6df7' => 
     array (
       0 => 'templates\\venta.tpl',
-      1 => 1369619440,
+      1 => 1370653420,
       2 => 'file',
     ),
   ),
@@ -15,13 +15,13 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   'function' => 
   array (
   ),
+  'version' => 'Smarty-3.1.13',
+  'unifunc' => 'content_51a2c533e2fe79_71599323',
   'variables' => 
   array (
     'pdf' => 0,
   ),
   'has_nocache_code' => false,
-  'version' => 'Smarty-3.1.13',
-  'unifunc' => 'content_51a2c533e2fe79_71599323',
 ),false); /*/%%SmartyHeaderCode%%*/?>
 <?php if ($_valid && !is_callable('content_51a2c533e2fe79_71599323')) {function content_51a2c533e2fe79_71599323($_smarty_tpl) {?> <div class="well span7">
 

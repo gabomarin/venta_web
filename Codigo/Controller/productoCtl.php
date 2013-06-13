@@ -32,24 +32,26 @@ class productoCtl{
 			case 'insertar'://solo el encargado de inventario puede insertar
 				include('validaciones.php');
 				if( isset($_SESSION['mail']) && $_SESSION['tipo'] == 3 ){
-					//echo 'entre';
-					if(isset($_REQUEST['nombre']) && isset($_REQUEST['precio'])
-					&& isset($_REQUEST['existencia']) && isset($_REQUEST['descripcion'])){
+					if(count($_REQUEST)>2 && ( isset($_REQUEST['nombre']) && isset($_REQUEST['precio'])&& isset($_REQUEST['existencia']) && isset($_REQUEST['descripcion']) && isset($_REQUEST['estatus']) && isset($_REQUEST['categoria']) && isset($_FILES['imagen'])) ){
 					
-					if(isNombre($_REQUEST['nombre']) &&
-					isEstatus($_REQUEST['estatus']) &&
-					isPrecio($_REQUEST['precio']) &&
-					isExistencia($_REQUEST['existencia'])){
-						$producto =
-						$this->modelo->insertar($_REQUEST['nombre'],$_REQUEST['descripcion'],$_REQUEST['estatus'],$_REQUEST['precio'],$_REQUEST['existencia'],$_REQUEST['imagen'], $_REQUEST['categoria']);
-						if (is_object($producto) )
-							include('View/productoInsertadoView.php');
-						else
-							echo ' Error no se pudo insertar';
-							//include('View/usuarioError.php');
-					} else {
-						echo 'Datos no validos. Porfavor revise la sintaxis';
-					} } else {
+						if(isNombre($_REQUEST['nombre']) && isEstatus($_REQUEST['estatus']) && isPrecio($_REQUEST['precio']) && isExistencia($_REQUEST['existencia']) && isImagen($_FILES['imagen']['type'])){
+							$archivo = $_FILES['imagen']['name'];
+							$prefijo = substr(md5(uniqid(rand())),0,2);
+							
+							$ruta = 'images/'.$prefijo.$archivo;
+							copy($_FILES['imagen']['tmp_name'],$ruta);
+							$producto = $this->modelo->insertar($_REQUEST['nombre'],$_REQUEST['descripcion'],$_REQUEST['estatus'],$_REQUEST['precio'],$_REQUEST['existencia'],$ruta, $_REQUEST['categoria']);
+							if (is_object($producto) )
+								include('View/productoInsertadoView.php');
+							else
+								echo ' Error no se pudo insertar';
+								//include('View/usuarioError.php');
+						}
+						else {
+							echo 'Datos no validos. Porfavor revise la sintaxis';
+						}
+					}
+					else {
 						ob_start();
 						  require 'templates/registrar_producto.tpl';
 						  $panel =  ob_get_clean();
@@ -61,8 +63,23 @@ class productoCtl{
 					echo 'No tienes permisos para realizar esta accion';
 				} break;
 			case 'listar'://cualquiera puede listar los productos
-					$producto = $this->modelo->listar(); if(is_array($producto))
-						include('View/productoListaView.php');
+					$producto = $this->modelo->listar();
+					if(is_array($producto))
+						{
+							$smarty->assign('productos',$producto);
+							$smarty->assign('lista','Todos los productos');
+							$var=$smarty->fetch("lista_productos.tpl");
+							ob_start();
+
+							echo $var;
+							$panel = ob_get_clean();
+							
+							 //echo $count+"  saasdasd";
+							
+							$smarty->assign('titulocontenido','');
+							$smarty->assign('contenido',$panel);
+									 
+						}
 					else
 						echo 'Error no se pudo listar';
 					break;
@@ -76,17 +93,36 @@ class productoCtl{
 							$this->modelo->consultarDato($_REQUEST['dato'],$_REQUEST['atributo']);
 							if(is_object($producto)){
 								//include('View/productoListaView.php');
-								$smarty->assign('titulocontenido',$producto->nombre);
+								//$smarty->assign('titulocontenido',$producto->nombre);
+								//ob_start();
+								//{
+								//	echo "<p>$ $producto->precio</p>";
+								//	echo "<p>$producto->descripcion</p>";
+								//	echo "<br><button class='btn btn-primary' id=agregar onClick=añadir()>Agregar</button>";
+								//}
+								//$panel= ob_get_clean();
+								//$smarty->assign('contenido',$panel);
+								$smarty->assign('producto_nombre', $producto->nombre);
+								$smarty->assign('producto_imagen', $producto->imagen);
+								$smarty->assign('producto_descripcion', $producto->descripcion);
+								$smarty->assign('producto_precio', $producto->precio);
+								$smarty->assign('producto_id',$producto->id);
+								
+								//var_dump($producto);
+								
+								$var=$smarty->fetch("mostrar_producto.tpl");
 								ob_start();
-								{
-									echo "<p>$ $producto->precio</p>";
-									echo "<p>$producto->descripcion</p>";
-									echo "<br><button class='btn btn-primary' id=agregar onClick=añadir()>Agregar</button>";
-								}
-								$panel= ob_get_clean();
+								echo $var;
+								////var_dump($usuario);
+								$panel = ob_get_clean();
+								// 
+								////echo $count+"  saasdasd";
+								$smarty->assign('titulocontenido','');
 								$smarty->assign('contenido',$panel);
 								
+								
 							}
+							
 							else
 								$smarty->assign('contenido','Error al procesar la solicitud');
 						} else {
@@ -114,7 +150,8 @@ class productoCtl{
 							} } else {
 								ob_start();
 						  require 'templates/modificar_producto.tpl'; $panel =
-						  ob_get_clean(); $smarty->assign('titulocontenido','');
+						  ob_get_clean();
+						  $smarty->assign('titulocontenido','');
 						  $smarty->assign('contenido',$panel);
 							}
 						} else {

@@ -1,0 +1,202 @@
+/*****************************************
+SimpleCart(js)
+Written By Brett Wejrowski
+Demo Site by Stephen McKinney
+
+The Style's for the SimpleCart(js) are in
+the Header of index.html. The following
+Just makes the rest of the site look
+pretty
+*****************************************/
+
+
+
+body { line-height: 1;}
+ol, ul { list-style: none;}
+blockquote, q { quotes: none;}
+:focus { outline: 0;}
+ins { text-decoration: none;}
+del { text-decoration: line-through;}
+table { border-collapse: collapse; border-spacing: 0;}
+
+.lateral{
+	
+	font:bold 12px Helvetica,Arial,sans-serif;
+}
+
+
+body{
+	background:url(images/bg.jpg);
+
+}
+#content{
+	background:url(images/bg_content.png);
+	width:1044px;
+	height:562px;
+	margin:90px auto 20px auto;
+}
+#header{
+	padding:20px 0;
+	margin-left:20px;
+	background:url(images/headerGrad.png) bottom left no-repeat;
+	width:770px;
+	float:left;
+}
+
+#catalog{
+	width:770px;
+	margin:30px 0 0 10px;
+	float:left;
+	height:444px;
+}
+#catalog li{
+	float:left;
+	margin:25px 25px 75px 25px;
+}
+#catalog li img{
+	display:block;
+}
+.price{
+	display:block;
+	float:left;
+	background:url(images/span.png);
+	width:33px;
+	height:21px;
+	line-height:20px;
+	margin:6px 4px 0 0;
+	color:#fff;
+	font-size:15px;
+	padding:2px 0 0 5px;
+	font-weight:lighter;
+	
+}
+b{
+	float:left;
+	font-size:15px;
+	color:#333;
+}
+b a{
+	font-size:12px;
+	color:#c23f26;
+}
+#sidebar{
+	float:right;
+	margin-right:5px;
+	width:248px;
+	margin-top:-70px;
+	
+}
+#sidebar a{
+	font-size:11px;
+	color:#000;
+}
+#sidebar a.simpleCart_checkout,
+.checkoutEmptyLinks a.simpleCart_checkout{
+	display:-moz-inline-box;
+	display:inline-block;
+	width:87px;
+	height:25px;
+	background:url(images/btnCheckout.gif);
+	overflow:hidden;
+	margin-left:100px;
+	vertical-align:middle;
+	text-indent:-9999px;
+	font-size:0;
+}
+a.btnCheckout:hover{
+	background-position:87px 0;
+}
+#downloadContainer{
+	width:230px;
+	font-size:11px;
+	font-weight:normal;
+	margin-top:52px;
+}
+#downloadContainer a{
+	color:#222;
+	text-decoration:none;
+}
+#downloadContainer a:hover{
+	text-decoration:underline;
+}
+
+#footer{
+	clear:both;
+	margin-top:15px;
+	text-align:center;
+	font:normal 11px Helvetica, Arial, sans-serif;
+	color:#e7ebf0;
+	opacity:.999;
+}
+#footer a{
+	color:#aaa;
+	text-decoration:none;
+}
+#footer a:hover{
+	text-decoration:underline;
+}
+#smallLogo{
+	margin-top:2px;
+	vertical-align:bottom
+}
+/*************************
+my cart page
+*************************/
+.alsoContainer{
+	float:left;
+	clear:left;
+	padding:15px 0;
+}
+.alsoInfo,
+.alsoImage,
+.alsoPrice{
+	float:left;
+}
+.alsoImage{
+	margin-right:8px;
+}
+.alsoInfo{
+	margin-right:9px;
+	width:90px;
+}
+#sidebar .alsoContainer a{
+	color:#c23f26;
+}
+.alsoPrice{
+	color:#418932;
+	font-size:13px;
+	padding-top:5px;
+}
+.checkoutEmptyLinks{
+	float:left;
+	clear:left;
+	width:500px;
+	padding-left:221px;
+}
+.checkoutEmptyLinks a{
+	color:#000;
+	font-size:11px;
+}
+/*************************
+Top Frame
+*************************/
+
+#topFrame{
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height:32px;
+	background:url(images/greenBG.gif) repeat-x;
+	z-index:100;
+	overflow:hidden;
+	text-indent:50px;
+	
+}
+#topFrame a{
+	color:#fff;
+	font-weight:bold;
+	line-height:32px;
+}
+
+

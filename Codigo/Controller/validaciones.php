@@ -7,6 +7,8 @@
 	function isNombre($nombre){
 		if( preg_match('/^([a-zA-Z]{2,} ?)*[a-zA-Z]{2,}$/',$nombre) )
 			return TRUE;
+		echo 'no deberia entrar';
+		die();
 		return FALSE;
 	}
 	function isMail($mail){
@@ -20,7 +22,7 @@
 		return FALSE;
 	}
 	function isRfc($rfc){
-		if( preg_match('/^([a-zA-Z]|\d){13}$/',$rfc) )
+		if( preg_match('/^[a-zA-Z]{4}(\d){2}((0[1-9])|(1[1-2]))(([1-2]\d)|(3[0-1]))([a-zA-Z]|\d){3}$/',$rfc) )
 			return TRUE;
 		return FALSE;
 	}
@@ -37,6 +39,8 @@
 	function isEstatus($estatus){
 		if( preg_match('/^(0|1)$/',$estatus) )
 			return TRUE;
+		echo 'no deberia entrar';
+		die();
 		return FALSE;
 	}
 	function isTipo($tipo){
@@ -47,14 +51,24 @@
 	function isPrecio($precio){
 		if(preg_match('/^(\d)+(\.(\d){2})?$/', $precio))
 			return TRUE;
+		echo 'no deberia entrar';
+		die();
 		return FALSE;
 
 	}
 	function isExistencia($existencia){
 		if(preg_match('/^(\d)+$/', $existencia))
 			return TRUE;
+		echo 'no deberia entrar';
+		die();
 		return FALSE;
 
+	}
+	function isImagen($imagen){
+		if( $imagen == "image/jpeg" || $imagen == "image/png"){
+			return TRUE;
+		}
+		return FALSE;
 	}
 	function isUsuarioAD($atributo,$dato){//verifica si el atributo pertenece a usuario y si el dato es valido para el 
 		switch( strtolower($atributo)){
