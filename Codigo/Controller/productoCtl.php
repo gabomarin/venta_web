@@ -42,7 +42,18 @@ class productoCtl{
 							copy($_FILES['imagen']['tmp_name'],$ruta);
 							$producto = $this->modelo->insertar($_REQUEST['nombre'],$_REQUEST['descripcion'],$_REQUEST['estatus'],$_REQUEST['precio'],$_REQUEST['existencia'],$ruta, $_REQUEST['categoria']);
 							if (is_object($producto) )
-								include('View/productoInsertadoView.php');
+							{
+								$error='El producto ha sido Creado';
+								$smarty->assign('titulo','');
+								$smarty->assign('error',$error);				  
+								$var=$smarty->fetch("registrar_producto.tpl");
+								
+								ob_start();
+								echo $var;
+								//var_dump($usuario);
+								$panel = ob_get_clean();
+								$smarty->assign('contenido',$panel);
+							}
 							else
 								echo ' Error no se pudo insertar';
 								//include('View/usuarioError.php');
@@ -55,6 +66,7 @@ class productoCtl{
 						ob_start();
 						  require 'templates/registrar_producto.tpl';
 						  $panel =  ob_get_clean();
+						  $smarty->assign('error','');
 						  $smarty->assign('titulocontenido','');
 						  $smarty->assign('contenido',$panel);
 					}
@@ -82,6 +94,39 @@ class productoCtl{
 						}
 					else
 						echo 'Error no se pudo listar';
+					break;
+				
+				case 'listart':
+					$producto = $this->modelo->listar();
+					if(is_array($producto))
+						{
+							$smarty->assign('productos', $producto);
+							
+							$var=$smarty->fetch("vista_Producto.tpl");
+							ob_start();
+							echo $var;
+							//var_dump($usuario);
+							$panel = ob_get_clean();
+						  
+						   //echo $count+"  saasdasd";
+							$smarty->assign('titulocontenido','');
+							$smarty->assign('contenido',$panel);
+							
+						}
+					else
+						{
+							$smarty->assign('productos', "No se han podido encontrar usuarios'");
+
+							$var=$smarty->fetch("vista_Producto.tpl");
+							ob_start();
+							echo $var;
+							$panel = ob_get_clean();
+						  
+						   //echo $count+"  saasdasd";
+						   $smarty->assign('titulocontenido','');
+							$smarty->assign('contenido',$panel);
+						}
+					
 					break;
 				
 				
@@ -128,7 +173,8 @@ class productoCtl{
 						} else {
 							echo 'Datos no validos. Porfavor revise la
 							sintaxis';
-						} break;
+						}
+				break;
 			case 'modificarDato'://solo el encargado de ventas e inventario pueden realizar esta accion
 						if( isset($_SESSION['mail']) && $_SESSION['tipo'] != 1){
 							include('validaciones.php');
@@ -149,14 +195,111 @@ class productoCtl{
 								sintaxis';
 							} } else {
 								ob_start();
-						  require 'templates/modificar_producto.tpl'; $panel =
-						  ob_get_clean();
-						  $smarty->assign('titulocontenido','');
-						  $smarty->assign('contenido',$panel);
+								require 'templates/modificar_producto.tpl';
+								$panel =ob_get_clean();
+								$smarty->assign('titulocontenido','');
+								$smarty->assign('contenido',$panel);
 							}
 						} else {
 							echo 'No tienes permisos para realizar esta accion';
-						} break;
+						}
+			break;
+		
+		
+			case 'modificar':
+				include('validaciones.php');
+				if(isset($_REQUEST['precio']) && isset($_REQUEST['existencia']) && isset($_REQUEST['categoria']) && isset($_REQUEST['descripcion']) ){
+
+					$producto = $this->modelo->modificaProducto($_REQUEST['id'],$_REQUEST['precio'],$_REQUEST['existencia'],$_REQUEST['categoria'], $_REQUEST['descripcion']);
+					//var_dump($usuario);
+					if($producto == TRUE){
+
+						$smarty->assign('titulo','Modificar producto');
+						$smarty->assign('error','Se ha modificado el producto');
+						$smarty->assign('id', $_REQUEST['id']);
+						$smarty->assign('nombre', $_REQUEST['nombre']);
+						//$smarty->assign('imagen', $_REQUEST['imagen']);
+						$smarty->assign('descripcion', $_REQUEST['descripcion']);
+						$smarty->assign('precio', $_REQUEST['precio']);
+						$smarty->assign('estatus', $_REQUEST['estatus']);
+						$smarty->assign('existencia', $_REQUEST['existencia']);
+
+						$var=$smarty->fetch("modificar_producto.tpl");
+						
+						ob_start();
+						echo $var;
+						//var_dump($usuario);
+						$panel = ob_get_clean();
+						$smarty->assign('contenido',$panel);
+					}
+					
+					else {
+						
+						
+						$smarty->assign('titulo','ERROR');
+						$smarty->assign('error','');
+						$smarty->assign('id', $_REQUEST['id']);
+						$smarty->assign('nombre', $_REQUEST['nombre']);
+						//$smarty->assign('imagen', $_REQUEST['imagen']);
+						$smarty->assign('descripcion', $_REQUEST['descripcion']);
+						$smarty->assign('precio', $_REQUEST['precio']);
+						$smarty->assign('estatus', $_REQUEST['estatus']);
+						$smarty->assign('existencia', $_REQUEST['existencia']);
+
+						$var=$smarty->fetch("modificar_producto.tpl");
+						
+						ob_start();
+						echo $var;
+						//var_dump($usuario);
+						$panel = ob_get_clean();
+						$smarty->assign('contenido',$panel);
+					}
+				}
+				else {
+						
+						
+						$smarty->assign('titulo','Modificar Producto');
+						$smarty->assign('error','');
+						$smarty->assign('id', $_REQUEST['id']);
+						$smarty->assign('nombre', $_REQUEST['nombre']);
+						//$smarty->assign('imagen', $_REQUEST['imagen']);
+						$smarty->assign('descripcion', $_REQUEST['descripcion']);
+						$smarty->assign('precio', $_REQUEST['precio']);
+						$smarty->assign('estatus', $_REQUEST['estatus']);
+						$smarty->assign('existencia', $_REQUEST['existencia']);
+
+						$var=$smarty->fetch("modificar_producto.tpl");
+						
+						ob_start();
+						echo $var;
+						//var_dump($usuario);
+						$panel = ob_get_clean();
+						$smarty->assign('contenido',$panel);
+					}
+			break;
+			
+			case 'checaProducto':
+				$smarty->assign('titulo',"Modificar producto");
+				$smarty->assign('id', $_REQUEST['id']);
+				$smarty->assign('nombre', $_REQUEST['nombre']);
+				$smarty->assign('imagen', $_REQUEST['imagen']);
+				$smarty->assign('descripcion', $_REQUEST['descripcion']);
+				$smarty->assign('precio', $_REQUEST['precio']);
+				$smarty->assign('estatus', $_REQUEST['estatus']);
+				$smarty->assign('existencia', $_REQUEST['existencia']);
+
+				$smarty->assign('error', '');
+				$var=$smarty->fetch("modificar_producto.tpl");
+				ob_start();
+
+				echo $var;
+				$panel = ob_get_clean();
+			  
+			   //echo $count+"  saasdasd";
+			  
+				$smarty->assign('titulocontenido','');
+				$smarty->assign('contenido',$panel);
+				break;
 		}
 		
 		

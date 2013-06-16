@@ -44,9 +44,6 @@
                                 <th>
                                     Editar
                                 </th>
-                                <th>
-                                    Eliminar
-                                </th>
                                 
 								
 							</tr>
@@ -56,23 +53,34 @@
 					
 						
 							<!-- Crear el Script para la consulta SQL -->
+			    
 							<tr>
-								<td>
+							<form action="index.php?modulo=usuario&action=checaUsuario" method="post">	      
+								<td >
+								      <input type="hidden" value="{$usuario.id}" id="id" name="id" >
 									{$usuario.id}
 								</td>
-								<td>
+								<td >
+								      <input type="hidden" id="nombre" name="nombre" value="{$usuario.nombre}" >
 									{$usuario.nombre}
 								</td>
-								<td>
+								<td >
+								      <input type="hidden" id="mail" name="mail" value="{$usuario.mail}" >
 									{$usuario.mail}
 								</td>
-								<td>
+								<td >
+								      <input type="hidden" id="rfc" name="rfc" value="{$usuario.rfc}" >
 									{$usuario.rfc}
 								</td>
-								<td>
+								<td >
+								      <input type="hidden" id="direccion" name="direccion" value="{$usuario.direccion}" >
 									{$usuario.direccion}
+							        <td style="display: none">
+								      <input type="hidden" id="telefono" name="telefono" value="{$usuario.telefono}"  >
+									{$usuario.telefono}
 								</td>
-								<td>
+								<td >
+								      <input type="hidden" id="tipo" name="tipo" value="{$usuario.tipo}" >
 									{if $usuario.tipo==1}
                                     Cliente
                                     {elseif $usuario.tipo==2}
@@ -90,22 +98,17 @@
                                 {/if}
                                 </td>
                                 <td>
-                                   <a href="index.php?modulo=usuario&action=modificarUsuario&id={$usuario.id}"><img class="offset2" src="images/editar.png"></a> 
+                                   <button type="submit" class="offset2" >Editar</button> 
                                 </td>
-                                <td>
-                                    <a href="index.php?modulo=usuario&action=eliminar&id={$usuario.id}"><img class="offset2" src="images/eliminar.png"></a>
-                                </td>
-								
-							</tr>
+			</form>					
+			    </tr>
 					
-					
+			    	
 		{/foreach}
         	</tbody>
          
          
         </table>
-        
-        <button class="btn btn-primary">Generar Reporte</button>
         
         {else}
         <p>{$usuarios}</p>

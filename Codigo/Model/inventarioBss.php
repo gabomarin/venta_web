@@ -27,18 +27,17 @@ class inventarioBss extends DB{
 
 		//Crear el query
 		$query = "INSERT INTO 
-				   inventario(cantidadProducto,fecha,cantidadReal,cantidadEsperada,descripcion)
+				   inventario(cantidadProducto,fecha,cantidadReal,cantidadEsperada,descripcion,usuario_id)
 				  VALUES
 				  ($cantidadProducto,
 				   '$fecha',
 				    $cantidadReal,
 					$cantidadEsperada,
-					'$descripcion')";
+					'$descripcion',$_SESSION[id])";
 
 		//Ejecutar el query
 		//echo $query.'   ';
 		$resultado = parent::ejecutarConsulta($query);
-
 		if($resultado == FALSE){
 			echo 'FALLO la consulta';
 			//Cerrar la conexion

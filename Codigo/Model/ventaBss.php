@@ -242,15 +242,12 @@ class ventaBss extends DB {
 		
 			
 		//Crear el query
-		$query = 'SELECT
-				venta.id, venta.fecha, producto.precio,venta.total, detalle_venta.cantidad,usuario.nombre
-			   FROM
-				venta, detalle_venta,producto,usuario
-			   WHERE
-				venta.id = detalle_venta.venta_id
-				AND
-				producto.id=detalle_venta.producto_id
-				AND usuario.id=venta.usuario_id;';
+		$query = 'SELECT 
+				venta.id, venta.fecha, venta.total,usuario.nombre
+			  FROM
+				venta, usuario
+			  WHERE
+				usuario.id = venta.usuario_id';
 
 		//Ejecutar el query
 		$resultado = parent:: ejecutarConsulta($query);

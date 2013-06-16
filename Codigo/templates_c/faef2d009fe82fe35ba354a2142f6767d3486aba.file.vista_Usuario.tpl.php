@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2013-06-08 20:08:23
+<?php /* Smarty version Smarty-3.1.13, created on 2013-06-14 01:58:36
          compiled from "templates\vista_Usuario.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:3230951a25dfab44d31-69720882%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'faef2d009fe82fe35ba354a2142f6767d3486aba' => 
     array (
       0 => 'templates\\vista_Usuario.tpl',
-      1 => 1370653409,
+      1 => 1371186635,
       2 => 'file',
     ),
   ),
@@ -86,28 +86,47 @@ $_smarty_tpl->tpl_vars['usuario']->_loop = true;
 					
 						
 							<!-- Crear el Script para la consulta SQL -->
+			    
 							<tr>
-								<td>
+							<form action="index.php?modulo=usuario&action=checaUsuario" method="post">	      
+								<td >
+								      <input type="hidden" value="<?php echo $_smarty_tpl->tpl_vars['usuario']->value['id'];?>
+" id="id" name="id" >
 									<?php echo $_smarty_tpl->tpl_vars['usuario']->value['id'];?>
 
 								</td>
-								<td>
+								<td >
+								      <input type="hidden" id="nombre" name="nombre" value="<?php echo $_smarty_tpl->tpl_vars['usuario']->value['nombre'];?>
+" >
 									<?php echo $_smarty_tpl->tpl_vars['usuario']->value['nombre'];?>
 
 								</td>
-								<td>
+								<td >
+								      <input type="hidden" id="mail" name="mail" value="<?php echo $_smarty_tpl->tpl_vars['usuario']->value['mail'];?>
+" >
 									<?php echo $_smarty_tpl->tpl_vars['usuario']->value['mail'];?>
 
 								</td>
-								<td>
+								<td >
+								      <input type="hidden" id="rfc" name="rfc" value="<?php echo $_smarty_tpl->tpl_vars['usuario']->value['rfc'];?>
+" >
 									<?php echo $_smarty_tpl->tpl_vars['usuario']->value['rfc'];?>
 
 								</td>
-								<td>
+								<td >
+								      <input type="hidden" id="direccion" name="direccion" value="<?php echo $_smarty_tpl->tpl_vars['usuario']->value['direccion'];?>
+" >
 									<?php echo $_smarty_tpl->tpl_vars['usuario']->value['direccion'];?>
 
+							        <td style="display: none">
+								      <input type="hidden" id="telefono" name="telefono" value="<?php echo $_smarty_tpl->tpl_vars['usuario']->value['telefono'];?>
+"  >
+									<?php echo $_smarty_tpl->tpl_vars['usuario']->value['telefono'];?>
+
 								</td>
-								<td>
+								<td >
+								      <input type="hidden" id="tipo" name="tipo" value="<?php echo $_smarty_tpl->tpl_vars['usuario']->value['tipo'];?>
+" >
 									<?php if ($_smarty_tpl->tpl_vars['usuario']->value['tipo']==1){?>
                                     Cliente
                                     <?php }elseif($_smarty_tpl->tpl_vars['usuario']->value['tipo']==2){?>
@@ -125,17 +144,16 @@ $_smarty_tpl->tpl_vars['usuario']->_loop = true;
                                 <?php }?>
                                 </td>
                                 <td>
-                                   <a href="index.php?modulo=usuario&action=modificarUsuario&id=<?php echo $_smarty_tpl->tpl_vars['usuario']->value['id'];?>
-"><img class="offset2" src="images/editar.png"></a> 
+                                   <button type="submit" class="offset2" >Editar</button> 
                                 </td>
                                 <td>
                                     <a href="index.php?modulo=usuario&action=eliminar&id=<?php echo $_smarty_tpl->tpl_vars['usuario']->value['id'];?>
 "><img class="offset2" src="images/eliminar.png"></a>
                                 </td>
-								
-							</tr>
+			</form>					
+			    </tr>
 					
-					
+			    	
 		<?php } ?>
         	</tbody>
          

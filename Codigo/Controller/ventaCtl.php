@@ -11,6 +11,7 @@ define('CLIENTE', 1);
 
 //Este controlador require tener acceso al modelo
 include_once ('model/ventaBss.php');
+
 //La clase controlador
 
 class ventaCtl {
@@ -18,6 +19,7 @@ class ventaCtl {
 	public $modelo;
 
 	//Cuando se crea el controlador crea el modelo de venta
+	
 	function __construct() {
 		$this -> modelo = new ventaBss();
 	}
@@ -220,6 +222,8 @@ class ventaCtl {
 								$smarty->assign('titulocontenido','');
 								$smarty->assign('contenido',$panel);
 								
+								
+								
 							}
 						else {
 							$smarty->assign('ventas', 'No se encontraron resultados');
@@ -316,7 +320,8 @@ class ventaCtl {
 								
 
 								$html =$var;
-								$html= str_replace( "Generar Reporte","", $html); 
+								$html= str_replace( "Generar Reporte PDF","", $html);
+								$html= str_replace( "Generar Reporte EXCEL","", $html); 
 								$dompdf = new DOMPDF();
 								$dompdf->load_html($html);
 								$dompdf->render();
@@ -327,6 +332,31 @@ class ventaCtl {
 									mkdir('temp',777);
 								}
 								file_put_contents("temp/$name.pdf", $output);
+
+								/*************** GENERA FACTURA*************************/
+								$objPHPExcel = new PHPExcel();
+
+
+								$objPHPExcel->setActiveSheetIndex(0)
+									    ->setCellValue('A1', 'ID')
+									    ->setCellValue('B1', 'FECHA')
+									    ->setCellValue('C1', 'TOTAL')
+									    ->setCellValue('D1', 'CLIENTE');
+								for( $i = 0 ; $i< count($venta) ;$i++ ){
+									$objPHPExcel->setActiveSheetIndex(0)
+									    ->setCellValue('A'.($i+2), $venta[$i]['id'])
+									    ->setCellValue('B'.($i+2), $venta[$i]['fecha'])
+									    ->setCellValue('C'.($i+2), $venta[$i]['total'])
+									    ->setCellValue('D'.($i+2), $venta[$i]['nombre']);
+								}
+								
+								
+								
+								$objPHPExcel->getActiveSheet()->setTitle('ventas');
+								$objPHPExcel->setActiveSheetIndex(0);
+								
+								$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+								$objWriter->save('temp/reporte.xls');
 								
 							}
 						else {
@@ -362,7 +392,6 @@ class ventaCtl {
 							$smarty->assign('contenido',$panel);
 					
 					break;
-
 				default :
 					echo 'Parametro invalido';
 			}

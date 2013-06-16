@@ -5,63 +5,59 @@
 			</h1>
 			<hr>
 			<div class="row-fluid">
-				<div class="span">
+				<div class="span12">
+		                  {if is_array($ventas) }
 					<table class="table table-hover table-bordered tabla">
 						<thead>
 							<tr>
 								<th>
-									Folio
+									ID
 								</th>
 								<th>
 									Fecha
 								</th>
-								<th>
-									Cantidad
-								</th>
-								<th>
-									Precio(C/U)
-								</th>
+
 								<th>
 									Total
 								</th>
 								<th>
-									Estatus
+									Cliente
 								</th>
 								
 							</tr>
 						</thead>
+						
 						<tbody>
 							<!-- Crear el Script para la consulta SQL -->
+							{foreach item=venta from=$ventas}
 							<tr>
 								<td>
-									1
+									{$venta.id}
 								</td>
 								<td>
-									2012-04-11
+									{$venta.fecha}
 								</td>
 								<td>
-									15
+								        {$venta.total}
 								</td>
 								<td>
-									150
-								</td>
-								<td>
-									750
-								</td>
-								<td>
-									Valida
+								        {$venta.nombre}
 								</td>
 								
 							</tr>
+							{/foreach}
 						</tbody>
 					</table>
-					<a href="temp/{$pdf}.pdf" target="_blank"> <button class="btn btn-primary">Generar Reporte</button></a>
+					<a href="temp/{$pdf}.pdf" target="_blank"> <button class="btn btn-primary">Generar Reporte PDF</button></a>
+					<a href="temp/reporte.xls" target="_blank"> <button class="btn btn-primary">Generar Reporte EXCEL</button></a>
                     
 			</div>
 			<div class="row-fluid">
 			</div>
 			<hr>
-					  
+		{else}
+        <p>{$ventas}</p>
+        {/if}			  
 		
 	</div>
 </div>

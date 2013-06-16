@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2013-06-08 16:36:18
+<?php /* Smarty version Smarty-3.1.13, created on 2013-06-14 03:40:14
          compiled from "templates\mostrar_producto.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:2130751ab6dc0b37347-79185937%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'b0f362975049016a0e314d7f79a177c0f4f7ba9a' => 
     array (
       0 => 'templates\\mostrar_producto.tpl',
-      1 => 1370653416,
+      1 => 1371195609,
       2 => 'file',
     ),
   ),
@@ -23,6 +23,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'producto_imagen' => 0,
     'producto_descripcion' => 0,
     'producto_precio' => 0,
+    'producto_id' => 0,
   ),
   'has_nocache_code' => false,
 ),false); /*/%%SmartyHeaderCode%%*/?>
@@ -83,11 +84,6 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 <div class="well span7">
     
 
-    
-
-
-    <p></p>
-
  
  <div class="simpleCart_shelfItem">
     <h2 class="item_name"> <?php echo $_smarty_tpl->tpl_vars['producto_nombre']->value;?>
@@ -99,7 +95,6 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 " >
     
     </div>
-    
     <?php echo $_smarty_tpl->tpl_vars['producto_descripcion']->value;?>
 
     </div>
@@ -110,6 +105,8 @@ $_valid = $_smarty_tpl->decodeProperties(array (
    <div class="compra span3">
     <p> <span class="item_price">Precio: $<?php echo $_smarty_tpl->tpl_vars['producto_precio']->value;?>
 </span><br><br>
+    
+
 
 <!--<script>
     function displayVals() {
@@ -124,7 +121,13 @@ $_valid = $_smarty_tpl->decodeProperties(array (
  
     </script>
         <a onclick="simpleCart.empty()">dad</a>-->
-        <a class="item_add" href="javascript:;"><button class="btn btn-primary">Añadir</button></a>
+        <!--<a class="item_add" href="javascript:;"><button class="btn btn-primary">Añadir</button></a>-->
+        
+        <a class="btn btn-primary" onclick="simpleCart.add({ name: '<?php echo $_smarty_tpl->tpl_vars['producto_nombre']->value;?>
+' , price: '<?php echo $_smarty_tpl->tpl_vars['producto_precio']->value;?>
+',  thumb:'<?php echo $_smarty_tpl->tpl_vars['producto_imagen']->value;?>
+' ,id_prod: '<?php echo $_smarty_tpl->tpl_vars['producto_id']->value;?>
+'});">Añadir</a>
         </div>
     <!--<a class="btn btn-primary" href="#" onclick="simpleCart.add('name=<?php echo $_smarty_tpl->tpl_vars['producto_nombre']->value;?>
 ','price=<?php echo $_smarty_tpl->tpl_vars['producto_precio']->value;?>

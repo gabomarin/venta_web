@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2013-06-13 00:03:02
+<?php /* Smarty version Smarty-3.1.13, created on 2013-06-14 00:32:19
          compiled from "templates/consulta_compra.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:50894723451ac30e95c36b1-03571766%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'b56f23e02199a954ed11d5b52007109a280c1644' => 
     array (
       0 => 'templates/consulta_compra.tpl',
-      1 => 1371099777,
+      1 => 1371185618,
       2 => 'file',
     ),
   ),

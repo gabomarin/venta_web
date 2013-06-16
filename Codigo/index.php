@@ -4,7 +4,7 @@
  * @package mvc
  */
 
- 
+ include_once ('phpexcel/Classes/PHPExcel.php');
 require('include.php');
 include_once('model/dbClass.php');
 if( !isset($_SESSION) ){
@@ -32,11 +32,12 @@ class index {
 				 if(isset($_SESSION['mail']))
 				 {
 						  require('model/dbdata.inc');
-						  $temp= "<li><a class='superior' href= 'index.php?modulo=usuario&action=consultarDato'>Perfil ($_SESSION[nombre])</a></li>  ";
+						  $nombre=substr($_SESSION['nombre'],0,strpos($_SESSION['nombre']," "));
+						  $temp= "<li><a class='superior' href= 'index.php?modulo=usuario&action=consultarDato'>Perfil ($nombre)</a></li>  ";
 						  if($_SESSION['tipo']==3)
 						  {
 						        $temp= $temp."<li><a class='superior' href='index.php?modulo=producto&action=insertar'>Agregar Producto</a></li>";
-								$temp= $temp."<li><a class='superior' href='index.php?modulo=producto&action=modificarDato'>Modificar Producto</a></li>";
+								$temp= $temp."<li><a class='superior' href='index.php?modulo=producto&action=listart'>Modificar Producto</a></li>";
 								$temp= $temp."<li><a class='superior' href='index.php?modulo=inventario&action=insertar'>Agregar Inventario</a></li>";
 								$temp= $temp."<li><a class='superior' href='index.php?modulo=inventario&action=consultarDato'>Consultar Inventario</a></li>";
 						  }
@@ -64,7 +65,7 @@ class index {
 						  $conexion  = new mysqli($hostdb, $userdb, $passdb, $db);
 						  if(!$conexion)
 						   die('No se ha podido realizar la conexion a la bd');
-						   $query = "SELECT * FROM `producto` LIMIT 0,5";
+						   $query = "SELECT * FROM `producto`  ORDER BY id  DESC LIMIT 0,3";
 						    $resultado = $conexion -> query($query);	
 						  $smarty->assign('titulocontenido',"");
 						  //$smarty->assign('contenidos', $resultado);
@@ -106,7 +107,7 @@ class index {
 						  $conexion  = new mysqli($hostdb, $userdb, $passdb, $db);
 						  if(!$conexion)
 						   die('No se ha podido realizar la conexion a la bd');
-						   $query = "SELECT * FROM `producto` LIMIT 0,5";
+						   $query = "SELECT * FROM `producto`  ORDER BY id  DESC LIMIT 0,3";
 						    $resultado = $conexion -> query($query);	
 						  $smarty->assign('titulocontenido',"");
 						  
@@ -159,7 +160,7 @@ class index {
 			       $smarty->assign('categorias', $resultado);
 				   
 				  
-				   $query = "SELECT * FROM `producto` LIMIT 0,5";
+				   $query = "SELECT * FROM `producto`  ORDER BY id  DESC LIMIT 0,3";
 				   $resultado = $conexion -> ejecutarConsulta($query);
 			       $smarty->assign('ultimos', $resultado);
 				   

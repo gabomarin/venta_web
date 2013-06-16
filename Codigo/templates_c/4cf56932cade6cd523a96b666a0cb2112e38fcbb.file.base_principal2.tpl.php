@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2013-06-12 14:55:20
+<?php /* Smarty version Smarty-3.1.13, created on 2013-06-14 02:17:30
          compiled from "templates/base_principal2.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:1805972346518896f62e8ab7-38896015%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '4cf56932cade6cd523a96b666a0cb2112e38fcbb' => 
     array (
       0 => 'templates/base_principal2.tpl',
-      1 => 1371066909,
+      1 => 1371194052,
       2 => 'file',
     ),
   ),
@@ -187,7 +187,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 					
 				<ul class="nav">
 					<li>
-						<img src="images/logo.jpg" width=80% height=80%<?php ?>>
+						<img src="images/logo.jpg" width=80%<?php ?>>
 					</li>
 				
 					<li class="active">
@@ -257,7 +257,7 @@ $_smarty_tpl->tpl_vars['categoria']->_loop = true;
 				
 				<!--Add a Div with the class "simpleCart_items" to show your shopping cart area.-->
 				<!--<div class="simpleCart_items"></div>-->
-				
+				<span class="simpleCart_quantity"></span> productos agregados </br> </br>
 				Total: <span class="simpleCart_total"></span>
 				<!--Here's the Links to Checkout and Empty Cart-->
 				<hr>
@@ -287,18 +287,17 @@ foreach ($_from as $_smarty_tpl->tpl_vars['ultimo']->key => $_smarty_tpl->tpl_va
 $_smarty_tpl->tpl_vars['ultimo']->_loop = true;
 ?>
 				  
-				  <div class="container span7">
+				  <div class="container span7" style="width:112px; height: 169px">
 				    <hr>
 				    <a href="index.php?modulo=producto&action=consultarDato&dato=<?php echo $_smarty_tpl->tpl_vars['ultimo']->value['id'];?>
 &atributo=id"><?php echo $_smarty_tpl->tpl_vars['ultimo']->value['nombre'];?>
 </a>
 				    <br />
 				    <img src= "<?php echo $_smarty_tpl->tpl_vars['ultimo']->value['imagen'];?>
-" height=120 width=120/>
+" height="120px" width="120px"/>
 				    <p>Precio: $<?php echo $_smarty_tpl->tpl_vars['ultimo']->value['precio'];?>
 </p>  
 				  </div>
-				  
 				  <?php } ?>
 			  </div>
 	

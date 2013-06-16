@@ -191,6 +191,30 @@ class usuarioBss extends DB{
 			return TRUE;		
 				
 	}
+	function modificaUsuario($id,$direccion,$telefono){
+		
+		//limpiar variable
+		$direccion = parent::limpiarVariable($direccion);
+		$telefono = parent::limpiarVariable($telefono);
+		
+
+		
+		$query = "UPDATE
+					usuario
+				  SET
+					direccion = '$direccion',
+				        telefono = '$telefono'
+				  WHERE 
+						id = $id";
+		
+		$resultado=parent::ejecutarConsulta($query);
+		parent::cerrar();
+		if(!$resultado)
+			return FALSE;
+		else
+			return TRUE;		
+				
+	}
 }
 
 ?>

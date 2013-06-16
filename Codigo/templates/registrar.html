@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Registrar Usuario</title>
+    <meta name="author" content="usuario"/>
+	<meta charset="UTF-8"/>
+	<meta name="keywords" content="Registrar Usuario"/>
+    <!-- Bootstrap -->
+    <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet" media="screen">
+	<link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+	<style>
+	  .mensaje{
+	    height: 15px;
+	  }
+	  .contenedorAlto{
+	    height: 48px;
+	  }
+	</style>
+	<script type="text/javascript">
+	  function validaForm(){
+	    
+		  var valor = document.getElementById('nombre');
+		  var valor2 = document.getElementById('contenedorNombre');
+		  var form = document.getElementById('registrar');
+		  if( valor.value == null || valor.value.length == "" || !/^([a-zA-Z]{2,} ?)*[a-zA-Z]{2,}$/.test(valor.value)){
+			  if ( !document.getElementById('errorNombre')) {
+			      //alert('AQUI!');
+			      var div = document.createElement('div');
+			      div.setAttribute('class','mensaje alert alert-error span3');
+			      div.setAttribute('id','errorNombre');
+			      //creo el texto
+			      var msg = document.createTextNode('Este Campo no puede estar vacio');
+			      //al div le agrefo el mensaje
+			      div.appendChild(msg);
+			      //valor.parentNode.insertBefore( div, valor.nextSibling );					    
+			      valor2.parentNode.appendChild(div);
+			      
+			      //return false;			
+			  }	
+		  }
+		  else if(document.getElementById('errorNombre')){
+			  var div_error = document.getElementById('errorNombre');
+			  //alert(div_error);
+			  if( typeof(div_error) == 'object' )
+				  valor2.parentNode.removeChild(div_error);
+		  }
+		  //para E-mail
+		  valor = document.getElementById('mail');
+		  valor2 = document.getElementById('contenedorMail');
+		  if( valor.value == null || valor.value.length == ""){
+			  if ( !document.getElementById('errorMail')) {
+			      //alert('AQUI!');
+			      var div = document.createElement('div');
+			      div.setAttribute('class','mensaje alert alert-error span3');
+			      div.setAttribute('id','errorMail');
+			      //creo el texto
+			      var msg = document.createTextNode('Este Campo no puede estar vacio');
+			      //al div le agrefo el mensaje
+			      div.appendChild(msg);
+			      //valor.parentNode.insertBefore( div, valor.nextSibling );					    
+			      valor2.parentNode.appendChild(div);
+			      
+			      //return false;			
+			  }	
+		  }
+		  else if(document.getElementById('errorMail')){
+		  
+			  var div_error = document.getElementById('errorMail');
+			  //alert(div_error);
+			  if( typeof(div_error) == 'object' )
+				  valor2.parentNode.removeChild(div_error);
+		  }
+					  
+	  }
+			
+	</script>
+  </head>
+  <body>
+    <form name="registrar" id="registrar" class="well form-horizontal" method="post" action="index.php?modulo=usuario&action=insertar">
+		<fieldset>
+		
+		<!-- Form Name -->
+		<legend>Registrar Usuario</legend>
+		
+		<!-- Text input-->
+		<div class="contenedorAlto control-group">
+		  <label class="control-label">Nombre</label>
+		  <div class="span4" id="contenedorNombre">
+		    
+		    <input id="nombre" name="nombre" type="text" placeholder="Escriba su nombre completo" class="input-xlarge" pattern="^([a-zA-Z]{2,} ?)*[a-zA-Z]{2,}$" maxlength="25" required="required" autocomplete="on">
+		    
+		  </div>
+		</div>
+		
+		<!-- Text input-->
+		<div class="contenedorAlto control-group">
+		  <label class="control-label">E-mail</label>
+		  <div class="span4" id="contenedorMail">
+		    <input id="mail" name="mail" type="email" placeholder="ejemplo@dominio.com" class="input-xlarge" maxlength="25" required="required" autocomplete="off">
+		    
+		  </div>
+		</div>
+		
+		<!-- Password input-->
+		<div class="contenedorAlto control-group">
+		  <label class="control-label">Contraseña</label>
+		  <div class="span4" id="contenedorPass">
+		    <input id="pass" name="pass" type="password" class="input-xlarge" pattern="^([a-zA-Z]|\d){6,}$"  maxlength="25" required="required">
+		    
+		  </div>
+		</div>
+		
+		<!-- Text input-->
+		<div class="contenedorAlto control-group">
+		  <label class="control-label">Direccion</label>
+		  <div class="span4" id="contenedorDireccion">
+		    <input id="direccion" name="direccion" type="text" placeholder="Ejemplo: Calle #0" class="input-xlarge" pattern="^([a-zA-Z]{2,})+( {1}([a-zA-Z]|\d)+)* #\d+(-(\d|[a-zA-Z]){1,2})?$" maxlength="25" required="required" autocomplete="on">
+		    
+		  </div>
+		</div>
+		
+		<!-- Text input-->
+		<div class="contenedorAlto control-group">
+		  <label class="control-label">RFC</label>
+		  <div class="span4" id="contenedorRfc">
+		    <input id="rfc" name="rfc" type="text" class="input-xlarge" pattern="^([a-zA-Z]|\d){13}$"maxlength="13" required="required" autocomplete="off">
+		    
+		  </div>
+		</div>
+		
+		<!-- Text input-->
+		<div class="contenedorAlto control-group">
+		  <label class="control-label">Telefono</label>
+		  <div class="span4" id="contenedorTelefono">
+		    <input id="telefono" name="telefono" type="tel" class="input-xlarge" pattern="^(\d)+$" maxlength="15" required="required" autocomplete="on">
+		    
+		  </div>
+		</div>
+		<input type="hidden" id="tipo" name="tipo" value="0"/>
+		<input type="hidden" id="estatus" name="estatus" value="0"/>
+		  <div class="controls">
+		    <button type="reset" id="limpiar" name="limpiar" class="btn btn-danger">Limpiar</button>
+		    <button type="submit" id="enviar" name="enviar" class="btn btn-success">Crear mi Cuenta</button>
+		    <button type="button" id="boton" name="boton" class="btn btn-success" onclick="validaForm()">Prueba</button>
+		  </div>
+		</fieldset>
+	</form>
+
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>

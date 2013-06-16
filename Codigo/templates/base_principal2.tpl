@@ -154,7 +154,7 @@
 					
 				<ul class="nav">
 					<li>
-						<img src="images/logo.jpg" width=80% height=80%>
+						<img src="images/logo.jpg" width=80%>
 					</li>
 				
 					<li class="active">
@@ -216,7 +216,7 @@
 				
 				<!--Add a Div with the class "simpleCart_items" to show your shopping cart area.-->
 				<!--<div class="simpleCart_items"></div>-->
-				
+				<span class="simpleCart_quantity"></span> productos agregados </br> </br>
 				Total: <span class="simpleCart_total"></span>
 				<!--Here's the Links to Checkout and Empty Cart-->
 				<hr>
@@ -242,14 +242,13 @@
 			    
 				  {foreach item=ultimo from=$ultimos}
 				  
-				  <div class="container span7">
+				  <div class="container span7" style="width:112px; height: 169px">
 				    <hr>
 				    <a href="index.php?modulo=producto&action=consultarDato&dato={$ultimo.id}&atributo=id">{$ultimo.nombre}</a>
 				    <br />
-				    <img src= "{$ultimo.imagen}" height=120 width=120/>
+				    <img src= "{$ultimo.imagen}" height="120px" width="120px"/>
 				    <p>Precio: ${$ultimo.precio}</p>  
 				  </div>
-				  
 				  {/foreach}
 			  </div>
 	

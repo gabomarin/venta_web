@@ -9,6 +9,7 @@
 //Este controlador require tener acceso al modelo
 include_once ('model/facturaBss.php');
 include_once ('factura/factura.php');
+include_once('validaciones.php');
 define('VENTAS', 2);
 define('CLIENTE', 1);
 define('INVENTARIO',3);
@@ -42,11 +43,19 @@ class facturaCtl {
 				case 'generar' :
 					//solo encargado de ventas crea factura
 					if (isset($_SESSION['mail']) && $_SESSION['tipo'] == VENTAS) {
-						$factura = $this -> modelo -> crearFactura($_REQUEST['fecha'], $_REQUEST['cantidad'], $_REQUEST['precio'], $_REQUEST['estatus']);
-						if (is_array($factura))
-							include ('View/listaFactura.php');
+						if(isEstatus($_REQUEST['estatus']) && isPrecio($_REQUEST['precio']))
+						{
+							$factura = $this -> modelo -> crearFactura($_REQUEST['fecha'], $_REQUEST['cantidad'], $_REQUEST['precio'], $_REQUEST['estatus']);
+							if (is_array($factura))
+								include ('View/listaFactura.php');
+							else
+								include ('View/facturaError.php');
+						}
 						else
-							include ('View/facturaError.php');
+						{
+							echo "Datos no validos";
+						}
+						
 					}
 					
 					else {
@@ -57,11 +66,19 @@ class facturaCtl {
 				case 'modificar' :
 					// solo encargado de ventas modifica facturas
 					if (isset($_SESSION['mail']) && $_SESSION['tipo'] == VENTAS) {
+						if(isId($_REQUEST['id']) && isEstatus($_REQUEST['estatus'])){
 						$factura = $this -> modelo -> modificarEstatus($_REQUEST['id'], $_REQUEST['estatus']);
-						if (is_array($factura))
+						
+							if (is_array($factura))
 							include ('View/listaFactura.php');
-						else
+							else
 							include ('View/facturaError.php');
+						}
+						else
+						{
+							echo "Datos invalidos";
+						}
+						
 					}
 					else echo 'No puedes realizar esta accion';
 					break;
@@ -84,11 +101,18 @@ class facturaCtl {
 
 					//El encargado de ventas elige que consultar
 					if (isset($_SESSION['mail']) && $_SESSION['tipo'] == VENTAS) {
-						$factura = $this -> modelo -> consultar($_REQUEST['tipo'], $_REQUEST['dato'],false );
-						if (is_array($factura))
-							include ('View/listaFactura.php');
+						if(isFacturaAD($_REQUEST['tipo'], $_REQUEST['dato'])){
+							$factura = $this -> modelo -> consultar($_REQUEST['tipo'], $_REQUEST['dato'],false );
+							if (is_array($factura))
+								include ('View/listaFactura.php');
+							else
+								include ('View/facturaError.php');
+						}
 						else
-							include ('View/facturaError.php');
+						{
+							echo "Datos invalidos";
+						}
+					
 					} 
 										
 					// si es cliente  o inventario solo podra listar sus propias facturas
@@ -105,8 +129,9 @@ class facturaCtl {
 						
 						break;
 				case 'pdf':
-					if(isset( $_REQUEST['id'] )){	
-						$facuraPdf = $this -> modeloFactura -> crearFactura($_REQUEST['id']);
+					if(isset( $_REQUEST['id'] )){
+						if(isId($_REQUEST['id']))
+							$facuraPdf = $this -> modeloFactura -> crearFactura($_REQUEST['id']);
 					}
 					break;
 			}

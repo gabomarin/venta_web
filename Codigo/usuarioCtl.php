@@ -54,14 +54,26 @@ class usuarioCtl {
 							
 							
 							$smarty->assign('registro', 'Registro Exitoso');
-							$enlace= '<a href="index.php?modulo=estandar&action=login">AQUI';
-							$mensaje= 'Gracias '.$usuario->nombre.' por registrarte en <em><strong>TD-INFORMATICA</strong></em>,
-							ahora mismo puedes iniciar sesion y comenzar a realizar compras haciendo click '.$enlace;
-							$mensaje.= '<br>Tu correo es  '. $usuario->mail; 
+							$enlace= '<a class="btn btn-success" href="http://alanturing.cucei.udg.mx/cc409/virtualtd/index.php?modulo=estandar&action=login">AQUI</a>';
+							
+							
+							
+							
+							
+							
+							
+							$mensaje.= 'Gracias <b>'.$usuario->nombre.'</b> por registrarte en <em><strong>TD-INFORMATICA</strong></em>,
+							ahora mismo puedes iniciar sesion y comenzar a realizar compras haciendo click'.'&nbsp;&nbsp;'.$enlace;
+							$mensaje.= '</br></br>Tu correo de acceso es  '. $usuario->mail; 
 							
 							
 							
 							$smarty->assign('mensaje', $mensaje);
+							$msg=  '<style>'.file_get_contents('bootstrap/css/bootstrap.css').'</style>';
+							$msg.= '<div class="well span7 text-center">';
+							$msg.='<a class="text-center" href="http://alanturing.cucei.udg.mx/cc409/virtualtd/index.php"><img class="img-rounded" src="images/logo_mail.jpg"  /></a></br>';
+							$msg.=$mensaje.'</div>';
+							
 									
 							$var=$smarty->fetch("usuario_registrado.tpl");
 							ob_start();
@@ -87,27 +99,25 @@ class usuarioCtl {
 							$mail->Username = 'virtual.td.26@gmail.com';
 							$mail->Password = 'virtualtd';
 							
-							$mail->From= 'gabomarin26@gmail.com';
+							$mail->From= 'virtual.td.26@gmail.com';
 							$mail->FromName= 'Le Administradore';
 							$mail->Subject = 'Registro en TD-INOFRMATICA';
-							$mail->AltBody = 'No se puede mostrar el corre, por favor actualiza tu navegador';
-							$mail->MsgHTML($var);
+							$mail->AltBody = 'No se puede mostrar el correo, por favor actualiza tu navegador';
+							$mail->MsgHTML($msg);
 							
 
 							$mail->AddAddress($usuario->mail, $usuario->nombre);
 							
-							$log= fopen('mail.log','a+');
-								
-								
-								fclose($log);
+							$log= fopen('mail_log.txt','a+');	
 							
-							if(!$mail->Send()) {
-								echo 'Email para '.$usuario->mail.' enviado correctamente el dia '.date('l jS \of F Y ').'a las '.date('h:i:s A').'\n';
-								fputs($log,'Email para '. $usuario->mail.' enviado correctamente el dia '.date('l jS \of F Y ').'a las '.date('h:i:s A').'\n');
+							if($mail->Send()) {
+								//echo 'Email para '.$usuario->mail.' enviado correctamente el dia '.date('l jS \of F Y ').'a las '.date('h:i:s A')."\n";
+								fwrite($log,'Email para '. $usuario->mail.' enviado correctamente el dia '.date('l jS \of F Y ').'a las '.date('h:i:s A')."\n");
 							
 							} else {
-								fputs($log,'No se pudo enviar el email a '.$usuario->mail.'\n');
+								fwrite($log,'No se pudo enviar el email a '.$usuario->mail.'\n');
 							}
+							fclose($log);
 
 							
 						}
@@ -331,37 +341,60 @@ class usuarioCtl {
 				
 			break;
 			
-			case 'modificarDato':
+			case 'modificarPass':
 				
-						if( isset($_SESSION['mail']) && $_SESSION['tipo'] == 2  ){//si es un encargado de ventas puede modificar cualquier usuario
+						 if( isset($_SESSION['mail'])  ){//si es un cliente solo puede modificar su informacion 
 							include('validaciones.php');
 							
-							if(isId($_REQUEST['id']) && isUsuarioAD($_REQUEST['atributo'],$_REQUEST['dato'])){
-								$usuario = $this->modelo->modificarDato($_REQUEST['id'],$_REQUEST['dato'],$_REQUEST['atributo']);
-								if($usuario == TRUE)
-									echo 'El campo fue modificado exitosamente';
-								else {
-									echo 'El campo no pudo ser modificado';
-								}	
-							}
-							else {
-								echo 'Datos no validos. Porfavor revise la sintaxis';
+							if( isset($_REQUEST['passNuevo'])){
+								if( $_REQUEST['passAnterior'] == $_SESSION['pass'] ){
+									if(isUsuarioAD('pass',$_REQUEST['passNuevo'])){
+										$usuario = $this->modelo->modificarDato($_SESSION['id'],$_REQUEST['passNuevo'],'pass');
+										$_SESSION['pass']=$_REQUEST['passNuevo'];
+										//var_dump($usuario);
+										if($usuario == TRUE)
+										{
+											$smarty->assign('titulo',"Modificar contraseña");
+											$smarty->assign('error',0);
+											$var= $smarty->fetch("modificar_pass.tpl");
+											ob_start();
+											echo $var;
+											$panel = ob_get_clean();
+											$smarty->assign('contenido',$panel);
+											$smarty->assign('titulocontenido','');
+										}
+										else {
+											echo 'El campo no pudo ser modificado';
+										}
+									}
+									else {
+										echo 'Datos no validos. Porfavor revise la sintaxis';
+									}
 								}
-							
-						}
-						else if( isset($_SESSION['mail']) && $_REQUEST['id'] ==  $_SESSION['id'] ){//si es un cliente solo puede modificar su informacion 
-							include('validaciones.php');
-							if(isId($_REQUEST['id']) && isUsuarioAD($_REQUEST['atributo'],$_REQUEST['dato'])){
-								$usuario = $this->modelo->modificarDato($_REQUEST['id'],$_REQUEST['dato'],$_REQUEST['atributo']);
-								//var_dump($usuario);
-								if($usuario == TRUE)
-									echo 'El campo fue modificado exitosamente';
-								else {
-									echo 'El campo no pudo ser modificado';
+								else{
+									$smarty->assign('titulo',"Modificar contraseña");
+									$smarty->assign('error',1);
+									$var= $smarty->fetch("modificar_pass.tpl");
+									ob_start();
+									echo $var;
+									$panel = ob_get_clean();
+									$smarty->assign('contenido',$panel);
+									$smarty->assign('titulocontenido','');	
 								}
 							}
-							else {
-								echo 'Datos no validos. Porfavor revise la sintaxis';
+							else
+							{
+
+										$smarty->assign('titulo',"Modificar contraseña");
+										$smarty->assign('error',-1);
+										$var= $smarty->fetch("modificar_pass.tpl");
+										ob_start();
+										echo $var;
+										$panel = ob_get_clean();
+										$smarty->assign('contenido',$panel);
+										$smarty->assign('titulocontenido','');
+										
+	
 							}
 						} 
 						else
@@ -440,6 +473,7 @@ class usuarioCtl {
 						  */
 							
 							$smarty->assign('titulo',"Editar perfil");
+							$smarty->assign('id', $_SESSION['id']);
 							$smarty->assign('usuario', $_SESSION['nombre']);
 							$smarty->assign('correo', $_SESSION['mail']);
 							$smarty->assign('direccion', $_SESSION['direccion']);
@@ -449,7 +483,7 @@ class usuarioCtl {
 								$smarty->assign('rfc', "NULO");
 							
 							$smarty->assign('telefono', $_SESSION['telefono']);
-
+							$smarty->assign('error','');
 							$var=$smarty->fetch("modificar_usuario.tpl");
 							ob_start();
 
@@ -490,7 +524,60 @@ class usuarioCtl {
 					echo 'No tienes los permisos para eliminar ';
 				}
 				break;
+			case 'modificaUsuario':
+					include('validaciones.php');
+					if(isset($_REQUEST['direccion']) && isset($_REQUEST['telefono']) ){
+						$usuario = $this->modelo->modificaUsuario($_REQUEST['id'],$_REQUEST['direccion'],$_REQUEST['telefono']);
+						//var_dump($usuario);
+						if($usuario == TRUE){
+							$error='El Usuario ha sido modificado';
+							$smarty->assign('titulo','Editar Perfil');
+							$smarty->assign('error',$error);
+							$smarty->assign('usuario',$_REQUEST['usuario']);
+							$smarty->assign('correo',$_REQUEST['correo']);
+							$smarty->assign('rfc',$_REQUEST['rfc']);
+							$var=$smarty->fetch("modificar_usuario.tpl");
+							
+							ob_start();
+							echo $var;
+							//var_dump($usuario);
+							$panel = ob_get_clean();
+							$smarty->assign('contenido',$panel);
+						}
+						
+						else {
+							echo 'El campo no pudo ser modificado';
+						}
+					}
+					else {
+						echo 'Datos no validos. Porfavor revise la sintaxis';
+							}
+				break;
 			
+			case 'checaUsuario':
+				$smarty->assign('titulo',"Editar perfil");
+				$smarty->assign('id', $_REQUEST['id']);
+				$smarty->assign('usuario', $_REQUEST['nombre']);
+				$smarty->assign('correo', $_REQUEST['mail']);
+				$smarty->assign('direccion', $_REQUEST['direccion']);
+				if($_REQUEST['rfc']!="")
+					$smarty->assign('rfc', $_REQUEST['rfc']);
+				else
+					$smarty->assign('rfc', "NULO");
+				
+				$smarty->assign('telefono', $_REQUEST['telefono']);
+				$smarty->assign('error', '');
+				$var=$smarty->fetch("modificar_usuario.tpl");
+				ob_start();
+
+				echo $var;
+				$panel = ob_get_clean();
+			  
+			   //echo $count+"  saasdasd";
+			  
+			  $smarty->assign('titulocontenido','');
+			  $smarty->assign('contenido',$panel);
+				break;
 			default:
 					echo 'Opcion no valida. Intente de nuevo';
 					break;

@@ -56,10 +56,6 @@ function validaForm(){
                 valor2.style.display='none';
                 
         }
-       if(valor3.style.display == 'block' ){
-                valor3.style.display='none'
-                
-        }
        valor.value=jQuery.trim(valor.value);
         if( valor.value == null || valor.value.length == ""){
                 if ( valor2.style.display != 'block' ) {

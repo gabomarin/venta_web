@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2013-05-26 21:19:56
+<?php /* Smarty version Smarty-3.1.13, created on 2013-06-14 02:11:55
          compiled from "templates\inventario.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:3006451a28752a0ad83-42629674%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'b4a2979c1e0d77e7de021745e7699670d237759b' => 
     array (
       0 => 'templates\\inventario.tpl',
-      1 => 1369617591,
+      1 => 1371174131,
       2 => 'file',
     ),
   ),
@@ -78,7 +78,7 @@ border: 1px solid black;
 									Descripcion
 								</th>
                                 <th>
-                                    Usuario Id
+                                    Nombre Usuario
                                 </th>
                                 
                                 
@@ -121,7 +121,7 @@ $_smarty_tpl->tpl_vars['inventario']->_loop = true;
 
 								</td>
                                 <td>
-                                <?php echo $_smarty_tpl->tpl_vars['inventario']->value['usuario_id'];?>
+                                <?php echo $_smarty_tpl->tpl_vars['inventario']->value['nombre'];?>
 
                                 </td>
 

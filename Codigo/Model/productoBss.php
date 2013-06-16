@@ -156,6 +156,37 @@ class productoBss extends DB{
 		if(!$resultado)
 			return FALSE;
 		else
+			return TRUE;
+	}
+		
+		
+	function modificaProducto($id,$precio,$existencia, $categoria, $descripcion){
+		
+		//limpiar variable
+		$id = parent::limpiarVariable($id);
+		$precio = parent::limpiarVariable($precio);
+		$existencia= parent::limpiarVariable($existencia);
+		$categoria = parent::limpiarVariable($categoria);
+		$descripcion = parent::limpiarVariable($descripcion);
+		
+
+		
+		$query = "UPDATE
+					producto
+				  SET
+					precio = $precio,
+					existencia = $existencia,
+					categoria_id = $categoria,
+				    descripcion = '$descripcion'
+				  WHERE 
+						id = $id";
+		
+		$resultado=parent::ejecutarConsulta($query);
+		
+		parent::cerrar();
+		if(!$resultado)
+			return FALSE;
+		else
 			return TRUE;		
 				
 	}

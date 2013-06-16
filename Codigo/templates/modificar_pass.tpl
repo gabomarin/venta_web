@@ -70,5 +70,23 @@
 		    <button type="button" id="cancelar" name="cancelar" class="btn btn-danger" onclick="javascript:window.history.back();">cancelar</button>
 		    <button type="button" id="enviar" name="enviar" class="btn btn-success" onclick="envia()">Cambiar</button>
 	         </div>
+		{if $error == 1}
+		    <div class="span4" style="margin-top: 10%;">
+		    <div class="prueba alert alert-error">
+		    
+		      Las contraseñas no coinciden
+		      </div>
+		    </div>
+	       {elseif $error==0}
+		    <div class="span4" style="margin-top: 10%;">
+		    <div class="prueba alert alert-success">
+		    
+		      Contraseña cambiada con exito
+		      </div>
+		    </div>
+		 
+		    
+		    
+	       {/if}
 		</fieldset>
 </form>

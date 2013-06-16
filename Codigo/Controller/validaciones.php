@@ -139,4 +139,44 @@
 					break;
 		}
 	}
+	
+	function isFacturaAD($atributo,$dato){
+		switch( strtolower($atributo)){
+			case 'id':
+					return isId($dato);
+					break;
+			case 'fecha':
+					return isFecha($dato);
+					break;
+				
+			case 'estatus':
+					return isEstatus($dato);
+				break;
+			default:
+					return FALSE;
+					break;
+		}
+	}
+	
+	
+	
+	function isInventarioAD($atributo,$dato){
+		switch( strtolower($atributo)){
+			case 'id':
+					return isId($dato);
+					break;
+			case 'fecha':
+					return isNombre($dato);
+					break;
+				
+			case 'cantidadesperada': case 'cantidadreal': case 'cantidadproducto':
+					return isId($dato);
+				break;
+		
+			default:
+					return FALSE;
+					break;
+		}
+	}
+	
 ?>

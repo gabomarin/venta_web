@@ -56,20 +56,8 @@ function validaForm(){
             return false;
         return true;
 }
-function checa() {
-        var pass1 = document.getElementById('passAnterior');
-        var pass2 = document.getElementById('passNuevo');
-
-        
-        /*if ( pass1.value == ) {
-                alert("wooo");
-                return true;
-        }*/
-        
-        return true;
-}
 function envia() {
-    if ( validaForm() && checa() ) {
+    if ( validaForm()) {
        document.forms["registrar"].submit();
        
     }
